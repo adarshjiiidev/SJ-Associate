@@ -9,11 +9,11 @@ import {
   type CourtProfile,
   type LiveCourtReport,
   type ConsultationPayload,
-} from "../data/courtsRegistry";
+} from "../data/courtsRegistry.js";
 import {
   createMailRouter,
   forwardConsultationEmailIfConfigured,
-} from "./mailRoutes";
+} from "./mailRoutes.js";
 
 interface CacheEntry<T> {
   data: T;

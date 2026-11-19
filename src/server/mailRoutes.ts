@@ -10,11 +10,11 @@ import {
   sanitizeEmailHtml,
   validateComposeMailInput,
   validateMailLoginInput
-} from "../utils/mailHelpers";
+} from "../utils/mailHelpers.js";
 import {
   sealMailSessionToken,
   unsealMailSessionToken
-} from "../utils/mailSessionToken";
+} from "../utils/mailSessionToken.js";
 
 export const MAIL_COOKIE_NAME = "sj_mail_sid";
 const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
