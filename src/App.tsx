@@ -7,6 +7,7 @@ import { BrowserRouter, Link, Route, Routes, useLocation } from "react-router-do
 import { MotionConfig } from "motion/react";
 import { ArrowRight, Landmark, Phone, Scale } from "lucide-react";
 import { ErrorBoundary } from "@/src/components/ErrorBoundary";
+import { BciDisclaimerModal } from "@/src/components/BciDisclaimerModal";
 import { Header } from "@/src/components/Header";
 import { Footer } from "@/src/components/Footer";
 import { ConsultationForm } from "@/src/components/ConsultationForm";
@@ -165,6 +166,7 @@ function AppShell() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <RouteMetadataAndScroll />
+      <BciDisclaimerModal />
       <Header onOpenConsultation={() => openConsultation()} />
 
       <main className="flex-1">
