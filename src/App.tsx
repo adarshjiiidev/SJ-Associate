@@ -32,7 +32,7 @@ const ROUTE_TITLES: Record<string, string> = {
   "/practice": "Corporate & Tax Practice Areas | SJ Associates — Advocate Sanjay Kumar Singh",
   "/about": "Advocate Sanjay Kumar Singh | Corporate & Tax Counsel — SJ Associates",
   "/contact": "Contact Chambers | SJ Associates — New Delhi, Mumbai & Bengaluru",
-  "/mail": "Chambers Webmail | SJ Associates (legalsja.com)"
+  "/mail": "Chambers Webmail | SJ Associates (services@sjalaw.in)"
 };
 
 function RouteMetadataAndScroll() {

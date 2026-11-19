@@ -1,6 +1,6 @@
 export const HOSTINGER_MAIL_DEFAULTS = {
-  domain: "legalsja.com",
-  defaultEmail: "sanjaysingh@legalsja.com",
+  domain: "sjalaw.in",
+  defaultEmail: "services@sjalaw.in",
   imapHost: "imap.hostinger.com",
   imapPort: 993,
   smtpHost: "smtp.hostinger.com",
@@ -40,7 +40,7 @@ export function validateMailLoginInput(input: MailLoginInput): {
   const smtpPort = Number(input.smtpPort ?? HOSTINGER_MAIL_DEFAULTS.smtpPort);
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errors.email = "Enter a valid mailbox address (e.g. sanjaysingh@legalsja.com).";
+    errors.email = "Enter a valid mailbox address (e.g. services@sjalaw.in).";
   }
 
   if (!password || password.length < 1) {

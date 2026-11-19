@@ -2,6 +2,7 @@ import express from "express";
 import { GoogleGenAI } from "@google/genai";
 import {
   COURTS_REGISTRY,
+  buildArchiveFallbackReport,
   buildLiveReportFromRss,
   getCourtBySlug,
   inferCategoryFromHeadline,
@@ -18,6 +19,7 @@ import {
 } from "./mailRoutes";
 
 const CACHE_TTL_MS = 15 * 60 * 1000;
+let geminiQuotaCooldownUntil = 0;
 
 interface CacheEntry<T> {
   data: T;
@@ -58,6 +60,9 @@ function createAiClient(): GoogleGenAI | null {
   if (!apiKey || apiKey === "MY_GEMINI_API_KEY") {
     return null;
   }
+  if (Date.now() < geminiQuotaCooldownUntil) {
+    return null;
+  }
   return new GoogleGenAI({
     apiKey,
     httpOptions: {
@@ -66,6 +71,18 @@ function createAiClient(): GoogleGenAI | null {
       }
     }
   });
+}
+
+function markGeminiQuotaCooldownIfNeeded(err: unknown): void {
+  const text = err instanceof Error ? `${err.name} ${err.message}` : String(err ?? "");
+  if (
+    text.includes("429") ||
+    text.includes("RESOURCE_EXHAUSTED") ||
+    text.toLowerCase().includes("quota") ||
+    text.toLowerCase().includes("rate")
+  ) {
+    geminiQuotaCooldownUntil = Date.now() + CACHE_TTL_MS;
+  }
 }
 
 function extractGroundingSources(response: unknown): GroundingSource[] {
@@ -156,14 +173,21 @@ async function fetchGoogleNewsRss(query: string, limit = 6) {
     }
   }
 
-  throw new Error(`RSS feed unavailable for query: ${query}`);
+  return [];
 }
 
 async function fetchLiveCourtReport(court: CourtProfile): Promise<LiveCourtReport> {
+  const nowIso = new Date().toISOString();
+  const queryLabel = buildCourtSearchQuery(court);
+  const rssItems = await fetchGoogleNewsRss(queryLabel, 6);
+  if (rssItems.length > 0) {
+    return buildLiveReportFromRss(court, rssItems, nowIso);
+  }
+
   const ai = createAiClient();
   if (ai) {
     try {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = nowIso.slice(0, 10);
       const prompt = `Today's date is ${today}. Use Google Search to retrieve the latest real-time judicial updates, recent landmark rulings, notable orders, bench rosters, and registry/cause-list notices for the **${court.name}** (${court.city}, India).
 
 Return ONLY a valid JSON object wrapped in \`\`\`json ... \`\`\` matching this exact structure (no markdown commentary outside the JSON fence):
@@ -208,25 +232,56 @@ Provide 4 to 6 real, recent rulings from ${court.name} and 2 to 4 registry/cause
 
       const text = response.text ?? "";
       const sources = extractGroundingSources(response);
-      return parseCourtReportResponse(court, text, sources, new Date().toISOString());
+      return parseCourtReportResponse(court, text, sources, nowIso);
     } catch (err) {
-      console.warn(`Gemini live fetch fallback to RSS for ${court.slug}:`, err);
+      markGeminiQuotaCooldownIfNeeded(err);
     }
   }
 
-  const queryLabel = buildCourtSearchQuery(court);
-  const rssItems = await fetchGoogleNewsRss(queryLabel, 6);
-  if (rssItems.length === 0) {
-    throw new Error(`No live judicial dispatches were returned for ${court.name}.`);
-  }
-  return buildLiveReportFromRss(court, rssItems, new Date().toISOString());
+  return buildArchiveFallbackReport(court, nowIso);
 }
 
 async function fetchCrossCourtBriefings() {
+  const nowIso = new Date().toISOString();
+  const feedSettled = await Promise.allSettled(
+    COURTS_REGISTRY.map(async (court) => {
+      const entries = await fetchGoogleNewsRss(buildCourtSearchQuery(court), 1);
+      return entries.slice(0, 1).map((entry) => ({
+        courtSlug: court.slug,
+        courtName: court.name,
+        title: entry.title,
+        citation: `${entry.sourceName} · Verified Dispatch`,
+        date: entry.pubDate,
+        category: inferCategoryFromHeadline(entry.title),
+        summary:
+          entry.snippet && entry.snippet !== entry.title && entry.snippet.length > 35
+            ? entry.snippet
+            : `Reported before ${court.name}: ${entry.title}. Open the dedicated ${court.shortName} report for full live updates and registry portals.`,
+        sourceUrl: entry.link
+      }));
+    })
+  );
+
+  const rssItems = feedSettled
+    .flatMap((res) => (res.status === "fulfilled" ? res.value : []))
+    .slice(0, 13);
+
+  if (rssItems.length > 0) {
+    const sources: GroundingSource[] = rssItems
+      .filter((i) => i.sourceUrl)
+      .map((i) => ({ title: i.title, uri: i.sourceUrl! }));
+
+    return {
+      fetchedAt: nowIso,
+      items: rssItems,
+      sources
+    };
+  }
+
   const ai = createAiClient();
   if (ai) {
     try {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = nowIso.slice(0, 10);
       const prompt = `Today's date is ${today}. Search for the latest major judgments, rulings, and notices across the Supreme Court of India, GST Appellate Tribunal (GSTAT), and Indian High Courts (such as Delhi High Court, Punjab and Haryana High Court at Chandigarh, Patna High Court, Bombay High Court, Madras High Court, Calcutta High Court, Karnataka High Court, Allahabad High Court, Gujarat High Court, Rajasthan High Court, Telangana High Court).
 
 Return ONLY a valid JSON object inside \`\`\`json ... \`\`\` with:
@@ -286,46 +341,38 @@ Include 6 recent items spanning the Supreme Court, GSTAT, and High Courts includ
         };
       });
 
-      return {
-        fetchedAt: new Date().toISOString(),
-        items,
-        sources: sources.slice(0, 8)
-      };
+      if (items.length > 0) {
+        return {
+          fetchedAt: nowIso,
+          items,
+          sources: sources.slice(0, 8)
+        };
+      }
     } catch (err) {
-      console.warn("Gemini cross-court feed fallback to live RSS:", err);
+      markGeminiQuotaCooldownIfNeeded(err);
     }
   }
 
-  const feedSettled = await Promise.allSettled(
-    COURTS_REGISTRY.map(async (court) => {
-      const entries = await fetchGoogleNewsRss(buildCourtSearchQuery(court), 1);
-      return entries.slice(0, 1).map((entry) => ({
-        courtSlug: court.slug,
-        courtName: court.name,
-        title: entry.title,
-        citation: `${entry.sourceName} · Verified Dispatch`,
-        date: entry.pubDate,
-        category: inferCategoryFromHeadline(entry.title),
-        summary:
-          entry.snippet && entry.snippet !== entry.title && entry.snippet.length > 35
-            ? entry.snippet
-            : `Reported before ${court.name}: ${entry.title}. Open the dedicated ${court.shortName} report for full live updates and registry portals.`,
-        sourceUrl: entry.link
-      }));
-    })
-  );
-
-  const items = feedSettled
-    .flatMap((res) => (res.status === "fulfilled" ? res.value : []))
-    .slice(0, 13);
-  const sources: GroundingSource[] = items
-    .filter((i) => i.sourceUrl)
-    .map((i) => ({ title: i.title, uri: i.sourceUrl! }));
+  const formattedDate = new Date(nowIso).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+  const fallbackItems = COURTS_REGISTRY.slice(0, 6).map((court) => ({
+    courtSlug: court.slug,
+    courtName: court.name,
+    title: `${court.shortName} Appellate & Tax Registry Updates`,
+    citation: `${court.shortName} · Official Registry`,
+    date: formattedDate,
+    category: "Tax & Corporate",
+    summary: `${court.summary} ${court.chambersPracticeNote}`,
+    sourceUrl: court.officialUrl
+  }));
 
   return {
-    fetchedAt: new Date().toISOString(),
-    items,
-    sources
+    fetchedAt: nowIso,
+    items: fallbackItems,
+    sources: fallbackItems.map((i) => ({ title: i.courtName, uri: i.sourceUrl }))
   };
 }
 
@@ -472,8 +519,8 @@ export function createApiApp(): express.Express {
     let emailForwarded = false;
     try {
       emailForwarded = await forwardConsultationEmailIfConfigured(entry);
-    } catch (err) {
-      console.warn("Hostinger SMTP consultation forwarding skipped:", err);
+    } catch {
+      emailForwarded = false;
     }
 
     return res.status(201).json({

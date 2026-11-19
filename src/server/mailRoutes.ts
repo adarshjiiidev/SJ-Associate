@@ -212,7 +212,11 @@ export async function forwardConsultationEmailIfConfigured(entry: {
 }): Promise<boolean> {
   cleanupExpiredSessions();
 
-  const recipient = process.env.MAIL_NOTIFY_TO?.trim() || HOSTINGER_MAIL_DEFAULTS.defaultEmail;
+  const rawNotify = process.env.MAIL_NOTIFY_TO?.trim();
+  const recipient =
+    rawNotify && rawNotify.toLowerCase() !== "sanjaysingh@legalsja.com"
+      ? rawNotify
+      : HOSTINGER_MAIL_DEFAULTS.defaultEmail;
   let smtpUser = process.env.MAIL_SMTP_USER?.trim();
   let smtpPass = process.env.MAIL_SMTP_PASS;
   let smtpHost = process.env.MAIL_SMTP_HOST?.trim() || HOSTINGER_MAIL_DEFAULTS.smtpHost;
@@ -276,10 +280,15 @@ export function createMailRouter(): express.Router {
   router.get("/session", (req, res) => {
     const session = getSessionFromRequest(req);
     if (!session) {
+      const envEmail = process.env.MAIL_DEFAULT_EMAIL?.trim();
+      const emailHint =
+        envEmail && envEmail.toLowerCase() !== "sanjaysingh@legalsja.com"
+          ? envEmail
+          : HOSTINGER_MAIL_DEFAULTS.defaultEmail;
       return res.json({
         authenticated: false,
         defaults: {
-          emailHint: process.env.MAIL_DEFAULT_EMAIL || HOSTINGER_MAIL_DEFAULTS.defaultEmail,
+          emailHint,
           imapHost: process.env.MAIL_IMAP_HOST || HOSTINGER_MAIL_DEFAULTS.imapHost,
           imapPort: Number(process.env.MAIL_IMAP_PORT ?? HOSTINGER_MAIL_DEFAULTS.imapPort),
           smtpHost: process.env.MAIL_SMTP_HOST || HOSTINGER_MAIL_DEFAULTS.smtpHost,

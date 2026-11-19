@@ -4,7 +4,7 @@ import { sealMailSessionToken, unsealMailSessionToken } from "./mailSessionToken
 
 const SAMPLE_SESSION = {
   id: "sess-abc-123",
-  email: "sanjaysingh@legalsja.com",
+  email: "services@sjalaw.in",
   password: "example-app-password",
   imapHost: "imap.hostinger.com",
   imapPort: 993,

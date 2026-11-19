@@ -560,7 +560,7 @@ export function MailPage() {
                 SJ Associates
               </p>
               <p className="text-[11px] text-[#DAF6EF]/75">
-                legalsja.com · Chambers Mail
+                services@sjalaw.in · Chambers Mail
               </p>
             </div>
           </Link>
@@ -581,7 +581,7 @@ export function MailPage() {
                 Sign In to Webmail
               </h1>
               <p className="text-xs sm:text-sm text-[#33566D] leading-relaxed">
-                Access your <strong className="text-[#0A2536]">legalsja.com</strong> email via encrypted Hostinger IMAP &amp; SMTP servers.
+                Access your <strong className="text-[#0A2536]">services@sjalaw.in</strong> email via encrypted Hostinger IMAP &amp; SMTP servers.
               </p>
             </div>
 
@@ -606,7 +606,7 @@ export function MailPage() {
                   autoComplete="username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="sanjaysingh@legalsja.com"
+                  placeholder="services@sjalaw.in"
                   className="w-full h-11 rounded-xl border border-border bg-[#F3FAFF]/60 px-3.5 text-sm text-[#0A2536] placeholder:text-[#33566D]/50 focus:outline-none focus:ring-2 focus:ring-[#0A2536]"
                 />
               </div>
@@ -980,7 +980,7 @@ export function MailPage() {
               <p className="text-xs text-[#33566D]">
                 {appliedSearch
                   ? "Try another keyword or clear the search filter."
-                  : "New mail received on legalsja.com will appear here."}
+                  : "New mail received on services@sjalaw.in will appear here."}
               </p>
             </div>
           ) : (
@@ -1285,7 +1285,7 @@ export function MailPage() {
                   type="text"
                   value={composeCc}
                   onChange={(e) => setComposeCc(e.target.value)}
-                  placeholder="counsel@legalsja.com"
+                  placeholder="services@sjalaw.in"
                   className="w-full h-10 rounded-xl border border-border bg-[#F3FAFF]/60 px-3 text-xs text-[#0A2536]"
                 />
               </div>

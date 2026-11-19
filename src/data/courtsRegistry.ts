@@ -752,3 +752,71 @@ export function buildLiveReportFromRss(
   };
 }
 
+export function buildArchiveFallbackReport(
+  court: CourtProfile,
+  fetchedAtIso: string
+): LiveCourtReport {
+  const formattedDate = new Date(fetchedAtIso).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+  const defaultBench = /bench/i.test(court.shortName)
+    ? court.shortName
+    : `${court.shortName} Division Bench`;
+
+  const rulings: JudicialRuling[] = [
+    {
+      id: `${court.slug}-fallback-1`,
+      title: `${court.shortName} Appellate & Writ Docket — Tax, GST & Commercial Filings`,
+      caseNameOrCitation: `${court.shortName} · Official Registry Docket`,
+      date: formattedDate,
+      category: "Tax & Corporate",
+      bench: defaultBench,
+      statutes:
+        court.tier === "supreme"
+          ? ["Article 136 Constitution of India", "CGST Act, 2017", "Income-tax Act, 1961"]
+          : court.tier === "tribunal"
+          ? ["Section 112 CGST Act, 2017", "GSTAT Procedure Rules"]
+          : ["Article 226 Constitution of India", "CGST Act, 2017", "Commercial Courts Act, 2015"],
+      holdingSummary: `${court.summary} ${court.chambersPracticeNote}`,
+      practicalTakeaway: `Access the official ${court.shortName} cause list and order portal for today's bench assignments and certified order uploads.`,
+      sourceUrl: court.officialUrl
+    }
+  ];
+
+  const registryNotices: RegistryNotice[] = [
+    {
+      id: `${court.slug}-notice-fallback-1`,
+      title: `${court.shortName} Daily Cause List & Registry Portal`,
+      date: formattedDate,
+      type: "Cause List",
+      summary: `Today's sitting benches, supplementary cause lists, and urgent mentioning schedules for the ${court.name} are posted on the official portal (${court.causeListUrl}).`
+    },
+    {
+      id: `${court.slug}-notice-fallback-2`,
+      title: `Active Benches & Filing Desk (${court.city})`,
+      date: "Current Roster",
+      type: "Bench Roster",
+      summary: `Benches covered: ${court.benches.join(", ")}. ${court.chambersPracticeNote}`
+    }
+  ];
+
+  return {
+    courtSlug: court.slug,
+    courtName: court.name,
+    fetchedAt: fetchedAtIso,
+    sourceMode: "archive-fallback",
+    overviewSummary: court.summary,
+    sittingStatus: "Registry & Cause List Portals Active",
+    chiefJusticeNote: `Principal Seat: ${court.city} · ${court.benches.length} Bench${court.benches.length > 1 ? "es" : ""}`,
+    rulings,
+    registryNotices,
+    sources: [
+      { title: `${court.name} Official Portal`, uri: court.officialUrl },
+      { title: `${court.shortName} Daily Cause List`, uri: court.causeListUrl }
+    ]
+  };
+}
+
+

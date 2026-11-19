@@ -205,7 +205,7 @@ export const CHAMBERS_OFFICES: OfficeLocation[] = [
       "https://www.google.com/maps/search/?api=1&query=Captain+Satish+Marg,+Rishi+Nagar,+Pitampura,+Delhi,+110034,+India",
     phone: "+91 9716318400",
     landline: "011-40196902",
-    email: "sanjaysingh@legalsja.com",
+    email: "services@sjalaw.in",
     hours: "Mon–Sat · 09:30 AM to 07:00 PM IST"
   },
   {
@@ -216,7 +216,7 @@ export const CHAMBERS_OFFICES: OfficeLocation[] = [
       "https://www.google.com/maps/search/?api=1&query=Horniman+Circle,+Fort,+Mumbai,+400001,+India",
     phone: "+91 9716318400",
     landline: "011-40196902",
-    email: "sanjaysingh@legalsja.com",
+    email: "services@sjalaw.in",
     hours: "Mon–Fri · 09:30 AM to 07:00 PM IST"
   },
   {
@@ -227,7 +227,7 @@ export const CHAMBERS_OFFICES: OfficeLocation[] = [
       "https://www.google.com/maps/search/?api=1&query=Mahatma+Gandhi+Road,+Bengaluru,+560001,+India",
     phone: "+91 9716318400",
     landline: "011-40196902",
-    email: "sanjaysingh@legalsja.com",
+    email: "services@sjalaw.in",
     hours: "Mon–Fri · 09:30 AM to 06:30 PM IST"
   }
 ];

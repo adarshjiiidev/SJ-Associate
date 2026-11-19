@@ -104,7 +104,7 @@ export function ConsultationForm({
             <p className="text-sm text-muted-foreground leading-relaxed">
               {confirmation.message}
               {confirmation.emailForwarded
-                ? " Delivered directly to sanjaysingh@legalsja.com."
+                ? " Delivered directly to services@sjalaw.in."
                 : ""}
             </p>
           </div>

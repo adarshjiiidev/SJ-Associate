@@ -10,8 +10,9 @@ import {
   validateMailLoginInput
 } from "./mailHelpers";
 
-test("Hostinger defaults match legalsja.com TLS IMAP/SMTP settings", () => {
-  assert.equal(HOSTINGER_MAIL_DEFAULTS.defaultEmail, "sanjaysingh@legalsja.com");
+test("Hostinger defaults match sjalaw.in TLS IMAP/SMTP settings", () => {
+  assert.equal(HOSTINGER_MAIL_DEFAULTS.domain, "sjalaw.in");
+  assert.equal(HOSTINGER_MAIL_DEFAULTS.defaultEmail, "services@sjalaw.in");
   assert.equal(HOSTINGER_MAIL_DEFAULTS.imapHost, "imap.hostinger.com");
   assert.equal(HOSTINGER_MAIL_DEFAULTS.imapPort, 993);
   assert.equal(HOSTINGER_MAIL_DEFAULTS.smtpHost, "smtp.hostinger.com");
@@ -25,11 +26,11 @@ test("validateMailLoginInput rejects invalid emails/empty passwords and normaliz
   assert.ok(bad.errors.password);
 
   const ok = validateMailLoginInput({
-    email: "  SanjaySingh@legalsja.com ",
+    email: "  Services@sjalaw.in ",
     password: "secret-password"
   });
   assert.equal(ok.valid, true);
-  assert.equal(ok.normalized?.email, "sanjaysingh@legalsja.com");
+  assert.equal(ok.normalized?.email, "services@sjalaw.in");
   assert.equal(ok.normalized?.imapHost, "imap.hostinger.com");
   assert.equal(ok.normalized?.imapPort, 993);
   assert.equal(ok.normalized?.smtpHost, "smtp.hostinger.com");

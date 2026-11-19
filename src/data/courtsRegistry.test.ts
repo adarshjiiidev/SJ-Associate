@@ -159,6 +159,7 @@ test("validateConsultationInput catches invalid inputs and passes valid ones", (
 });
 
 import {
+  buildArchiveFallbackReport,
   buildLiveReportFromRss,
   inferCategoryFromHeadline,
   parseRssItemsFromXml
@@ -223,4 +224,11 @@ test("parseRssItemsFromXml and buildLiveReportFromRss parse live court RSS feeds
   const gstat = getCourtBySlug("gstat")!;
   const gstatReport = buildLiveReportFromRss(gstat, bingParsed, "2026-11-18T12:00:00.000Z");
   assert.equal(gstatReport.rulings[0].bench, "GSTAT (Principal Bench)");
+
+  const fallbackReport = buildArchiveFallbackReport(gstat, "2026-11-18T12:00:00.000Z");
+  assert.equal(fallbackReport.sourceMode, "archive-fallback");
+  assert.equal(fallbackReport.rulings.length, 1);
+  assert.equal(fallbackReport.registryNotices.length, 2);
+  assert.equal(fallbackReport.sources.length, 2);
 });
+

@@ -948,7 +948,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
                         </p>
                         <p className="text-xs text-[#DAF6EF]/85">
                           Ref: <span className="font-mono">{quickSuccessRef}</span>. SJ Associates will contact you shortly.
-                          {quickEmailForwarded ? " Delivered to sanjaysingh@legalsja.com." : ""}
+                          {quickEmailForwarded ? " Delivered to services@sjalaw.in." : ""}
                         </p>
                       </div>
                     </div>
