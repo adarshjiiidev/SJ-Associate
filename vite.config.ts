@@ -8,9 +8,12 @@ export default defineConfig(() => {
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': path.resolve(import.meta.dirname, '.'),
       },
       dedupe: ['react', 'react-dom'],
+    },
+    build: {
+      chunkSizeWarningLimit: 1200,
     },
     optimizeDeps: {
       include: ['react', 'react-dom', 'motion/react'],

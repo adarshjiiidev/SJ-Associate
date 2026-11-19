@@ -1,380 +1,360 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { AnimatePresence, motion, useInView } from "motion/react";
-import {
-  ArrowRight,
-  CheckCircle2,
-  FileCheck2,
-  Gavel,
-  Landmark,
-  Radar,
-  Scale,
-  ShieldCheck
-} from "lucide-react";
-import { Button } from "@/src/components/ui/button";
+import React, { useState, useEffect } from "react";
+import { CheckCircle2, Radar, Scale, Calculator, Briefcase } from "lucide-react";
 
-interface PracticeWorkflowShowcaseProps {
-  onOpenConsultation: () => void;
+interface WorkflowStage {
+  id: string;
+  step: string;
+  badgeSubtitle: string;
+  badgeTitle: string;
+  leftCardTitle: string;
+  leftCardSubtitle: string;
+  leftCardStatus: string;
+  centerHubTitle: string;
+  rightTopTitle: string;
+  rightTopSubtitle: string;
+  rightTopStatus: string;
+  rightMiddleTitle: string;
+  rightMiddleSubtitle: string;
+  rightMiddleStatus: string;
+  ctaTitle: string;
+  ctaDescription: string;
 }
 
-const STAGES = [
+const WORKFLOW_STAGES: WorkflowStage[] = [
   {
-    id: 0,
+    id: "gst-and-tax",
     step: "01",
-    label: "Tax & Corporate Scrutiny",
-    shortLabel: "01. Audit & Filing",
-    headline: "Statutory Audit, SCN Reply & Writ Filing",
-    summary:
-      "Every tax notice, GST return mismatch, Section 148 reassessment, or corporate petition is vetted line by line by Advocate Sanjay Kumar Singh—aligning financial computation with writ maintainability.",
-    metricLabel: "Statutory Scrutiny",
-    metricTarget: 100,
-    nodes: [
-      {
-        title: "GST & Income Tax Record Audit",
-        meta: "Delhi HC · ITAT · CESTAT Desk",
-        status: "Completed"
-      },
-      {
-        title: "Stay Against Coercive Recovery",
-        meta: "Article 226 / Bank Attachment Relief",
-        status: "Completed"
-      },
-      {
-        title: "Board Resolution & Paperbook",
-        meta: "e-Filing & NCLT Registry Standard",
-        status: "Completed"
-      }
-    ]
+    badgeSubtitle: "SECTION 01 · 6 GST & TAX SERVICES (40%)",
+    badgeTitle: "GST & Tax Practice Wing",
+    leftCardTitle: "GST Registration & Return Filing",
+    leftCardSubtitle: "REG-01/21 · GSTR-1, 3B, 2B & GSTR-9/9C",
+    leftCardStatus: "Active Desk",
+    centerHubTitle: "GST Registration, Returns, SCN & 3-Tier Appeals",
+    rightTopTitle: "SCN Reply & Commissioner Appeal",
+    rightTopSubtitle: "DRC-01 / Sec. 73–74 Replies · Sec. 107 APL-01",
+    rightTopStatus: "Active Watch",
+    rightMiddleTitle: "GSTAT Appeal & High Court Appeal",
+    rightMiddleSubtitle: "Sec. 112 GSTAT APL-05 · Art. 226 Tax Writs",
+    rightMiddleStatus: "Synced",
+    ctaTitle: "Direct GST & Appellate Desk",
+    ctaDescription:
+      "Registration, Return Filing, SCN Reply, GSTAT Appeal, Commissioner Appeal & High Court Appeal.",
   },
   {
-    id: 1,
+    id: "income-tax",
     step: "02",
-    label: "Tax & NCLT Benches",
-    shortLabel: "02. Benches",
-    headline: "High Courts, GSTAT & Tax Tribunals",
-    summary:
-      "Track connected corporate appeals, GST writ petitions, and tax orders across the Supreme Court, High Court of Delhi, GSTAT, and eleven regional High Courts.",
-    metricLabel: "13 Courts & Tribunals",
-    metricTarget: 13,
-    nodes: [
-      {
-        title: "Delhi High Court Tax Bench",
-        meta: "Sher Shah Road · GST & Corporate",
-        status: "Active Watch"
-      },
-      {
-        title: "Supreme Court & NCLAT Desk",
-        meta: "Tilak Marg · Tax SLPs & IBC",
-        status: "Active Watch"
-      },
-      {
-        title: "Chandigarh, Patna, Bombay & Regional HCs",
-        meta: "Connected Corporate Counsel",
-        status: "Synced"
-      }
-    ]
+    badgeSubtitle: "SECTION 02 · 4 INCOME TAX SERVICES (27%)",
+    badgeTitle: "Income Tax Practice Wing",
+    leftCardTitle: "Income Tax Return (ITR) Filing",
+    leftCardSubtitle: "ITR-1 to ITR-7 · Tax Audit & 26AS/AIS",
+    leftCardStatus: "Active Desk",
+    centerHubTitle: "ITR Filing, TDS Returns, Consultancy & Assessments",
+    rightTopTitle: "TDS Return Filing (24Q / 26Q / 27Q)",
+    rightTopSubtitle: "Quarterly Filings · Form 16/16A & TRACES",
+    rightTopStatus: "Active Watch",
+    rightMiddleTitle: "Income Tax Consultancy & Other Matters",
+    rightMiddleSubtitle: "Tax Planning · Sec. 143(3) Scrutiny · Sec. 148 & CIT(A)",
+    rightMiddleStatus: "Synced",
+    ctaTitle: "Direct Income Tax Desk",
+    ctaDescription:
+      "ITR Return Filing, TDS Return Filing, Income Tax Consultancy & Assessment Matters.",
   },
   {
-    id: 2,
+    id: "others-registrations",
     step: "03",
-    label: "Commercial Relief",
-    shortLabel: "03. Orders",
-    headline: "Quashed Demands & Board Closure",
-    summary:
-      "Focused oral submissions on statutory interpretation, certified copy collection, and clear post-order guidance for CFOs, tax teams, and company boards.",
-    metricLabel: "Corporate Resolution",
-    metricTarget: 100,
-    nodes: [
-      {
-        title: "Assessment & Demand Stays",
-        meta: "Grounded Tax & Corporate Precedents",
-        status: "Ready"
-      },
-      {
-        title: "Certified Copy & Audit Briefing",
-        meta: "Direct CFO & Board Reporting",
-        status: "Ready"
-      },
-      {
-        title: "Refund & Compliance Follow-Through",
-        meta: "Appellate Steps Mapped Cleanly",
-        status: "Ready"
-      }
-    ]
-  }
-] as const;
+    badgeSubtitle: "SECTION 03 · 5 REGISTRATION & ADVISORY SERVICES (33%)",
+    badgeTitle: "Others — Accounts, DGFT & Registrations",
+    leftCardTitle: "Accounting & Bookkeeping",
+    leftCardSubtitle: "Tally / Zoho Books · Trial Balance & Audit P&L",
+    leftCardStatus: "Active Desk",
+    centerHubTitle: "Accounting, DGFT Work, MSME, Trademark & Partnership",
+    rightTopTitle: "DGFT Work & MSME Registration",
+    rightTopSubtitle: "IEC Code · Advance Auth · EPCG · Udyam Certificate",
+    rightTopStatus: "Active Watch",
+    rightMiddleTitle: "Trademark & Partnership Firm Registration",
+    rightMiddleSubtitle: "TM-A Filing & Objections · Partnership Deed & ROF",
+    rightMiddleStatus: "Synced",
+    ctaTitle: "Registrations & DGFT Desk",
+    ctaDescription:
+      "Accounting & Bookkeeping, DGFT Work, MSME, Trademark & Partnership Firm Registration.",
+  },
+];
 
-export function PracticeWorkflowShowcase({
-  onOpenConsultation
-}: PracticeWorkflowShowcaseProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const inView = useInView(sectionRef, { once: true, amount: "some" });
-  const [activeStage, setActiveStage] = useState<0 | 1 | 2>(0);
-  const [paused, setPaused] = useState(false);
+interface PracticeWorkflowShowcaseProps {
+  onNavigatePractice?: () => void;
+  onNavigateCourts?: () => void;
+  onOpenConsultation?: (briefNote?: string) => void;
+}
+
+export const PracticeWorkflowShowcase: React.FC<PracticeWorkflowShowcaseProps> = ({
+  onNavigatePractice,
+  onOpenConsultation,
+}) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    if (!inView || paused) return;
-    const id = setInterval(() => {
-      setActiveStage((prev) => ((prev + 1) % 3) as 0 | 1 | 2);
-    }, 5200);
-    return () => clearInterval(id);
-  }, [inView, paused]);
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % WORKFLOW_STAGES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused]);
 
-  const current = STAGES[activeStage];
+  const stage = WORKFLOW_STAGES[activeIndex];
+
+  const handleConsultClick = () => {
+    if (onOpenConsultation) {
+      onOpenConsultation(`${stage.badgeTitle}: ${stage.ctaDescription}`);
+    } else if (onNavigatePractice) {
+      onNavigatePractice();
+    }
+  };
 
   return (
     <section
-      ref={sectionRef}
-      className="relative bg-[#F3FAFF] py-16 sm:py-24 border-y border-border overflow-hidden"
+      aria-label="Chambers Process and 3-Section Work Graph"
+      className="bg-[#F3FAFF] border-t border-border py-16 sm:py-20"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       <div className="mx-auto max-w-[1280px] px-5 sm:px-6 space-y-10">
-        {/* Top Row matching Video Frame Aesthetic */}
+        {/* Top Editorial Row (Exact Original Layout from r12-workflow-fixed.png) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-          <div className="lg:col-span-7 space-y-2">
+          <div className="lg:col-span-7 space-y-2.5">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#33566D]">
-              Chambers Process
+              CHAMBERS PROCESS · 3 SECTIONS OF WORK
             </p>
             <h2
-              className="text-4xl sm:text-5xl font-extrabold text-[#0A2536] leading-[0.98]"
+              className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0A2536] leading-[0.98]"
               style={{ textWrap: "balance" }}
             >
-              Corporate &amp; Tax Disputes.
-              <span className="block text-[#33566D]">Handled Methodically.</span>
+              Litigation, Tax &amp; Compliance.
+              <br />
+              Handled Methodically.
             </h2>
           </div>
-          <p className="lg:col-span-5 text-sm sm:text-base text-[#33566D] leading-relaxed">
-            Every business matter follows a disciplined chambers sequence—from Income Tax &amp; GST computation scrutiny to daily bench tracking across GSTAT, Delhi, and regional High Courts.
-          </p>
+          <div className="lg:col-span-5">
+            <p className="text-sm sm:text-base text-[#33566D] leading-relaxed">
+              Every matter across our three sections—<strong className="text-[#0A2536]">1. GST &amp; Tax</strong>, <strong className="text-[#0A2536]">2. Income Tax</strong>, and <strong className="text-[#0A2536]">3. Others (Accounting, DGFT, MSME, Trademark &amp; Partnership)</strong>—follows a disciplined chambers sequence across Delhi and regional tax offices &amp; courts.
+            </p>
+          </div>
         </div>
 
-        {/* Main Architectural Workflow Canvas */}
-        <div
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          className="relative rounded-[28px] border border-border bg-white shadow-sm overflow-hidden p-5 sm:p-8 lg:p-10"
-        >
-          {/* Subtle Concentric Blueprint Arcs Background */}
+        {/* Main White Hub Diagram Card (Exact Original Layout from r12-workflow-fixed.png) */}
+        <div className="relative rounded-[28px] border border-border bg-white p-6 sm:p-10 shadow-2xs overflow-hidden">
+          {/* Background Concentric Dashed Rings & Connector Curves */}
           <svg
+            viewBox="0 0 1000 460"
+            className="pointer-events-none absolute inset-0 h-full w-full opacity-45"
             aria-hidden="true"
-            viewBox="0 0 1200 520"
-            className="hidden lg:block pointer-events-none absolute inset-0 h-full w-full opacity-55"
           >
-            <circle cx="600" cy="260" r="145" fill="none" stroke="#D5E4ED" strokeWidth="1.2" />
-            <circle cx="600" cy="260" r="245" fill="none" stroke="#D5E4ED" strokeDasharray="6 6" strokeWidth="1.2" />
-            <circle cx="600" cy="260" r="355" fill="none" stroke="#E6F2F7" strokeWidth="1.2" />
-
-            {/* Animated dotted workflow paths radiating from central hub */}
-            <motion.path
-              key={`left-${activeStage}`}
-              d="M 455 240 C 370 240, 340 165, 270 165"
+            <circle
+              cx="500"
+              cy="220"
+              r="145"
+              fill="none"
+              stroke="#D5E4ED"
+              strokeWidth="1.5"
+              strokeDasharray="5 6"
+            />
+            <circle
+              cx="500"
+              cy="220"
+              r="205"
+              fill="none"
+              stroke="#D5E4ED"
+              strokeWidth="1.2"
+              strokeDasharray="4 7"
+            />
+            <circle
+              cx="500"
+              cy="220"
+              r="265"
+              fill="none"
+              stroke="#D5E4ED"
+              strokeWidth="1"
+              strokeDasharray="3 8"
+            />
+            {/* Left to Center Connectors */}
+            <path
+              d="M 290 155 C 350 185, 375 205, 405 210"
               fill="none"
               stroke="#33566D"
-              strokeWidth="1.75"
-              strokeDasharray="5 5"
-              initial={{ pathLength: 0, opacity: 0.3 }}
-              animate={{ pathLength: 1, opacity: 0.9 }}
-              transition={{ duration: 0.75, ease: "easeOut" }}
+              strokeWidth="1.5"
+              strokeOpacity="0.45"
             />
-            <motion.path
-              key={`bottom-left-${activeStage}`}
-              d="M 470 295 C 380 315, 345 365, 270 365"
+            <path
+              d="M 290 315 C 350 285, 375 255, 415 245"
               fill="none"
               stroke="#33566D"
-              strokeWidth="1.75"
-              strokeDasharray="5 5"
-              initial={{ pathLength: 0, opacity: 0.3 }}
-              animate={{ pathLength: 1, opacity: 0.9 }}
-              transition={{ duration: 0.85, delay: 0.08, ease: "easeOut" }}
+              strokeWidth="1.5"
+              strokeOpacity="0.45"
             />
-            <motion.path
-              key={`right-${activeStage}`}
-              d="M 745 255 C 830 255, 860 195, 925 195"
+            {/* Center to Right Connectors */}
+            <path
+              d="M 595 190 C 635 180, 665 155, 710 135"
               fill="none"
-              stroke="#0A2536"
-              strokeWidth="1.75"
-              strokeDasharray="5 5"
-              initial={{ pathLength: 0, opacity: 0.3 }}
-              animate={{ pathLength: 1, opacity: 0.95 }}
-              transition={{ duration: 0.8, delay: 0.12, ease: "easeOut" }}
+              stroke="#33566D"
+              strokeWidth="1.5"
+              strokeOpacity="0.45"
+            />
+            <path
+              d="M 595 235 C 635 235, 665 230, 710 225"
+              fill="none"
+              stroke="#33566D"
+              strokeWidth="1.5"
+              strokeOpacity="0.45"
             />
           </svg>
 
-          {/* Desktop Radial Layout matching Video Canvas */}
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-            {/* Left Checklist / Readiness Dial */}
-            <div className="lg:col-span-4 space-y-4">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`left-card-${activeStage}`}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.32 }}
-                  className="space-y-3"
-                >
-                  <div className="inline-flex items-center gap-3 rounded-2xl border border-[#0A2536]/15 bg-[#0A2536] px-4 py-3 text-[#F3FAFF] shadow-sm">
-                    <div className="relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#DAF6EF]/40 bg-[#33566D]/50 text-sm font-extrabold tabular-nums text-[#DAF6EF]">
-                      {current.step}
-                    </div>
-                    <div>
-                      <p className="text-[11px] uppercase tracking-[0.12em] text-[#DAF6EF]/80">
-                        {current.metricLabel}
-                      </p>
-                      <p className="text-sm font-bold text-[#F3FAFF]">{current.label}</p>
-                    </div>
-                  </div>
+          {/* 3-Column Hub Layout */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            {/* Left Column (4 cols) */}
+            <div className="lg:col-span-4 space-y-3.5">
+              {/* Dark Stage Badge Card */}
+              <div className="rounded-[20px] bg-[#0A2536] text-[#F3FAFF] p-4 flex items-center gap-3.5 shadow-sm">
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 text-sm font-bold tabular-nums">
+                  {stage.step}
+                </span>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#DAF6EF]">
+                    {stage.badgeSubtitle}
+                  </p>
+                  <p className="text-base font-extrabold text-white leading-snug">
+                    {stage.badgeTitle}
+                  </p>
+                </div>
+              </div>
 
-                  <div className="rounded-2xl border border-border bg-[#F3FAFF]/80 p-4 space-y-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-[#0A2536]">{current.nodes[0].title}</span>
-                      <span className="rounded-full bg-[#DAF6EF] px-2.5 py-0.5 text-[11px] font-bold text-[#0A2536]">
-                        {current.nodes[0].status}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#33566D]">{current.nodes[0].meta}</p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+              {/* Light Node Card */}
+              <div className="rounded-[20px] border border-border bg-[#F3FAFF]/80 p-4 flex items-center justify-between gap-3">
+                <div className="space-y-0.5">
+                  <p className="text-sm font-extrabold text-[#0A2536]">
+                    {stage.leftCardTitle}
+                  </p>
+                  <p className="text-xs text-[#33566D]">
+                    {stage.leftCardSubtitle}
+                  </p>
+                </div>
+                <span className="inline-flex items-center rounded-full bg-[#DAF6EF] px-3 py-1 text-[11px] font-bold text-[#0A2536] whitespace-nowrap">
+                  {stage.leftCardStatus}
+                </span>
+              </div>
             </div>
 
-            {/* Center Architectural Crest Node */}
-            <div className="lg:col-span-4 flex flex-col items-center justify-center text-center py-4 lg:py-8">
-              <motion.div
-                key={`hub-${activeStage}`}
-                initial={{ scale: 0.94, opacity: 0.7 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="relative flex flex-col items-center gap-3 rounded-full border border-border bg-white p-7 sm:p-8 shadow-md max-w-[260px]"
-              >
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#DAF6EF] text-[#0A2536]">
-                  {activeStage === 0 ? (
-                    <FileCheck2 className="h-7 w-7" aria-hidden="true" />
-                  ) : activeStage === 1 ? (
-                    <Radar className="h-7 w-7" aria-hidden="true" />
+            {/* Center Hub Circle (4 cols) */}
+            <div className="lg:col-span-4 flex items-center justify-center py-4">
+              <div className="mx-auto w-60 h-60 sm:w-68 sm:h-68 rounded-full border border-border bg-white shadow-md flex flex-col items-center justify-center p-6 text-center gap-2.5">
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#DAF6EF] text-[#0A2536]">
+                  {activeIndex === 0 ? (
+                    <Scale className="h-6 w-6" aria-hidden="true" />
+                  ) : activeIndex === 1 ? (
+                    <Calculator className="h-6 w-6" aria-hidden="true" />
                   ) : (
-                    <Gavel className="h-7 w-7" aria-hidden="true" />
+                    <Briefcase className="h-6 w-6" aria-hidden="true" />
                   )}
-                </div>
-                <div className="space-y-1">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#0A2536] px-3 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#DAF6EF]">
-                    <Scale className="h-3 w-3" aria-hidden="true" />
-                    SJ Associates
-                  </span>
-                  <h3 className="text-2xl font-extrabold text-[#0A2536] leading-tight pt-1">
-                    {current.headline}
-                  </h3>
-                </div>
-              </motion.div>
+                </span>
+
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0A2536] px-3 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#F3FAFF]">
+                  <Radar className="h-3 w-3 text-[#DAF6EF]" aria-hidden="true" />
+                  SJ ASSOCIATES
+                </span>
+
+                <h3 className="text-xl sm:text-2xl font-extrabold text-[#0A2536] leading-tight px-2">
+                  {stage.centerHubTitle}
+                </h3>
+              </div>
             </div>
 
-            {/* Right Status Cards */}
-            <div className="lg:col-span-4 space-y-3">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`right-cards-${activeStage}`}
-                  initial={{ opacity: 0, x: 16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -16 }}
-                  transition={{ duration: 0.35 }}
-                  className="space-y-3"
-                >
-                  {current.nodes.slice(1).map((node, i) => (
-                    <div
-                      key={node.title}
-                      className="rounded-2xl border border-border bg-white p-4 shadow-xs space-y-2"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle2
-                            className="h-4 w-4 text-[#33566D] shrink-0"
-                            aria-hidden="true"
-                          />
-                          <p className="text-sm font-bold text-[#0A2536] leading-snug">
-                            {node.title}
-                          </p>
-                        </div>
-                        <span
-                          className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold whitespace-nowrap ${
-                            i === 0
-                              ? "bg-[#DAF6EF] text-[#0A2536]"
-                              : "bg-[#F3FAFF] text-[#33566D] border border-border"
-                          }`}
-                        >
-                          {node.status}
-                        </span>
-                      </div>
-                      <p className="text-xs text-[#33566D]">{node.meta}</p>
-                    </div>
-                  ))}
+            {/* Right Column (4 cols) */}
+            <div className="lg:col-span-4 space-y-3.5">
+              {/* Top Right Node Card */}
+              <div className="rounded-[20px] border border-border bg-white p-4 flex items-center justify-between gap-3 shadow-2xs">
+                <div className="space-y-0.5">
+                  <p className="text-sm font-extrabold text-[#0A2536] flex items-center gap-1.5">
+                    <CheckCircle2
+                      className="h-4 w-4 text-[#33566D] shrink-0"
+                      aria-hidden="true"
+                    />
+                    <span>{stage.rightTopTitle}</span>
+                  </p>
+                  <p className="text-xs text-[#33566D] pl-5.5">
+                    {stage.rightTopSubtitle}
+                  </p>
+                </div>
+                <span className="inline-flex items-center rounded-full bg-[#DAF6EF] px-3 py-1 text-[11px] font-bold text-[#0A2536] whitespace-nowrap">
+                  {stage.rightTopStatus}
+                </span>
+              </div>
 
-                  <div className="rounded-2xl border border-border bg-[#0A2536] p-4 text-[#F3FAFF] flex items-center justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="text-xs text-[#DAF6EF] font-semibold">
-                        Direct Chambers Desk
-                      </p>
-                      <p className="text-xs text-[#F3FAFF]/80 line-clamp-2 leading-relaxed">
-                        {current.summary}
-                      </p>
-                    </div>
-                    <Button
-                      type="button"
-                      size="sm"
-                      onClick={onOpenConsultation}
-                      className="rounded-full bg-[#DAF6EF] text-[#0A2536] hover:bg-white shrink-0"
-                    >
-                      Consult
-                    </Button>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+              {/* Middle Right Node Card */}
+              <div className="rounded-[20px] border border-border bg-white p-4 flex items-center justify-between gap-3 shadow-2xs">
+                <div className="space-y-0.5">
+                  <p className="text-sm font-extrabold text-[#0A2536] flex items-center gap-1.5">
+                    <CheckCircle2
+                      className="h-4 w-4 text-[#33566D] shrink-0"
+                      aria-hidden="true"
+                    />
+                    <span>{stage.rightMiddleTitle}</span>
+                  </p>
+                  <p className="text-xs text-[#33566D] pl-5.5">
+                    {stage.rightMiddleSubtitle}
+                  </p>
+                </div>
+                <span className="inline-flex items-center rounded-full border border-border bg-[#F3FAFF] px-3 py-1 text-[11px] font-semibold text-[#33566D] whitespace-nowrap">
+                  {stage.rightMiddleStatus}
+                </span>
+              </div>
+
+              {/* Bottom Right Dark CTA Card */}
+              <div className="rounded-[20px] bg-[#0A2536] text-[#F3FAFF] p-4 flex items-center justify-between gap-3 shadow-sm">
+                <div className="space-y-0.5">
+                  <p className="text-xs font-extrabold text-white">
+                    {stage.ctaTitle}
+                  </p>
+                  <p className="text-[11px] text-[#F3FAFF]/80 leading-snug line-clamp-2">
+                    {stage.ctaDescription}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleConsultClick}
+                  className="rounded-full bg-[#DAF6EF] px-4 py-2 text-xs font-bold text-[#0A2536] hover:bg-white transition-colors shrink-0 cursor-pointer"
+                >
+                  Consult
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Interactive Stage Switcher Bar (matching Bottom Timeline in Reference Video) */}
-          <div className="mt-8 pt-6 border-t border-border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-            <div
-              className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0"
-              role="tablist"
-              aria-label="Chambers workflow stages"
-            >
-              {STAGES.map((stage, idx) => {
-                const isActive = activeStage === idx;
+          {/* Bottom Stage Switcher Bar */}
+          <div className="relative z-10 mt-8 pt-6 border-t border-border flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {WORKFLOW_STAGES.map((item, idx) => {
+                const isActive = activeIndex === idx;
                 return (
                   <button
-                    key={stage.id}
+                    key={item.id}
                     type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => {
-                      setPaused(true);
-                      setActiveStage(idx as 0 | 1 | 2);
-                    }}
-                    className={`relative min-h-[42px] px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer flex items-center gap-2 ${
+                    onClick={() => setActiveIndex(idx)}
+                    className={`min-h-[38px] rounded-full px-4 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                       isActive
-                        ? "bg-[#0A2536] text-[#F3FAFF] shadow-xs"
-                        : "bg-[#F3FAFF] text-[#33566D] hover:bg-[#DAF6EF]/70 border border-border"
+                        ? "bg-[#0A2536] text-[#F3FAFF]"
+                        : "border border-border bg-[#F3FAFF] text-[#33566D] hover:bg-[#DAF6EF]/50 hover:text-[#0A2536]"
                     }`}
                   >
-                    <span>{stage.shortLabel}</span>
-                    {isActive && (
-                      <ArrowRight className="h-3.5 w-3.5 text-[#DAF6EF]" aria-hidden="true" />
-                    )}
+                    {item.step} · {item.badgeTitle}
                   </button>
                 );
               })}
             </div>
-
-            <Link
-              to="/courts"
-              className="inline-flex items-center justify-center sm:justify-end gap-2 text-xs font-bold uppercase tracking-[0.08em] text-[#0A2536] hover:text-[#33566D] transition-colors min-h-[40px]"
-            >
-              <Landmark className="h-4 w-4 text-[#33566D]" aria-hidden="true" />
-              Open 13 Live Courts &amp; GSTAT
-              <ShieldCheck className="h-4 w-4 text-[#33566D]" aria-hidden="true" />
-            </Link>
+            <span className="text-xs text-[#33566D] tabular-nums">
+              Section {stage.step} of 03 · 15 Services Total
+            </span>
           </div>
         </div>
       </div>
     </section>
   );
-}
+};

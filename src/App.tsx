@@ -27,11 +27,11 @@ import { ContactPage } from "@/src/pages/ContactPage";
 import { MailPage } from "@/src/pages/MailPage";
 
 const ROUTE_TITLES: Record<string, string> = {
-  "/": "SJ Associates | Advocate Sanjay Kumar Singh — Corporate & Tax Law Chambers",
+  "/": "SJ Associates | Advocate Sanjay Kumar Singh — GST, Income Tax & Appellate Chambers",
   "/courts": "Live Supreme Court, GSTAT & High Court Reports | SJ Associates",
-  "/practice": "Corporate & Tax Practice Areas | SJ Associates — Advocate Sanjay Kumar Singh",
-  "/about": "Advocate Sanjay Kumar Singh | Corporate & Tax Counsel — SJ Associates",
-  "/contact": "Contact Chambers | SJ Associates — New Delhi, Mumbai & Bengaluru",
+  "/practice": "GST & Tax, Income Tax & Registrations Practice | SJ Associates",
+  "/about": "Advocate Sanjay Kumar Singh | GST, Income Tax & Appellate Counsel — SJ Associates",
+  "/contact": "Contact Chambers & Tax Offices | SJ Associates — New Delhi & Regional Seats",
   "/mail": "Chambers Webmail | SJ Associates (services@sjalaw.in)"
 };
 
@@ -181,9 +181,9 @@ function AppShell() {
       <Dialog open={consultOpen} onOpenChange={setConsultOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Schedule a Corporate &amp; Tax Consultation</DialogTitle>
+            <DialogTitle>Schedule a GST, Income Tax &amp; Legal Consultation</DialogTitle>
             <DialogDescription>
-              Share a short overview of your GST, income tax, GSTAT, business setup, or corporate matter to arrange a chambers briefing with Advocate Sanjay Kumar Singh.
+              Share a short overview of your GST &amp; Tax, Income Tax, GSTAT/High Court appeal, DGFT, MSME, Trademark, or Partnership matter to arrange a chambers briefing with Advocate Sanjay Kumar Singh.
             </DialogDescription>
           </DialogHeader>
           <ConsultationForm

@@ -1,542 +1,263 @@
 import express from "express";
-import { GoogleGenAI } from "@google/genai";
 import {
   COURTS_REGISTRY,
-  buildArchiveFallbackReport,
-  buildLiveReportFromRss,
   getCourtBySlug,
-  inferCategoryFromHeadline,
-  parseCourtReportResponse,
   parseRssItemsFromXml,
+  buildLiveReportFromRss,
+  buildArchiveFallbackReport,
   validateConsultationInput,
   type CourtProfile,
-  type GroundingSource,
-  type LiveCourtReport
+  type LiveCourtReport,
+  type ConsultationPayload,
 } from "../data/courtsRegistry";
 import {
   createMailRouter,
-  forwardConsultationEmailIfConfigured
+  forwardConsultationEmailIfConfigured,
 } from "./mailRoutes";
-
-const CACHE_TTL_MS = 15 * 60 * 1000;
-let geminiQuotaCooldownUntil = 0;
 
 interface CacheEntry<T> {
   data: T;
   expiresAt: number;
 }
 
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 const courtReportCache = new Map<string, CacheEntry<LiveCourtReport>>();
-let crossCourtFeedCache: CacheEntry<{
-  fetchedAt: string;
-  items: Array<{
-    courtSlug: string;
-    courtName: string;
-    title: string;
-    citation: string;
-    date: string;
-    category: string;
-    summary: string;
-    sourceUrl?: string;
-  }>;
-  sources: GroundingSource[];
-}> | null = null;
+let crossCourtFeedCache: CacheEntry<CrossCourtFeedItem[]> | null = null;
+const consultationLog: Array<ConsultationPayload & { id: string; createdAt: string }> = [];
 
-interface StoredConsultation {
-  referenceId: string;
-  submittedAt: string;
-  fullName: string;
-  email: string;
-  phone: string;
+export interface CrossCourtFeedItem {
+  id: string;
   courtSlug: string;
-  practiceArea: string;
-  briefSummary: string;
+  courtId: string;
+  courtName: string;
+  courtShortName: string;
+  title: string;
+  date: string;
+  dateLabel: string;
+  category: string;
+  summary: string;
+  sourceUrl?: string;
 }
 
-const consultationsLog: StoredConsultation[] = [];
-
-function createAiClient(): GoogleGenAI | null {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey || apiKey === "MY_GEMINI_API_KEY") {
-    return null;
-  }
-  if (Date.now() < geminiQuotaCooldownUntil) {
-    return null;
-  }
-  return new GoogleGenAI({
-    apiKey,
-    httpOptions: {
-      headers: {
-        "User-Agent": "aistudio-build"
-      }
-    }
-  });
-}
-
-function markGeminiQuotaCooldownIfNeeded(err: unknown): void {
-  const text = err instanceof Error ? `${err.name} ${err.message}` : String(err ?? "");
-  if (
-    text.includes("429") ||
-    text.includes("RESOURCE_EXHAUSTED") ||
-    text.toLowerCase().includes("quota") ||
-    text.toLowerCase().includes("rate")
-  ) {
-    geminiQuotaCooldownUntil = Date.now() + CACHE_TTL_MS;
-  }
-}
-
-function extractGroundingSources(response: unknown): GroundingSource[] {
-  const resp = response as {
-    candidates?: Array<{
-      groundingMetadata?: {
-        groundingChunks?: Array<{
-          web?: { uri?: string; title?: string };
-        }>;
-      };
-    }>;
-  };
-  const chunks = resp?.candidates?.[0]?.groundingMetadata?.groundingChunks ?? [];
-  const seen = new Set<string>();
-  const sources: GroundingSource[] = [];
-
-  for (const chunk of chunks) {
-    const uri = chunk?.web?.uri;
-    const title = chunk?.web?.title;
-    if (uri && uri.startsWith("http") && !seen.has(uri)) {
-      seen.add(uri);
-      sources.push({
-        uri,
-        title: title?.trim() || new URL(uri).hostname
-      });
-    }
-  }
-  return sources;
-}
-
-function buildCourtSearchQuery(court: CourtProfile): string {
-  switch (court.slug) {
-    case "supreme-court-of-india":
-      return '"Supreme Court of India"';
-    case "gstat":
-      return '"GST Appellate Tribunal" OR GSTAT';
-    case "punjab-haryana-high-court":
-      return '"Punjab and Haryana High Court"';
-    case "calcutta-high-court":
-      return '"Calcutta High Court"';
-    case "gujarat-high-court":
-      return '"Gujarat High Court"';
-    case "karnataka-high-court":
-      return '"Karnataka High Court"';
-    case "rajasthan-high-court":
-      return '"Rajasthan High Court"';
-    case "telangana-high-court":
-      return '"Telangana High Court"';
-    default:
-      return `"${court.shortName}"`;
-  }
-}
-
-async function fetchRssXml(url: string): Promise<string | null> {
+async function fetchRssXml(url: string): Promise<string> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 7000);
   try {
-    const resp = await fetch(url, {
+    const res = await fetch(url, {
+      signal: controller.signal,
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+        "User-Agent": "Mozilla/5.0 (compatible; SJALawChambers/1.0)",
+        Accept: "application/rss+xml, application/xml, text/xml",
       },
-      signal: AbortSignal.timeout(6500)
     });
-    if (!resp.ok) return null;
-    return await resp.text();
+    if (!res.ok) return "";
+    return await res.text();
   } catch {
-    return null;
+    return "";
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
-async function fetchGoogleNewsRss(query: string, limit = 6) {
-  const sortedBingUrl = `https://www.bing.com/news/search?q=${encodeURIComponent(
-    query
-  )}&qft=sortbydate%3d%221%22&format=rss`;
-  const googleNewsUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(
+async function fetchCourtNewsRssItems(court: CourtProfile, limit = 8) {
+  const query =
+    court.slug === "gstat"
+      ? `"GSTAT" OR "GST Appellate Tribunal" GST appeal notice ruling`
+      : `"${court.name}" judgment OR order OR GST OR tax OR bench`;
+
+  const googleUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(
     query
   )}&hl=en-IN&gl=IN&ceid=IN:en`;
-  const fallbackBingUrl = `https://www.bing.com/news/search?q=${encodeURIComponent(
-    query
-  )}&format=rss`;
-
-  const candidates = [sortedBingUrl, googleNewsUrl, fallbackBingUrl];
-  for (const url of candidates) {
-    const xml = await fetchRssXml(url);
-    if (!xml) continue;
-    const parsed = parseRssItemsFromXml(xml, limit);
-    if (parsed.length > 0) {
-      return parsed;
-    }
+  const googleXml = await fetchRssXml(googleUrl);
+  if (googleXml) {
+    const parsed = parseRssItemsFromXml(googleXml, limit);
+    if (parsed.length > 0) return parsed;
   }
 
+  const bingUrl = `https://www.bing.com/news/search?q=${encodeURIComponent(
+    query
+  )}&format=rss`;
+  const bingXml = await fetchRssXml(bingUrl);
+  if (bingXml) {
+    return parseRssItemsFromXml(bingXml, limit);
+  }
   return [];
 }
 
 async function fetchLiveCourtReport(court: CourtProfile): Promise<LiveCourtReport> {
-  const nowIso = new Date().toISOString();
-  const queryLabel = buildCourtSearchQuery(court);
-  const rssItems = await fetchGoogleNewsRss(queryLabel, 6);
-  if (rssItems.length > 0) {
-    return buildLiveReportFromRss(court, rssItems, nowIso);
+  const cached = courtReportCache.get(court.slug);
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.data;
   }
 
-  const ai = createAiClient();
-  if (ai) {
-    try {
-      const today = nowIso.slice(0, 10);
-      const prompt = `Today's date is ${today}. Use Google Search to retrieve the latest real-time judicial updates, recent landmark rulings, notable orders, bench rosters, and registry/cause-list notices for the **${court.name}** (${court.city}, India).
+  const nowIso = new Date().toISOString();
 
-Return ONLY a valid JSON object wrapped in \`\`\`json ... \`\`\` matching this exact structure (no markdown commentary outside the JSON fence):
-{
-  "overviewSummary": "2-sentence editorial summary of recent judicial activity and key matters before ${court.name}.",
-  "sittingStatus": "Current sitting status (e.g., Regular Sitting / Bench Roster Active / Cause List Published)",
-  "chiefJusticeNote": "Current Chief Justice / Bench leadership & principal seat note for ${court.name}.",
-  "rulings": [
-    {
-      "title": "Concise legal headline summarizing the holding",
-      "caseNameOrCitation": "Case title, writ/appeal number, or neutral citation",
-      "date": "Month DD, YYYY or Month YYYY",
-      "category": "One of: Constitutional | Tax & Corporate | Commercial & Arbitration | Criminal | Civil & Property",
-      "bench": "Bench composition (e.g., Division Bench / Constitutional Bench / Single Judge)",
-      "statutes": ["Key Act or Constitutional Article 1", "Key Section 2"],
-      "holdingSummary": "2-3 sentence legal holding explaining what the court held and why.",
-      "practicalTakeaway": "1 concise sentence on practical litigation or compliance impact for counsel and clients.",
-      "sourceUrl": "Optional verified source URL if found in search"
-    }
-  ],
-  "registryNotices": [
-    {
-      "title": "Recent practice direction, cause list update, or registry circular",
-      "date": "Month DD, YYYY or Month YYYY",
-      "type": "One of: Circular | Cause List | Practice Direction | Bench Roster",
-      "summary": "1-2 sentence summary of the registry update or e-filing/cause list notice."
-    }
-  ]
-}
-
-Provide 4 to 6 real, recent rulings from ${court.name} and 2 to 4 registry/cause-list notices grounded in current search results. Ensure every detail reflects actual public court reports.`;
-
-      const response = await ai.models.generateContent({
-        model: "gemini-4-hydrogen",
-        contents: prompt,
-        config: {
-          systemInstruction:
-            "You are a senior Indian judicial research editor preparing authoritative legal alerts strictly grounded in verified Google Search results. Never fabricate case numbers or dates.",
-          tools: [{ googleSearch: {} }]
-        }
-      });
-
-      const text = response.text ?? "";
-      const sources = extractGroundingSources(response);
-      return parseCourtReportResponse(court, text, sources, nowIso);
-    } catch (err) {
-      markGeminiQuotaCooldownIfNeeded(err);
-    }
+  // Direct Live RSS without AI credit usage
+  const rssItems = await fetchCourtNewsRssItems(court, 8);
+  if (rssItems.length >= 2) {
+    const rssReport = buildLiveReportFromRss(court, rssItems, nowIso);
+    courtReportCache.set(court.slug, {
+      data: rssReport,
+      expiresAt: Date.now() + CACHE_TTL_MS,
+    });
+    return rssReport;
   }
 
-  return buildArchiveFallbackReport(court, nowIso);
+  const fallback = buildArchiveFallbackReport(court, nowIso);
+  courtReportCache.set(court.slug, {
+    data: fallback,
+    expiresAt: Date.now() + 5 * 60 * 1000,
+  });
+  return fallback;
 }
 
-async function fetchCrossCourtBriefings() {
-  const nowIso = new Date().toISOString();
-  const feedSettled = await Promise.allSettled(
-    COURTS_REGISTRY.map(async (court) => {
-      const entries = await fetchGoogleNewsRss(buildCourtSearchQuery(court), 1);
-      return entries.slice(0, 1).map((entry) => ({
-        courtSlug: court.slug,
-        courtName: court.name,
-        title: entry.title,
-        citation: `${entry.sourceName} · Verified Dispatch`,
-        date: entry.pubDate,
-        category: inferCategoryFromHeadline(entry.title),
-        summary:
-          entry.snippet && entry.snippet !== entry.title && entry.snippet.length > 35
-            ? entry.snippet
-            : `Reported before ${court.name}: ${entry.title}. Open the dedicated ${court.shortName} report for full live updates and registry portals.`,
-        sourceUrl: entry.link
-      }));
-    })
+async function fetchCrossCourtBriefings(): Promise<CrossCourtFeedItem[]> {
+  if (crossCourtFeedCache && crossCourtFeedCache.expiresAt > Date.now()) {
+    return crossCourtFeedCache.data;
+  }
+
+  const targetCourts = COURTS_REGISTRY.slice(0, 6);
+  const reports = await Promise.all(
+    targetCourts.map((court) => fetchLiveCourtReport(court))
   );
 
-  const rssItems = feedSettled
-    .flatMap((res) => (res.status === "fulfilled" ? res.value : []))
-    .slice(0, 13);
-
-  if (rssItems.length > 0) {
-    const sources: GroundingSource[] = rssItems
-      .filter((i) => i.sourceUrl)
-      .map((i) => ({ title: i.title, uri: i.sourceUrl! }));
-
-    return {
-      fetchedAt: nowIso,
-      items: rssItems,
-      sources
-    };
-  }
-
-  const ai = createAiClient();
-  if (ai) {
-    try {
-      const today = nowIso.slice(0, 10);
-      const prompt = `Today's date is ${today}. Search for the latest major judgments, rulings, and notices across the Supreme Court of India, GST Appellate Tribunal (GSTAT), and Indian High Courts (such as Delhi High Court, Punjab and Haryana High Court at Chandigarh, Patna High Court, Bombay High Court, Madras High Court, Calcutta High Court, Karnataka High Court, Allahabad High Court, Gujarat High Court, Rajasthan High Court, Telangana High Court).
-
-Return ONLY a valid JSON object inside \`\`\`json ... \`\`\` with:
-{
-  "items": [
-    {
-      "courtSlug": "One of: supreme-court-of-india | gstat | delhi-high-court | bombay-high-court | punjab-haryana-high-court | patna-high-court | madras-high-court | calcutta-high-court | karnataka-high-court | allahabad-high-court | gujarat-high-court | rajasthan-high-court | telangana-high-court",
-      "courtName": "Official Court or Tribunal Name",
-      "title": "Editorial legal headline of the ruling",
-      "citation": "Case title or citation",
-      "date": "Month DD, YYYY",
-      "category": "Constitutional | Tax & Corporate | Commercial & Arbitration | Criminal | Civil & Property",
-      "summary": "2-sentence summary of the holding.",
-      "sourceUrl": "Optional URL"
-    }
-  ]
-}
-Include 6 recent items spanning the Supreme Court, GSTAT, and High Courts including Delhi, Chandigarh (Punjab and Haryana HC), and Patna High Court when relevant.`;
-
-      const response = await ai.models.generateContent({
-        model: "gemini-4-hydrogen",
-        contents: prompt,
-        config: {
-          systemInstruction:
-            "You are a senior Indian appellate legal editor. Output strictly grounded, accurate recent rulings in clean JSON.",
-          tools: [{ googleSearch: {} }]
-        }
+  const feedItems: CrossCourtFeedItem[] = [];
+  for (let i = 0; i < targetCourts.length; i++) {
+    const court = targetCourts[i];
+    const report = reports[i];
+    const topRuling = report.rulings[0];
+    if (topRuling) {
+      feedItems.push({
+        id: `${court.slug}-feed-${i + 1}`,
+        courtSlug: court.slug,
+        courtId: court.slug,
+        courtName: court.name,
+        courtShortName: court.shortName,
+        title: topRuling.title,
+        date: topRuling.date,
+        dateLabel: topRuling.date,
+        category: topRuling.category,
+        summary: topRuling.holdingSummary,
+        sourceUrl: topRuling.sourceUrl || court.officialUrl,
       });
-
-      const sources = extractGroundingSources(response);
-      const rawText = (response.text ?? "").trim();
-      const fenced = rawText.match(/```(?:json)?\s*([\s\S]*?)```/i);
-      const jsonText = fenced ? fenced[1].trim() : rawText;
-      const parsed = JSON.parse(jsonText) as {
-        items?: Array<Record<string, unknown>>;
-      };
-
-      const validSlugs = new Set(COURTS_REGISTRY.map((c) => c.slug));
-      const items = (parsed.items ?? []).slice(0, 6).map((item, idx) => {
-        const rawSlug = String(item.courtSlug ?? "supreme-court-of-india");
-        const slug = validSlugs.has(rawSlug as CourtProfile["slug"])
-          ? rawSlug
-          : "supreme-court-of-india";
-        const court = getCourtBySlug(slug)!;
-        return {
-          courtSlug: slug,
-          courtName: String(item.courtName ?? court.name),
-          title: String(item.title ?? "Recent Judicial Pronouncement"),
-          citation: String(item.citation ?? `${court.shortName} Order`),
-          date: String(item.date ?? "Recent"),
-          category: String(item.category ?? "Constitutional"),
-          summary: String(item.summary ?? ""),
-          sourceUrl:
-            typeof item.sourceUrl === "string" && item.sourceUrl.startsWith("http")
-              ? item.sourceUrl
-              : sources[idx]?.uri
-        };
-      });
-
-      if (items.length > 0) {
-        return {
-          fetchedAt: nowIso,
-          items,
-          sources: sources.slice(0, 8)
-        };
-      }
-    } catch (err) {
-      markGeminiQuotaCooldownIfNeeded(err);
     }
   }
 
-  const formattedDate = new Date(nowIso).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  });
-  const fallbackItems = COURTS_REGISTRY.slice(0, 6).map((court) => ({
-    courtSlug: court.slug,
-    courtName: court.name,
-    title: `${court.shortName} Appellate & Tax Registry Updates`,
-    citation: `${court.shortName} · Official Registry`,
-    date: formattedDate,
-    category: "Tax & Corporate",
-    summary: `${court.summary} ${court.chambersPracticeNote}`,
-    sourceUrl: court.officialUrl
-  }));
-
-  return {
-    fetchedAt: nowIso,
-    items: fallbackItems,
-    sources: fallbackItems.map((i) => ({ title: i.courtName, uri: i.sourceUrl }))
+  crossCourtFeedCache = {
+    data: feedItems,
+    expiresAt: Date.now() + CACHE_TTL_MS,
   };
+  return feedItems;
 }
 
 export function createApiApp(): express.Express {
   const app = express();
-  app.disable("x-powered-by");
+  app.set("trust proxy", 1);
+  app.use(express.json());
 
-  app.use((_req, res, next) => {
-    res.setHeader("X-Content-Type-Options", "nosniff");
-    res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  // Normalize Vercel serverless rewrite paths (/api/(.*) -> /api/index)
+  app.use((req, _res, next) => {
+    if (
+      req.url.startsWith("/mail") ||
+      req.url.startsWith("/courts") ||
+      req.url.startsWith("/consultations") ||
+      req.url.startsWith("/health")
+    ) {
+      req.url = `/api${req.url}`;
+    }
     next();
   });
 
-  app.use(express.json({ limit: "64kb" }));
-
-  app.use(
-    (
-      err: unknown,
-      _req: express.Request,
-      res: express.Response,
-      next: express.NextFunction
-    ) => {
-      if (err instanceof SyntaxError && "body" in err) {
-        return res.status(400).json({
-          error: "Invalid JSON payload.",
-          code: "INVALID_JSON"
-        });
-      }
-      return next(err);
-    }
-  );
+  // Mount Chambers Webmail & IMAP/SMTP routes
+  const mailRouter = createMailRouter();
+  app.use("/api/mail", mailRouter);
+  app.use("/mail", mailRouter);
 
   app.get("/api/health", (_req, res) => {
     res.json({
       status: "ok",
-      timestamp: new Date().toISOString(),
-      uptimeSeconds: Math.round(process.uptime()),
-      courtsIndexed: COURTS_REGISTRY.length,
-      liveAiConfigured: Boolean(createAiClient())
+      liveRssConfigured: true,
+      aiCreditsUsed: 0,
+      courtsCount: COURTS_REGISTRY.length,
     });
   });
 
   app.get("/api/courts", (_req, res) => {
-    res.json({ courts: COURTS_REGISTRY });
-  });
-
-  app.get("/api/courts/briefings/latest", async (req, res) => {
-    const forceRefresh = req.query.refresh === "1";
-    const now = Date.now();
-    if (!forceRefresh && crossCourtFeedCache && crossCourtFeedCache.expiresAt > now) {
-      return res.json(crossCourtFeedCache.data);
-    }
-
-    try {
-      const data = await fetchCrossCourtBriefings();
-      crossCourtFeedCache = {
-        data,
-        expiresAt: now + CACHE_TTL_MS
-      };
-      return res.json(data);
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Failed to fetch live cross-court briefings.";
-      return res.status(502).json({
-        error: message,
-        code: "LIVE_BRIEFINGS_UNAVAILABLE"
-      });
-    }
-  });
-
-  app.get("/api/courts/:slug/live", async (req, res) => {
-    const { slug } = req.params;
-    const court = getCourtBySlug(slug);
-    if (!court) {
-      return res.status(404).json({
-        error: `Court '${slug}' was not found in the constitutional registry.`,
-        code: "COURT_NOT_FOUND"
-      });
-    }
-
-    const forceRefresh = req.query.refresh === "1";
-    const now = Date.now();
-    const cached = courtReportCache.get(slug);
-
-    if (!forceRefresh && cached && cached.expiresAt > now) {
-      return res.json({
-        ...cached.data,
-        cached: true
-      });
-    }
-
-    try {
-      const report = await fetchLiveCourtReport(court);
-      courtReportCache.set(slug, {
-        data: report,
-        expiresAt: now + CACHE_TTL_MS
-      });
-      return res.json({
-        ...report,
-        cached: false
-      });
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : `Unable to retrieve live judicial report for ${court.name}.`;
-      return res.status(502).json({
-        error: message,
-        code: "COURT_LIVE_FETCH_FAILED"
-      });
-    }
-  });
-
-  app.post("/api/consultations", async (req, res) => {
-    const payload = req.body ?? {};
-    const validation = validateConsultationInput(payload);
-    if (!validation.valid) {
-      return res.status(400).json({
-        error: "Please correct the highlighted fields before submitting.",
-        errors: validation.errors
-      });
-    }
-
-    const referenceId = `SJA-${new Date().getFullYear()}-${String(
-      1001 + consultationsLog.length
-    ).padStart(4, "0")}`;
-
-    const entry: StoredConsultation = {
-      referenceId,
-      submittedAt: new Date().toISOString(),
-      fullName: String(payload.fullName).trim(),
-      email: String(payload.email).trim(),
-      phone: String(payload.phone).trim(),
-      courtSlug: String(payload.courtSlug || "delhi-high-court"),
-      practiceArea: String(payload.practiceArea).trim(),
-      briefSummary: String(payload.briefSummary).trim()
-    };
-
-    if (consultationsLog.length >= 500) {
-      consultationsLog.shift();
-    }
-    consultationsLog.push(entry);
-
-    let emailForwarded = false;
-    try {
-      emailForwarded = await forwardConsultationEmailIfConfigured(entry);
-    } catch {
-      emailForwarded = false;
-    }
-
-    return res.status(201).json({
-      referenceId: entry.referenceId,
-      submittedAt: entry.submittedAt,
-      emailForwarded,
-      message: "Your briefing request has been logged with the SJ Associates Chambers Desk."
+    res.json({
+      courts: COURTS_REGISTRY,
     });
   });
 
-  app.use("/api/mail", createMailRouter());
+  app.get("/api/courts/live-feed", async (_req, res) => {
+    try {
+      const briefings = await fetchCrossCourtBriefings();
+      res.json({ briefings, items: briefings });
+    } catch {
+      res.status(500).json({ error: "Failed to load cross-court briefings" });
+    }
+  });
 
-  app.use("/api/*", (req, res) => {
-    res.status(404).json({
-      error: `API route '${req.originalUrl}' was not found.`,
-      code: "API_NOT_FOUND"
+  const handleCourtLiveReport = async (req: express.Request, res: express.Response) => {
+    const slug = req.params.slug || req.params.courtId;
+    const court = getCourtBySlug(slug);
+    if (!court) {
+      res.status(404).json({ error: "Court not found in chambers registry" });
+      return;
+    }
+
+    if (req.query.refresh === "true" || req.query.refresh === "1") {
+      courtReportCache.delete(court.slug);
+    }
+
+    const report = await fetchLiveCourtReport(court);
+    res.json({ court, report, ...report });
+  };
+
+  app.get("/api/courts/:slug/report", handleCourtLiveReport);
+  app.get("/api/courts/:slug/live", handleCourtLiveReport);
+  app.get("/api/courts/:slug/live-updates", handleCourtLiveReport);
+
+  app.post("/api/consultations", async (req, res) => {
+    const payload = req.body as Partial<ConsultationPayload>;
+    const validation = validateConsultationInput(payload);
+    if (!validation.valid) {
+      res.status(400).json({ error: "Validation failed", errors: validation.errors });
+      return;
+    }
+    const entry = {
+      id: `SJA-${Date.now().toString(36).toUpperCase()}`,
+      fullName: payload.fullName!.trim(),
+      email: payload.email!.trim(),
+      phone: payload.phone!.trim(),
+      courtSlug: (payload.courtSlug || "delhi-gst-vyapar-bhawan").trim(),
+      practiceArea: payload.practiceArea!.trim(),
+      briefSummary: payload.briefSummary!.trim(),
+      createdAt: new Date().toISOString(),
+    };
+    consultationLog.unshift(entry);
+
+    let forwarded = false;
+    try {
+      forwarded = await forwardConsultationEmailIfConfigured({
+        referenceId: entry.id,
+        submittedAt: entry.createdAt,
+        fullName: entry.fullName,
+        email: entry.email,
+        phone: entry.phone,
+        courtSlug: entry.courtSlug,
+        practiceArea: entry.practiceArea,
+        briefSummary: entry.briefSummary,
+      });
+    } catch {
+      forwarded = false;
+    }
+
+    res.status(201).json({
+      ok: true,
+      referenceId: entry.id,
+      inboxEmail: "services@sjalaw.in",
+      delivery: { mode: forwarded ? "smtp-forwarded" : "logged" },
+      consultation: entry,
     });
   });
 

@@ -234,6 +234,12 @@ export function CourtsPage() {
                       <p className="text-sm text-muted-foreground leading-relaxed">
                         {court.summary}
                       </p>
+                      {court.nearbyTaxOffices && court.nearbyTaxOffices.length > 0 && (
+                        <div className="pt-1 text-xs text-[#0A2536] bg-[#F3FAFF] px-3 py-2 rounded-xl border border-border">
+                          <span className="font-bold text-primary">Nearby Tax &amp; Regional Offices: </span>
+                          <span>{court.nearbyTaxOffices.slice(0, 2).join(" · ")}</span>
+                        </div>
+                      )}
                     </div>
 
                     <div className="pt-4 border-t border-border flex items-center justify-between gap-4">
@@ -241,7 +247,7 @@ export function CourtsPage() {
                         {court.stateOrJurisdiction}
                       </span>
                       <span className="inline-flex items-center gap-1.5 text-xs font-bold text-primary whitespace-nowrap shrink-0">
-                        Open Live Report
+                        Statements &amp; Tax Offices
                         <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                       </span>
                     </div>

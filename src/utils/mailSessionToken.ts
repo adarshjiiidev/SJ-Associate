@@ -14,12 +14,17 @@ export interface SealedMailSessionPayload {
 
 const TOKEN_PREFIX = "v1";
 
+function cleanSecret(val?: string): string {
+  if (!val) return "";
+  return val.trim().replace(/^["']+|["']+$/g, "").trim();
+}
+
 function deriveAesKey(secretOverride?: string): Buffer {
   const rawSecret =
-    secretOverride?.trim() ||
-    process.env.MAIL_SESSION_SECRET?.trim() ||
-    process.env.VERCEL_PROJECT_ID?.trim() ||
-    "sj-associates-legalsja-hostinger-mail-session-v1";
+    cleanSecret(secretOverride) ||
+    cleanSecret(process.env.MAIL_SESSION_SECRET) ||
+    cleanSecret(process.env.VERCEL_PROJECT_ID) ||
+    "sj-associates-sjalaw-hostinger-mail-session-v1";
   return crypto.createHash("sha256").update(rawSecret, "utf8").digest();
 }
 

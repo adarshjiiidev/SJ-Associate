@@ -171,7 +171,10 @@ export function MailPage() {
 
   function getStoredToken(): string | null {
     try {
-      return window.sessionStorage.getItem(MAIL_TOKEN_KEY);
+      return (
+        window.sessionStorage.getItem(MAIL_TOKEN_KEY) ||
+        window.localStorage.getItem(MAIL_TOKEN_KEY)
+      );
     } catch {
       return null;
     }
@@ -181,8 +184,10 @@ export function MailPage() {
     try {
       if (token) {
         window.sessionStorage.setItem(MAIL_TOKEN_KEY, token);
+        window.localStorage.setItem(MAIL_TOKEN_KEY, token);
       } else {
         window.sessionStorage.removeItem(MAIL_TOKEN_KEY);
+        window.localStorage.removeItem(MAIL_TOKEN_KEY);
       }
     } catch {
       // Ignore storage errors
@@ -198,7 +203,7 @@ export function MailPage() {
     return fetch(url, {
       ...init,
       headers,
-      credentials: "same-origin"
+      credentials: "include"
     });
   }, []);
 

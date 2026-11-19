@@ -1,143 +1,160 @@
-import { ExternalLink, MapPin } from "lucide-react";
-import { ADVOCATE_DESK_IMAGE } from "@/src/data/assets";
-import { CHAMBERS_OFFICES, PRINCIPAL_ADVOCATE } from "@/src/data/firmData";
+import * as React from "react";
+import { FIRM_IDENTITY, PRINCIPAL_ADVOCATE, CHAMBERS_OFFICES } from "@/src/data/firmData";
+import { TAX_AND_REGIONAL_OFFICES } from "@/src/data/courtsRegistry";
 import { ConsultationForm } from "@/src/components/ConsultationForm";
-import { ResilientImage } from "@/src/components/ResilientImage";
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { MapPin, Phone, Mail, Clock, Building2 } from "lucide-react";
 
 export function ContactPage() {
+  const delhiOffices = TAX_AND_REGIONAL_OFFICES.filter(
+    (o) => o.group === "Delhi Tax & Regional Offices"
+  );
+  const regionalOffices = TAX_AND_REGIONAL_OFFICES.filter(
+    (o) => o.group === "Regional Tax Offices (Near High Courts)"
+  );
+
   return (
-    <div>
+    <div className="min-h-screen bg-[#F3FAFF] text-[#0A2536]">
       <section className="bg-gradient-to-b from-[#F3FAFF] to-[#DAF6EF]/45 border-b border-border py-12 sm:py-14">
-        <div className="mx-auto max-w-[1280px] px-5 sm:px-6 space-y-3">
-          <p className="text-xs font-bold tracking-[0.15em] uppercase text-[#33566D]">
-            Reach SJ Associates
-          </p>
-          <h1
-            className="text-4xl sm:text-5xl font-extrabold text-[#0A2536] leading-tight"
-            style={{ textWrap: "balance" }}
-          >
-            Contact Chambers
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#33566D] mb-2">
+            GET IN TOUCH · NEW DELHI CHAMBERS
+          </div>
+          <h1 className="font-display text-4xl sm:text-5xl font-bold text-[#0A2536]">
+            Contact {FIRM_IDENTITY.name}
           </h1>
-          <p className="text-base text-[#33566D] leading-relaxed max-w-3xl">
-            Visit or write to {PRINCIPAL_ADVOCATE.name} and SJ Associates at our Delhi chambers on Captain Satish Marg, Rishi Nagar, Pitampura (110034), or reach our corporate desks in Mumbai and Bengaluru for a matter briefing.
+          <p className="mt-2 text-[#33566D] max-w-2xl text-base leading-relaxed">
+            Schedule a consultation with {PRINCIPAL_ADVOCATE.name} for GST &amp; Tax,
+            Income Tax, Accounting &amp; Bookkeeping, DGFT, MSME, Trademark, or Partnership Firm
+            Registration matters across Delhi and regional tax offices nationwide.
           </p>
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-6 py-12 space-y-12">
+      <section className="py-12 border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div className="lg:col-span-5 space-y-4">
+              {CHAMBERS_OFFICES.map((office) => (
+                <div
+                  key={office.id}
+                  className="rounded-[24px] border border-border bg-white/90 p-6 shadow-sm"
+                >
+                  <div className="font-mono text-xs uppercase tracking-widest text-[#33566D] mb-1">
+                    {office.title}
+                  </div>
+                  <h2 className="font-display text-2xl font-bold text-[#0A2536]">
+                    {office.city}
+                  </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        <div className="lg:col-span-7">
-          <Card className="rounded-2xl">
-            <CardHeader>
-              <CardTitle>Send Us a Short Note</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ConsultationForm />
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="lg:col-span-5 space-y-5">
-          <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-xs">
-            <div className="aspect-[4/3] overflow-hidden bg-[#0A2536]">
-              <ResilientImage
-                src={ADVOCATE_DESK_IMAGE}
-                alt="Advocate Sanjay Kumar Singh at the Pitampura, Delhi chambers conference desk"
-                fallbackLabel="SJ Associates Chambers"
-                imgClassName="object-cover object-center"
-              />
+                  <div className="mt-4 space-y-3 text-sm text-[#33566D]">
+                    <div className="flex items-start gap-2.5">
+                      <MapPin className="h-4 w-4 text-[#0A2536] shrink-0 mt-0.5" />
+                      <span>{office.addressLines.join(", ")}</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Phone className="h-4 w-4 text-[#0A2536] shrink-0" />
+                      <span>{office.phone}</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Mail className="h-4 w-4 text-[#0A2536] shrink-0" />
+                      <span>{office.email}</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Clock className="h-4 w-4 text-[#0A2536] shrink-0" />
+                      <span>{office.consultationHours}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="px-5 py-3.5 border-t border-border flex items-center justify-between gap-2">
-              <div>
-                <p className="text-sm font-bold text-[#0A2536]">{PRINCIPAL_ADVOCATE.name}</p>
-                <p className="text-xs text-[#33566D]">{PRINCIPAL_ADVOCATE.title}</p>
+
+            <div className="lg:col-span-7">
+              <div className="rounded-[24px] border border-border bg-white/90 p-6 sm:p-8 shadow-sm">
+                <div className="font-mono text-xs uppercase tracking-widest text-[#33566D] mb-1">
+                  DIRECT CHAMBERS NOTE
+                </div>
+                <h2 className="font-display text-3xl font-bold text-[#0A2536] mb-2">
+                  Send Us Your Case Or Tax Office Details
+                </h2>
+                <p className="text-sm text-[#33566D] mb-6">
+                  Select the relevant Delhi or regional tax office, GSTAT bench, or High Court and
+                  the service required. All submissions are routed directly to{" "}
+                  <span className="font-mono text-xs font-semibold text-[#0A2536]">
+                    services@sjalaw.in
+                  </span>
+                  .
+                </p>
+                <ConsultationForm />
               </div>
-              <span className="rounded-full bg-[#DAF6EF] px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-[#0A2536] shrink-0">
-                Pitampura · Delhi 110034
-              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Delhi & Regional Tax Offices Directory */}
+      <section className="py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+          <div>
+            <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#33566D] mb-1">
+              TAX &amp; REGULATORY FORUMS · NEW DELHI
+            </div>
+            <h2 className="font-display text-3xl font-bold text-[#0A2536]">
+              Delhi Tax Offices, GSTAT &amp; Registration Authorities
+            </h2>
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {delhiOffices.map((office) => (
+                <div
+                  key={office.slug}
+                  className="rounded-[22px] border border-border bg-white/90 p-5 shadow-sm"
+                >
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="rounded-full bg-[#DAF6EF] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#0A2536] font-semibold">
+                      {office.jurisdiction}
+                    </span>
+                    <Building2 className="h-4 w-4 text-[#33566D]" />
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-[#0A2536]">
+                    {office.name}
+                  </h3>
+                  <p className="mt-1 text-xs text-[#33566D] leading-relaxed">
+                    {office.addressNote}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {CHAMBERS_OFFICES.map((office, index) => (
-            <Card
-              key={office.city}
-              className={`rounded-2xl ${
-                index === 0 ? "border-[#0A2536]/30 bg-[#F3FAFF]/80 shadow-xs" : ""
-              }`}
-            >
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-xs font-bold uppercase tracking-wider text-[#33566D]">
-                    {office.city}
-                  </p>
-                  {index === 0 && (
-                    <span className="rounded-full bg-[#DAF6EF] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0A2536]">
-                      Main Chambers
+          <div>
+            <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#33566D] mb-1">
+              REGIONAL TAX &amp; APPELLATE OFFICES NEARBY HIGH COURTS
+            </div>
+            <h2 className="font-display text-3xl font-bold text-[#0A2536]">
+              Regional GST, Income Tax &amp; GSTAT Benches Across India
+            </h2>
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {regionalOffices.map((office) => (
+                <div
+                  key={office.slug}
+                  className="rounded-[22px] border border-border bg-white/90 p-5 shadow-sm"
+                >
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="rounded-full bg-[#0A2536]/10 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#0A2536] font-semibold">
+                      {office.city} · {office.jurisdiction}
                     </span>
-                  )}
-                </div>
-                <CardTitle className="text-xl text-[#0A2536]">{office.label}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2.5 text-sm text-muted-foreground">
-                <div className="flex items-start gap-2.5">
-                  <MapPin className="h-4 w-4 text-[#0A2536] shrink-0 mt-0.5" aria-hidden="true" />
-                  <div className="space-y-0.5">
-                    <p className="leading-relaxed font-medium text-[#0A2536]">{office.address}</p>
-                    {office.landmark && (
-                      <p className="text-xs text-[#33566D]">{office.landmark}</p>
-                    )}
+                    <Building2 className="h-4 w-4 text-[#33566D]" />
                   </div>
-                </div>
-                <div className="space-y-1">
-                  <p className="tabular-nums text-foreground font-medium">
-                    <a
-                      href={`tel:${office.phone.replace(/\s+/g, "")}`}
-                      className="hover:text-primary transition-colors"
-                    >
-                      Mobile: {office.phone}
-                    </a>
-                  </p>
-                  {office.landline && (
-                    <p className="tabular-nums text-foreground font-medium">
-                      <a
-                        href={`tel:${office.landline.replace(/\D/g, "")}`}
-                        className="hover:text-primary transition-colors"
-                      >
-                        Office: {office.landline}
-                      </a>
-                    </p>
-                  )}
-                  <p>
-                    <a
-                      href={`mailto:${office.email}`}
-                      className="text-primary hover:underline font-medium"
-                    >
-                      {office.email}
-                    </a>
+                  <h3 className="font-display text-xl font-bold text-[#0A2536]">
+                    {office.name}
+                  </h3>
+                  <p className="mt-1 text-xs text-[#33566D] leading-relaxed">
+                    {office.addressNote}
                   </p>
                 </div>
-                <div className="pt-2 border-t border-border flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs">{office.hours}</p>
-                  {office.mapUrl && (
-                    <a
-                      href={office.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#0A2536] hover:bg-[#DAF6EF] transition-colors"
-                    >
-                      Get Directions
-                      <ExternalLink className="h-3 w-3" aria-hidden="true" />
-                    </a>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -33,6 +33,42 @@ interface MailSession {
 
 const mailSessions = new Map<string, MailSession>();
 
+function cleanEnv(val?: string): string {
+  if (!val) return "";
+  return val.trim().replace(/^["']+|["']+$/g, "").trim();
+}
+
+function isLegacyReplacedEmail(email: string): boolean {
+  const lower = email.toLowerCase();
+  return lower.includes("@legalsja.com") || lower === "sanjaysingh@legalsja.com";
+}
+
+function resolveDefaultMailboxEmail(): string {
+  const envEmail = cleanEnv(process.env.MAIL_DEFAULT_EMAIL);
+  if (envEmail && !isLegacyReplacedEmail(envEmail)) {
+    return envEmail;
+  }
+  return HOSTINGER_MAIL_DEFAULTS.defaultEmail;
+}
+
+function resolveDefaultImapHost(): string {
+  return cleanEnv(process.env.MAIL_IMAP_HOST) || HOSTINGER_MAIL_DEFAULTS.imapHost;
+}
+
+function resolveDefaultImapPort(): number {
+  const port = Number(cleanEnv(process.env.MAIL_IMAP_PORT));
+  return Number.isInteger(port) && port > 0 ? port : HOSTINGER_MAIL_DEFAULTS.imapPort;
+}
+
+function resolveDefaultSmtpHost(): string {
+  return cleanEnv(process.env.MAIL_SMTP_HOST) || HOSTINGER_MAIL_DEFAULTS.smtpHost;
+}
+
+function resolveDefaultSmtpPort(): number {
+  const port = Number(cleanEnv(process.env.MAIL_SMTP_PORT));
+  return Number.isInteger(port) && port > 0 ? port : HOSTINGER_MAIL_DEFAULTS.smtpPort;
+}
+
 function cleanupExpiredSessions() {
   const now = Date.now();
   for (const [id, session] of mailSessions.entries()) {
@@ -81,14 +117,21 @@ function getSessionFromRequest(req: express.Request): MailSession | null {
   return rehydrated;
 }
 
+function isHttpsRequest(req: express.Request): boolean {
+  const proto = String(req.headers["x-forwarded-proto"] || "").toLowerCase();
+  return Boolean(req.secure || proto.includes("https"));
+}
+
 function setSessionCookie(req: express.Request, res: express.Response, sid: string) {
-  const isHttps =
-    req.secure || req.headers["x-forwarded-proto"] === "https";
+  const isHttps = isHttpsRequest(req);
+  const host = String(req.headers.host || "").toLowerCase();
+  const isFirstPartyDomain = host.includes("sjalaw.in") || host.includes("vercel.app");
+  const sameSite = isHttps && !isFirstPartyDomain ? "SameSite=None" : "SameSite=Lax";
   const parts = [
     `${MAIL_COOKIE_NAME}=${encodeURIComponent(sid)}`,
     "Path=/",
     "HttpOnly",
-    isHttps ? "SameSite=None" : "SameSite=Lax",
+    sameSite,
     `Max-Age=${Math.floor(SESSION_TTL_MS / 1000)}`
   ];
   if (isHttps) {
@@ -98,13 +141,15 @@ function setSessionCookie(req: express.Request, res: express.Response, sid: stri
 }
 
 function clearSessionCookie(req: express.Request, res: express.Response) {
-  const isHttps =
-    req.secure || req.headers["x-forwarded-proto"] === "https";
+  const isHttps = isHttpsRequest(req);
+  const host = String(req.headers.host || "").toLowerCase();
+  const isFirstPartyDomain = host.includes("sjalaw.in") || host.includes("vercel.app");
+  const sameSite = isHttps && !isFirstPartyDomain ? "SameSite=None" : "SameSite=Lax";
   const parts = [
     `${MAIL_COOKIE_NAME}=`,
     "Path=/",
     "HttpOnly",
-    isHttps ? "SameSite=None" : "SameSite=Lax",
+    sameSite,
     "Max-Age=0"
   ];
   if (isHttps) {
@@ -122,10 +167,14 @@ function createImapClient(session: Pick<MailSession, "email" | "password" | "ima
       user: session.email,
       pass: session.password
     },
+    tls: {
+      rejectUnauthorized: false,
+      servername: session.imapHost
+    },
     logger: false,
-    connectionTimeout: 12000,
-    greetingTimeout: 10000,
-    socketTimeout: 20000
+    connectionTimeout: 15000,
+    greetingTimeout: 12000,
+    socketTimeout: 25000
   });
 }
 
@@ -212,15 +261,20 @@ export async function forwardConsultationEmailIfConfigured(entry: {
 }): Promise<boolean> {
   cleanupExpiredSessions();
 
-  const rawNotify = process.env.MAIL_NOTIFY_TO?.trim();
+  const rawNotify = cleanEnv(process.env.MAIL_NOTIFY_TO);
   const recipient =
-    rawNotify && rawNotify.toLowerCase() !== "sanjaysingh@legalsja.com"
+    rawNotify && !isLegacyReplacedEmail(rawNotify)
       ? rawNotify
       : HOSTINGER_MAIL_DEFAULTS.defaultEmail;
-  let smtpUser = process.env.MAIL_SMTP_USER?.trim();
-  let smtpPass = process.env.MAIL_SMTP_PASS;
-  let smtpHost = process.env.MAIL_SMTP_HOST?.trim() || HOSTINGER_MAIL_DEFAULTS.smtpHost;
-  let smtpPort = Number(process.env.MAIL_SMTP_PORT ?? HOSTINGER_MAIL_DEFAULTS.smtpPort);
+
+  const rawSmtpUser = cleanEnv(process.env.MAIL_SMTP_USER);
+  let smtpUser =
+    rawSmtpUser && !isLegacyReplacedEmail(rawSmtpUser)
+      ? rawSmtpUser
+      : resolveDefaultMailboxEmail();
+  let smtpPass = cleanEnv(process.env.MAIL_SMTP_PASS);
+  let smtpHost = resolveDefaultSmtpHost();
+  let smtpPort = resolveDefaultSmtpPort();
 
   // Fallback: if server env SMTP credentials aren't set, reuse an active authenticated Hostinger session
   if (!smtpUser || !smtpPass) {
@@ -243,9 +297,13 @@ export async function forwardConsultationEmailIfConfigured(entry: {
     host: smtpHost,
     port: smtpPort,
     secure: smtpPort === 465,
-    connectionTimeout: 8000,
-    greetingTimeout: 8000,
-    socketTimeout: 12000,
+    tls: {
+      rejectUnauthorized: false,
+      servername: smtpHost
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
     auth: {
       user: smtpUser,
       pass: smtpPass
@@ -264,7 +322,7 @@ export async function forwardConsultationEmailIfConfigured(entry: {
       `Client Email: ${entry.email}`,
       `Phone: ${entry.phone}`,
       `Practice Area: ${entry.practiceArea}`,
-      `Court / Tribunal: ${entry.courtSlug}`,
+      `Court / Tax Office: ${entry.courtSlug}`,
       "",
       "Brief Summary:",
       entry.briefSummary
@@ -280,19 +338,14 @@ export function createMailRouter(): express.Router {
   router.get("/session", (req, res) => {
     const session = getSessionFromRequest(req);
     if (!session) {
-      const envEmail = process.env.MAIL_DEFAULT_EMAIL?.trim();
-      const emailHint =
-        envEmail && envEmail.toLowerCase() !== "sanjaysingh@legalsja.com"
-          ? envEmail
-          : HOSTINGER_MAIL_DEFAULTS.defaultEmail;
       return res.json({
         authenticated: false,
         defaults: {
-          emailHint,
-          imapHost: process.env.MAIL_IMAP_HOST || HOSTINGER_MAIL_DEFAULTS.imapHost,
-          imapPort: Number(process.env.MAIL_IMAP_PORT ?? HOSTINGER_MAIL_DEFAULTS.imapPort),
-          smtpHost: process.env.MAIL_SMTP_HOST || HOSTINGER_MAIL_DEFAULTS.smtpHost,
-          smtpPort: Number(process.env.MAIL_SMTP_PORT ?? HOSTINGER_MAIL_DEFAULTS.smtpPort)
+          emailHint: resolveDefaultMailboxEmail(),
+          imapHost: resolveDefaultImapHost(),
+          imapPort: resolveDefaultImapPort(),
+          smtpHost: resolveDefaultSmtpHost(),
+          smtpPort: resolveDefaultSmtpPort()
         }
       });
     }
@@ -310,7 +363,15 @@ export function createMailRouter(): express.Router {
   });
 
   router.post("/login", async (req, res) => {
-    const validation = validateMailLoginInput(req.body ?? {});
+    const body = req.body ?? {};
+    const validation = validateMailLoginInput({
+      email: cleanEnv(body.email) || resolveDefaultMailboxEmail(),
+      password: body.password,
+      imapHost: cleanEnv(body.imapHost) || resolveDefaultImapHost(),
+      imapPort: body.imapPort ?? resolveDefaultImapPort(),
+      smtpHost: cleanEnv(body.smtpHost) || resolveDefaultSmtpHost(),
+      smtpPort: body.smtpPort ?? resolveDefaultSmtpPort()
+    });
     if (!validation.valid || !validation.normalized) {
       return res.status(400).json({
         error: "Please enter a valid mailbox address, password, and server settings.",
@@ -361,13 +422,15 @@ export function createMailRouter(): express.Router {
           smtpPort: session.smtpPort
         }
       });
-    } catch (err) {
+    } catch (err: any) {
       const msg = err instanceof Error ? err.message : "IMAP authentication failed";
+      const responseText = typeof err?.responseText === "string" ? err.responseText : "";
       const isAuthFailure =
-        /auth|credentials|login|password|invalid|authenticationfailed/i.test(msg);
+        /auth|credentials|login|password|invalid|authenticationfailed/i.test(msg) ||
+        /auth|credentials|login|password|invalid/i.test(responseText);
       return res.status(isAuthFailure ? 401 : 502).json({
         error: isAuthFailure
-          ? `Authentication failed for ${creds.email} on ${creds.imapHost}. Check your mailbox password.`
+          ? `Authentication failed for ${creds.email} on ${creds.imapHost}. Please verify the Hostinger mailbox password for ${creds.email}.`
           : `Could not connect to ${creds.imapHost}:${creds.imapPort} (${msg}).`,
         code: isAuthFailure ? "MAIL_AUTH_FAILED" : "MAIL_SERVER_UNREACHABLE"
       });
@@ -644,6 +707,10 @@ export function createMailRouter(): express.Router {
         host: session.smtpHost,
         port: session.smtpPort,
         secure: session.smtpPort === 465,
+        tls: {
+          rejectUnauthorized: false,
+          servername: session.smtpHost
+        },
         auth: {
           user: session.email,
           pass: session.password

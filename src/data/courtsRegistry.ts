@@ -17,7 +17,7 @@ export type CourtImageKey =
 
 export type BulletinCategory =
   | "Constitutional"
-  | "Tax & Corporate"
+  | "GST & Income Tax"
   | "Commercial & Arbitration"
   | "Criminal"
   | "Civil & Property";
@@ -33,10 +33,21 @@ export interface CourtProfile {
   region: "National" | "North" | "West" | "South" | "East";
   establishedYear: number;
   benches: string[];
+  nearbyTaxOffices: string[];
   officialUrl: string;
   causeListUrl: string;
   chambersPracticeNote: string;
   summary: string;
+}
+
+export interface TaxRegionalOffice {
+  slug: string;
+  name: string;
+  city: string;
+  group: "Delhi Tax & Regional Offices" | "Regional Tax Offices (Near High Courts)";
+  nearbyCourtSlug: CourtImageKey;
+  jurisdiction: string;
+  addressNote: string;
 }
 
 export interface JudicialRuling {
@@ -107,12 +118,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "National",
     establishedYear: 1950,
     benches: ["Tilak Marg, New Delhi (Principal Seat)"],
+    nearbyTaxOffices: [
+      "I.P. Estate Income Tax Office (ITO), New Delhi",
+      "CGST & Delhi GST Commissionerate, Vyapar Bhawan, ITO",
+      "GSTAT Principal Bench, New Delhi"
+    ],
     officialUrl: "https://www.sci.gov.in",
     causeListUrl: "https://www.sci.gov.in/cause-list/",
     chambersPracticeNote:
-      "Chambers maintains an active Advocate-on-Record (AoR) filing desk at Tilak Marg for Special Leave Petitions (Article 136), Writ Petitions (Article 32), Transfer Petitions, and Constitutional Bench references.",
+      "Chambers maintains an active filing desk at Tilak Marg for Special Leave Petitions (Article 136), Writ Petitions (Article 32), Transfer Petitions, and GST & Income Tax appeals.",
     summary:
-      "Apex constitutional court of the Republic of India exercising original, appellate, and advisory jurisdiction over constitutional, civil, criminal, tax, and regulatory matters."
+      "Apex constitutional court of the Republic of India exercising original, appellate, and advisory jurisdiction over constitutional, GST, income tax, civil, criminal, and regulatory matters."
   },
   {
     slug: "delhi-high-court",
@@ -125,12 +141,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "North",
     establishedYear: 1966,
     benches: ["Sher Shah Road, New Delhi"],
+    nearbyTaxOffices: [
+      "Vyapar Bhawan Delhi GST & CGST Office (I.P. Estate)",
+      "Pratyaksh Kar Bhawan (Civic Centre) & ITO Income Tax Offices",
+      "DGFT CLA Regional Office (ITO) & Trademark Registry (Dwarka)"
+    ],
     officialUrl: "https://delhihighcourt.nic.in",
     causeListUrl: "https://delhihighcourt.nic.in/web/cause-list",
     chambersPracticeNote:
-      "Original Side commercial suits, Section 34/37 arbitration challenges, Intellectual Property Division (IPD) filings, and Article 226 writ petitions against central ministries and regulators.",
+      "Article 226 GST & Income Tax writ petitions, Show Cause Notice (SCN) & assessment challenge writs, Intellectual Property Division (IPD) trademark filings, and DGFT customs petitions.",
     summary:
-      "Premier commercial and constitutional High Court featuring India's dedicated Intellectual Property Division (IPD) and Original Civil Jurisdiction."
+      "Principal High Court in New Delhi adjudicating GST, Income Tax, Customs, DGFT, Trademark (IPD), and constitutional writ petitions."
   },
   {
     slug: "gstat",
@@ -143,12 +164,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "National",
     establishedYear: 2024,
     benches: ["Principal Bench, New Delhi", "State & Regional Benches Across India"],
+    nearbyTaxOffices: [
+      "CGST Commissionerate (Appeals-I & II), Delhi",
+      "Delhi State GST Appellate Authority, Vyapar Bhawan, ITO",
+      "Regional GSTAT State Benches Across India"
+    ],
     officialUrl: "https://gstat.gov.in",
     causeListUrl: "https://efiling.gstat.gov.in",
     chambersPracticeNote:
-      "Second-level appellate representation under Section 112 of the CGST Act against Orders-in-Appeal (Section 107) and Revisional Orders (Section 108), pre-deposit structuring, and GSTAT e-Filing Portal hearings.",
+      "Second-level appellate representation under Section 112 of the CGST Act against Commissioner (Appeals) Orders (Section 107) and Revisional Orders (Section 108), pre-deposit structuring, and GSTAT e-Filing Portal hearings.",
     summary:
-      "India's statutory second-level Goods and Services Tax Appellate Tribunal (Principal Bench in New Delhi), hearing GST demand, input tax credit, and valuation appeals under Section 112 CGST."
+      "India's statutory second-level Goods and Services Tax Appellate Tribunal (Principal Bench in New Delhi), hearing GST demand, input tax credit, SCN, and valuation appeals under Section 112 CGST."
   },
   {
     slug: "punjab-haryana-high-court",
@@ -161,12 +187,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "North",
     establishedYear: 1947,
     benches: ["Capitol Complex, Sector 1, Chandigarh"],
+    nearbyTaxOffices: [
+      "Central Revenue Building (CGST & Income Tax), Sector 17, Chandigarh",
+      "Haryana & Punjab State GST Commissionerates (Panchkula / Mohali)",
+      "Commissioner (Appeals) GST & Income Tax — Gurugram, Faridabad & Ludhiana"
+    ],
     officialUrl: "https://highcourtchd.gov.in",
     causeListUrl: "https://highcourtchd.gov.in/sub_pages/top_menu/causelist/causelist.php",
     chambersPracticeNote:
-      "GST assessment & ITC block writs, industrial/MSME recovery disputes, corporate income tax appeals, DGFT customs compliance, and commercial arbitration across NCR Gurugram, Mohali & Chandigarh.",
+      "GST assessment & ITC block writs, SCN replies, MSME recovery disputes, income tax appeals, and DGFT customs compliance across NCR Gurugram, Mohali & Chandigarh.",
     summary:
-      "Capitol Complex High Court at Chandigarh exercising corporate, tax, GST, and commercial writ jurisdiction across Haryana, Punjab, and Chandigarh."
+      "Capitol Complex High Court at Chandigarh exercising tax, GST, income tax, and commercial writ jurisdiction across Haryana, Punjab, and Chandigarh."
   },
   {
     slug: "rajasthan-high-court",
@@ -179,12 +210,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "North",
     establishedYear: 1949,
     benches: ["Jodhpur (Principal Seat)", "Jaipur Bench"],
+    nearbyTaxOffices: [
+      "New Central Revenue Building (CGST & Income Tax), Statue Circle, Jaipur",
+      "Rajasthan State GST Kar Bhawan, Jhalana Doongri, Jaipur",
+      "Income Tax & CGST Commissionerate, Paota, Jodhpur"
+    ],
     officialUrl: "https://hcraj.nic.in",
     causeListUrl: "https://hcraj.nic.in/hcraj/causelist.php",
     chambersPracticeNote:
-      "Mining, industrial & renewable-energy corporate contracts, Section 148 income tax reassessment writs, GST demand stays, and commercial appeals at Jaipur and Jodhpur.",
+      "Section 148 income tax reassessment writs, GST demand stays, SCN replies, Commissioner (Appeals) representation, and commercial appeals at Jaipur and Jodhpur.",
     summary:
-      "Dual-bench High Court serving Rajasthan's industrial, energy, and export corridors across direct taxation, GST, and corporate commercial litigation."
+      "Dual-bench High Court serving Rajasthan's industrial and trade corridors across direct taxation, GST appeals, and writ litigation."
   },
   {
     slug: "allahabad-high-court",
@@ -197,12 +233,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "North",
     establishedYear: 1866,
     benches: ["Prayagraj (Principal Seat)", "Lucknow Bench"],
+    nearbyTaxOffices: [
+      "CGST & Income Tax Commissionerate, Civil Lines, Prayagraj",
+      "UP State GST Headquarters, Vibhuti Khand, Gomti Nagar, Lucknow",
+      "Regional GST & Income Tax Offices — Noida & Ghaziabad"
+    ],
     officialUrl: "https://www.allahabadhighcourt.in",
     causeListUrl: "https://www.allahabadhighcourt.in/causelist/index.html",
     chambersPracticeNote:
-      "GST enforcement & e-way bill seizure writs, state infrastructure & public procurement contracts, corporate income tax appeals, and commercial recovery.",
+      "GST enforcement & e-way bill seizure writs, Show Cause Notice (SCN) defense, income tax appeals, and MSME recovery petitions across Uttar Pradesh.",
     summary:
-      "Largest High Court in India by sanctioned judicial strength, governing commercial, indirect tax, GST, and corporate constitutional matters across Uttar Pradesh."
+      "Largest High Court in India by sanctioned judicial strength, governing indirect tax, GST, income tax, and constitutional writ matters across Uttar Pradesh."
   },
   {
     slug: "gujarat-high-court",
@@ -215,12 +256,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "West",
     establishedYear: 1960,
     benches: ["Sola, Ahmedabad (Principal Seat)"],
+    nearbyTaxOffices: [
+      "GST Bhavan & CGST Commissionerate, Ambawadi, Ahmedabad",
+      "Aayakar Bhawan (Income Tax), Ashram Road, Ahmedabad",
+      "Regional DGFT & Trademark Registry Office, Ahmedabad"
+    ],
     officialUrl: "https://gujarathighcourt.nic.in",
     causeListUrl: "https://gujarathighcourt.nic.in/causelist",
     chambersPracticeNote:
-      "Customs, SEZ & GIFT City financial regulatory litigation, maritime trade disputes, GST input tax credit refunds, and corporate tax writs.",
+      "Customs, DGFT & SEZ tax litigation, GST input tax credit refunds, SCN challenge writs, and income tax appeals.",
     summary:
-      "Pioneering High Court in live-streamed judicial proceedings, handling major maritime trade, industrial, indirect tax, and IFSC/GIFT City regulatory matters."
+      "Pioneering High Court in live-streamed judicial proceedings, handling major maritime trade, DGFT, indirect tax, and GST matters."
   },
   {
     slug: "patna-high-court",
@@ -233,12 +279,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "East",
     establishedYear: 1916,
     benches: ["Bailey Road, Patna (Principal Seat)"],
+    nearbyTaxOffices: [
+      "Central Revenue Building (CGST & Income Tax), Birchand Patel Path, Patna",
+      "Bihar Commercial Taxes (State GST) Department, Vikas Bhawan, Patna",
+      "Commissioner (Appeals) GST & Income Tax, Patna"
+    ],
     officialUrl: "https://patnahighcourt.gov.in",
     causeListUrl: "https://patnahighcourt.gov.in/CauseList",
     chambersPracticeNote:
-      "GST show-cause & bank attachment stays, commercial infrastructure & PSU contract writs, direct tax appeals, and corporate compliance petitions across Bihar.",
+      "GST show-cause & bank attachment stays, Commissioner (Appeals) & GSTAT representations, direct tax appeals, and statutory compliance petitions across Bihar.",
     summary:
-      "Historic Centenary Chartered High Court seated at Patna, adjudicating GST, commercial contract, tax appellate, and corporate writ petitions."
+      "Historic Centenary Chartered High Court seated at Patna, adjudicating GST, income tax, and commercial writ petitions."
   },
   {
     slug: "bombay-high-court",
@@ -251,12 +302,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "West",
     establishedYear: 1862,
     benches: ["Mumbai (Principal Seat)", "Nagpur", "Aurangabad", "Goa (Panaji)"],
+    nearbyTaxOffices: [
+      "Aayakar Bhawan (Income Tax), Maharishi Karve Road, Churchgate, Mumbai",
+      "GST Bhavan (CGST & Maharashtra State GST), Churchgate / Mazgaon, Mumbai",
+      "Zonal DGFT Office (CGO Building) & Trademark Registry (Antop Hill), Mumbai"
+    ],
     officialUrl: "https://bombayhighcourt.nic.in",
     causeListUrl: "https://bombayhighcourt.nic.in/causelist.php",
     chambersPracticeNote:
-      "Admiralty & maritime actions, SEBI/RBI regulatory writs, NCLT/IBC appellate challenges, corporate tax appeals, and Original Side commercial injunctions at Fort, Mumbai.",
+      "GST & Customs writ petitions, Income Tax appeals, DGFT export-import disputes, and trademark enforcement from our Fort, Mumbai desk.",
     summary:
-      "Chartered High Court seated in Fort, Mumbai, shaping India's financial, corporate, admiralty, insolvency, and tax jurisprudence."
+      "Chartered High Court seated in Fort, Mumbai, shaping India's financial, GST, income tax, customs, and commercial jurisprudence."
   },
   {
     slug: "telangana-high-court",
@@ -269,12 +325,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "South",
     establishedYear: 1919,
     benches: ["Madina, Hyderabad (Principal Seat)"],
+    nearbyTaxOffices: [
+      "GST Bhavan & CGST Commissionerate, Basheerbagh, Hyderabad",
+      "Aayakar Bhawan / IT Towers (Income Tax), Basheerbagh / Masab Tank, Hyderabad",
+      "Regional DGFT & MSME Facilitation Office, Hyderabad"
+    ],
     officialUrl: "https://tshc.gov.in",
     causeListUrl: "https://tshc.gov.in/getCauseList",
     chambersPracticeNote:
-      "Pharmaceutical, IT/SEZ & biotech corporate tax writs, NCLT/IBC connected appeals, GST refunds, and commercial arbitration matters in Hyderabad.",
+      "GST refund & SCN writs, Income Tax reassessment challenges, customs/SEZ taxation, and DGFT trade representation in Hyderabad.",
     summary:
-      "Principal appellate forum in Hyderabad governing corporate governance, customs/SEZ taxation, technology companies, and commercial litigation."
+      "Principal appellate forum in Hyderabad governing GST, income tax, customs/SEZ taxation, and statutory registration disputes."
   },
   {
     slug: "calcutta-high-court",
@@ -287,12 +348,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "East",
     establishedYear: 1862,
     benches: ["Kolkata (Principal Seat)", "Port Blair (Circuit)", "Jalpaiguri (Circuit)"],
+    nearbyTaxOffices: [
+      "Aayakar Bhawan (Income Tax), P-7 Chowringhee Square, Kolkata",
+      "GST Bhawan (CGST & WB State GST), Rajdanga / Beliaghata, Kolkata",
+      "Zonal DGFT (Esplanade) & Trademark Registry Office (Salt Lake), Kolkata"
+    ],
     officialUrl: "https://www.calcuttahighcourt.gov.in",
     causeListUrl: "https://www.calcuttahighcourt.gov.in/Cause-List",
     chambersPracticeNote:
-      "Original Side commercial suits, arbitration enforcement, mining and infrastructure contract disputes, and admiralty proceedings.",
+      "GST Show Cause Notice (SCN) writs, Commissioner (Appeals) & GSTAT matters, income tax appeals, and DGFT customs challenges.",
     summary:
-      "India's oldest Chartered High Court (1862), exercising Ordinary Original Civil Jurisdiction across Eastern India and admiralty waters."
+      "India's oldest Chartered High Court (1862), exercising writ and appellate tax jurisdiction across Eastern India."
   },
   {
     slug: "karnataka-high-court",
@@ -305,12 +371,17 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "South",
     establishedYear: 1884,
     benches: ["Bengaluru (Principal Seat)", "Dharwad", "Kalaburagi"],
+    nearbyTaxOffices: [
+      "CR Building (CGST & Income Tax), Queen's Road, Bengaluru",
+      "Vanijya Therige Karyalaya (Karnataka State GST), Gandhinagar, Bengaluru",
+      "Regional DGFT Office (Koramangala) & MSME Facilitation Desk, Bengaluru"
+    ],
     officialUrl: "https://karnatakajudiciary.kar.nic.in",
     causeListUrl: "https://karnatakajudiciary.kar.nic.in/causelist.php",
     chambersPracticeNote:
-      "Startup & corporate litigation, technology & fintech regulation writs, cross-border commercial disputes, and direct/GST tax appeals from our MG Road desk.",
+      "GST & Income Tax appeals, TDS & reassessment writs, DGFT export compliance, and trademark protection from our MG Road desk.",
     summary:
-      "Seated at Attara Kacheri in Bengaluru, adjudicating pivotal technology law, corporate governance, NCLT commercial challenges, and direct tax disputes."
+      "Seated at Attara Kacheri in Bengaluru, adjudicating direct tax, GST, customs, and registration disputes."
   },
   {
     slug: "madras-high-court",
@@ -323,18 +394,179 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     region: "South",
     establishedYear: 1862,
     benches: ["Chennai (Principal Seat)", "Madurai Bench"],
+    nearbyTaxOffices: [
+      "GST Bhawan & Aayakar Bhawan, Nungambakkam High Road, Chennai",
+      "Tamil Nadu Commercial Taxes (State GST), Ezhilagam / Greams Road, Chennai",
+      "Zonal DGFT (Shastri Bhavan) & Trademark Registry (Guindy), Chennai"
+    ],
     officialUrl: "https://www.hcmadras.tn.nic.in",
     causeListUrl: "https://www.hcmadras.tn.nic.in/causelist.php",
     chambersPracticeNote:
-      "GST and customs writ litigation, trademark and copyright enforcement, industrial labour disputes, and commercial division appeals.",
+      "GST and customs writ litigation, Show Cause Notice (SCN) defense, income tax appeals, and trademark enforcement.",
     summary:
-      "Historic Chartered High Court in Chennai renowned for constitutional protection, indirect tax rulings, and commercial IP jurisprudence."
+      "Historic Chartered High Court in Chennai renowned for constitutional protection, indirect tax rulings, and trademark IP jurisprudence."
   }
 ];
 
 export const COURTS_REGISTRY: CourtProfile[] = sortCourtsByDistanceFromDelhi(
   UNSORTED_COURTS_REGISTRY
 );
+
+export const TAX_AND_REGIONAL_OFFICES: TaxRegionalOffice[] = [
+  {
+    slug: "delhi-gst-comm-ito",
+    name: "Delhi GST & CGST Commissionerate (Vyapar Bhawan, I.P. Estate, New Delhi)",
+    city: "New Delhi",
+    group: "Delhi Tax & Regional Offices",
+    nearbyCourtSlug: "delhi-high-court",
+    jurisdiction: "Delhi State GST & Central GST North/South/East/West Zones",
+    addressNote: "Vyapar Bhawan & CR Building, I.P. Estate, ITO, New Delhi — 110002"
+  },
+  {
+    slug: "delhi-ito-civic-centre",
+    name: "Income Tax Office (ITO) — Pratyaksh Kar Bhawan & I.P. Estate, New Delhi",
+    city: "New Delhi",
+    group: "Delhi Tax & Regional Offices",
+    nearbyCourtSlug: "delhi-high-court",
+    jurisdiction: "Delhi Income Tax Assessment, TDS Circles & CIT Ranges",
+    addressNote: "Civic Centre (Minto Road) & C.R. Building, I.P. Estate, New Delhi"
+  },
+  {
+    slug: "delhi-commissioner-appeals",
+    name: "Commissioner (Appeals) — GST & Income Tax (CIT Appeals), New Delhi",
+    city: "New Delhi",
+    group: "Delhi Tax & Regional Offices",
+    nearbyCourtSlug: "gstat",
+    jurisdiction: "First Appellate Authority (Sec. 107 CGST & Sec. 246A Income Tax)",
+    addressNote: "I.P. Estate / Laxmi Nagar / Civic Centre Appellate Ranges, New Delhi"
+  },
+  {
+    slug: "delhi-itat-cestat",
+    name: "ITAT & CESTAT Principal Benches — Lok Nayak Bhawan / R.K. Puram, New Delhi",
+    city: "New Delhi",
+    group: "Delhi Tax & Regional Offices",
+    nearbyCourtSlug: "delhi-high-court",
+    jurisdiction: "Income Tax Appellate Tribunal & Customs/Excise Appellate Tribunal",
+    addressNote: "Lok Nayak Bhawan, Khan Market & West Block, R.K. Puram, New Delhi"
+  },
+  {
+    slug: "delhi-dgft-trademark-msme",
+    name: "DGFT (CLA ITO), Trademark Registry (Dwarka) & MSME Office, New Delhi",
+    city: "New Delhi",
+    group: "Delhi Tax & Regional Offices",
+    nearbyCourtSlug: "delhi-high-court",
+    jurisdiction: "IEC/DGFT North Zone, Trademark Registry Delhi & MSME Udyam Desk",
+    addressNote: "Indraprastha Bhawan (ITO) & Boudhik Sampada Bhawan (Sector 14, Dwarka)"
+  },
+  {
+    slug: "delhi-pitampura-rohini-circle",
+    name: "North-West Delhi GST & Income Tax Circle — Pitampura / Rohini, Delhi",
+    city: "Delhi (Pitampura)",
+    group: "Delhi Tax & Regional Offices",
+    nearbyCourtSlug: "delhi-high-court",
+    jurisdiction: "Pitampura, Rohini, Wazirpur & North-West Delhi Tax Wards",
+    addressNote: "Near Captain Satish Marg, Rishi Nagar, Pitampura, Delhi — 110034"
+  },
+  {
+    slug: "ncr-gurugram-noida-tax-office",
+    name: "NCR Regional GST & Income Tax Offices — Gurugram, Noida, Faridabad & Ghaziabad",
+    city: "NCR (Gurugram / Noida)",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "punjab-haryana-high-court",
+    jurisdiction: "Haryana & UP NCR GST Commissionerates, CIT(A) & MSME Councils",
+    addressNote: "Udyog Vihar / Sector 32 Gurugram & Sector 62 / 18 Noida"
+  },
+  {
+    slug: "chandigarh-regional-tax-office",
+    name: "Chandigarh, Punjab & Haryana Regional GST & Income Tax Office (Sector 17)",
+    city: "Chandigarh",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "punjab-haryana-high-court",
+    jurisdiction: "Near Punjab & Haryana High Court — CGST, State GST & Income Tax",
+    addressNote: "Central Revenue Building, Sector 17-C, Chandigarh & Panchkula/Mohali"
+  },
+  {
+    slug: "jaipur-jodhpur-regional-tax-office",
+    name: "Rajasthan Regional GST, Income Tax & Commissioner (Appeals) — Jaipur & Jodhpur",
+    city: "Jaipur / Jodhpur",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "rajasthan-high-court",
+    jurisdiction: "Near Rajasthan High Court Benches — Kar Bhawan & NCRB Statue Circle",
+    addressNote: "Statue Circle & Jhalana Doongri, Jaipur · Paota, Jodhpur"
+  },
+  {
+    slug: "prayagraj-lucknow-regional-tax-office",
+    name: "UP Regional GST & Income Tax Commissionerate — Prayagraj & Lucknow",
+    city: "Prayagraj / Lucknow",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "allahabad-high-court",
+    jurisdiction: "Near Allahabad High Court & Lucknow Bench — CGST, UP GST & Income Tax",
+    addressNote: "Civil Lines, Prayagraj & Vibhuti Khand, Gomti Nagar, Lucknow"
+  },
+  {
+    slug: "ahmedabad-regional-tax-office",
+    name: "Gujarat Regional GST Bhavan, Aayakar Bhawan & DGFT — Ahmedabad",
+    city: "Ahmedabad",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "gujarat-high-court",
+    jurisdiction: "Near Gujarat High Court — CGST, State GST, Income Tax & Trademark",
+    addressNote: "Ambawadi & Ashram Road, Ahmedabad, Gujarat"
+  },
+  {
+    slug: "patna-regional-tax-office",
+    name: "Bihar Regional GST & Income Tax Office (Central Revenue Building, Patna)",
+    city: "Patna",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "patna-high-court",
+    jurisdiction: "Near Patna High Court — CGST, Bihar Commercial Taxes & CIT(A)",
+    addressNote: "Birchand Patel Path & Bailey Road, Patna, Bihar"
+  },
+  {
+    slug: "mumbai-regional-tax-office",
+    name: "Mumbai Regional Aayakar Bhawan, GST Bhavan, DGFT & Trademark Office",
+    city: "Mumbai",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "bombay-high-court",
+    jurisdiction: "Near Bombay High Court — Churchgate, Fort, Mazgaon & Antop Hill",
+    addressNote: "M.K. Road, Churchgate & Fort, Mumbai — 400001 / 400020"
+  },
+  {
+    slug: "hyderabad-regional-tax-office",
+    name: "Hyderabad Regional GST Bhavan, Income Tax Towers & DGFT Office",
+    city: "Hyderabad",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "telangana-high-court",
+    jurisdiction: "Near Telangana High Court — Basheerbagh & Masab Tank Tax Circles",
+    addressNote: "Basheerbagh & Masab Tank, Hyderabad, Telangana"
+  },
+  {
+    slug: "kolkata-regional-tax-office",
+    name: "Kolkata Regional Aayakar Bhawan, GST Bhawan, DGFT & Trademark Office",
+    city: "Kolkata",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "calcutta-high-court",
+    jurisdiction: "Near Calcutta High Court — Chowringhee, Rajdanga & Salt Lake",
+    addressNote: "P-7 Chowringhee Square & Esplanade, Kolkata, West Bengal"
+  },
+  {
+    slug: "bengaluru-regional-tax-office",
+    name: "Bengaluru Regional CR Building (Income Tax & CGST), State GST & DGFT",
+    city: "Bengaluru",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "karnataka-high-court",
+    jurisdiction: "Near Karnataka High Court — Queen's Road, Gandhinagar & Koramangala",
+    addressNote: "Queen's Road & MG Road Corridor, Bengaluru, Karnataka"
+  },
+  {
+    slug: "chennai-regional-tax-office",
+    name: "Chennai Regional GST Bhawan, Aayakar Bhawan, DGFT & Trademark Office",
+    city: "Chennai",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "madras-high-court",
+    jurisdiction: "Near Madras High Court — Nungambakkam, Greams Road & Guindy",
+    addressNote: "Nungambakkam High Road & Guindy, Chennai, Tamil Nadu"
+  }
+];
 
 export function getCourtBySlug(slug: string | undefined): CourtProfile | undefined {
   if (!slug) return undefined;
@@ -368,7 +600,8 @@ export function filterCourts(
       court.shortName,
       court.city,
       court.stateOrJurisdiction,
-      ...court.benches
+      ...court.benches,
+      ...court.nearbyTaxOffices
     ]
       .join(" ")
       .toLowerCase();
@@ -396,7 +629,7 @@ export function extractJsonFromModelText(rawText: string): unknown {
 
 const VALID_CATEGORIES: BulletinCategory[] = [
   "Constitutional",
-  "Tax & Corporate",
+  "GST & Income Tax",
   "Commercial & Arbitration",
   "Criminal",
   "Civil & Property"
@@ -409,10 +642,16 @@ function normalizeCategory(value: unknown): BulletinCategory {
     );
     if (exact) return exact;
     const lower = value.toLowerCase();
-    if (lower.includes("tax") || lower.includes("corp") || lower.includes("gst")) {
-      return "Tax & Corporate";
+    if (
+      lower.includes("tax") ||
+      lower.includes("gst") ||
+      lower.includes("income") ||
+      lower.includes("tds") ||
+      lower.includes("customs")
+    ) {
+      return "GST & Income Tax";
     }
-    if (lower.includes("arb") || lower.includes("comm") || lower.includes("ibc")) {
+    if (lower.includes("arb") || lower.includes("comm") || lower.includes("ibc") || lower.includes("trademark") || lower.includes("dgft")) {
       return "Commercial & Arbitration";
     }
     if (lower.includes("crim") || lower.includes("bail") || lower.includes("pmla")) {
@@ -521,12 +760,12 @@ export function validateConsultationInput(
   }
 
   if (!input.practiceArea || input.practiceArea.trim().length === 0) {
-    errors.practiceArea = "Please select a practice area.";
+    errors.practiceArea = "Please select a service or case type.";
   }
 
   if (!input.briefSummary || input.briefSummary.trim().length < 15) {
     errors.briefSummary =
-      "Please share a concise summary of the legal matter (at least 15 characters).";
+      "Please share a concise summary of the matter (at least 15 characters).";
   }
 
   return {
@@ -562,29 +801,30 @@ export function inferCategoryFromHeadline(headline: string): BulletinCategory {
   if (
     lower.includes("tax") ||
     lower.includes("gst") ||
+    lower.includes("gstat") ||
     lower.includes("vat") ||
     lower.includes("itc") ||
+    lower.includes("tds") ||
     lower.includes("refund") ||
     lower.includes("assessment") ||
     lower.includes("income") ||
     lower.includes("customs") ||
-    lower.includes("sebi") ||
-    lower.includes("company") ||
-    lower.includes("corporate") ||
-    lower.includes("bank")
+    lower.includes("scn") ||
+    lower.includes("demand") ||
+    lower.includes("revenue")
   ) {
-    return "Tax & Corporate";
+    return "GST & Income Tax";
   }
   if (
     lower.includes("arbitrat") ||
-    lower.includes("ibc") ||
-    lower.includes("insolvency") ||
-    lower.includes("nclt") ||
+    lower.includes("dgft") ||
+    lower.includes("msme") ||
     lower.includes("trademark") ||
     lower.includes("patent") ||
     lower.includes("copyright") ||
     lower.includes("contract") ||
-    lower.includes("commercial")
+    lower.includes("commercial") ||
+    lower.includes("partnership")
   ) {
     return "Commercial & Arbitration";
   }
@@ -633,7 +873,6 @@ export function parseRssItemsFromXml(xml: string, limit = 8): ParsedRssItem[] {
     const fullTitle = decodeXmlEntities(titleRaw);
     let link = decodeXmlEntities(linkRaw);
 
-    // Unwrap Bing News redirect links to their canonical source URL
     try {
       const parsedLink = new URL(link);
       const wrappedUrl = parsedLink.searchParams.get("url");
@@ -726,10 +965,10 @@ export function buildLiveReportFromRss(
     },
     {
       id: `${court.slug}-notice-rss-2`,
-      title: `Active Benches & Filing Desk (${court.city})`,
+      title: `Nearby Tax Offices & Benches (${court.city})`,
       date: "Current Roster",
       type: "Bench Roster",
-      summary: `Benches covered: ${court.benches.join(", ")}. ${court.chambersPracticeNote}`
+      summary: `Benches: ${court.benches.join(", ")}. Connected tax offices: ${court.nearbyTaxOffices.join(" · ")}. ${court.chambersPracticeNote}`
     }
   ];
 
@@ -743,8 +982,8 @@ export function buildLiveReportFromRss(
     courtName: court.name,
     fetchedAt: fetchedAtIso,
     sourceMode: "live-rss",
-    overviewSummary: `Latest orders, judgments, and court updates from the ${court.name} (${court.city}), gathered in real time from trusted Indian legal news sources.`,
-    sittingStatus: "Live Court Updates Active",
+    overviewSummary: `Latest orders, judgments, and court updates from the ${court.name} (${court.city}), gathered directly from public Indian legal news feeds without AI credit usage.`,
+    sittingStatus: "Live Court Feed Active (Direct RSS · Zero AI Credits)",
     chiefJusticeNote: `Principal Seat: ${court.city} · ${court.benches.length} Bench${court.benches.length > 1 ? "es" : ""}`,
     rulings,
     registryNotices,
@@ -768,20 +1007,44 @@ export function buildArchiveFallbackReport(
   const rulings: JudicialRuling[] = [
     {
       id: `${court.slug}-fallback-1`,
-      title: `${court.shortName} Appellate & Writ Docket — Tax, GST & Commercial Filings`,
-      caseNameOrCitation: `${court.shortName} · Official Registry Docket`,
+      title: `${court.shortName} — GST Show Cause Notice (SCN), Input Tax Credit & Section 73/74 Orders`,
+      caseNameOrCitation: `${court.shortName} · Tax & GST Division Docket`,
       date: formattedDate,
-      category: "Tax & Corporate",
+      category: "GST & Income Tax",
       bench: defaultBench,
       statutes:
         court.tier === "supreme"
-          ? ["Article 136 Constitution of India", "CGST Act, 2017", "Income-tax Act, 1961"]
+          ? ["Article 136 Constitution of India", "CGST Act, 2017"]
           : court.tier === "tribunal"
-          ? ["Section 112 CGST Act, 2017", "GSTAT Procedure Rules"]
-          : ["Article 226 Constitution of India", "CGST Act, 2017", "Commercial Courts Act, 2015"],
-      holdingSummary: `${court.summary} ${court.chambersPracticeNote}`,
-      practicalTakeaway: `Access the official ${court.shortName} cause list and order portal for today's bench assignments and certified order uploads.`,
+          ? ["Section 112 CGST Act, 2017", "Section 107/108 Appeals"]
+          : ["Article 226 Constitution of India", "Section 73/74 CGST Act, 2017"],
+      holdingSummary: `Orders addressing DRC-01 Show Cause Notice replies, GSTR-1 vs GSTR-3B reconciliation mismatches, Commissioner (Appeals) pre-deposit compliance, and GSTAT appellate filings before ${court.name}.`,
+      practicalTakeaway: `Assessees contesting an adjudicating order or SCN should verify limitation dates and attach reconciled return ledgers before filing.`,
       sourceUrl: court.officialUrl
+    },
+    {
+      id: `${court.slug}-fallback-2`,
+      title: `${court.shortName} — Income Tax Return Assessment, Section 148 Notice & TDS Compliance`,
+      caseNameOrCitation: `${court.shortName} · Direct Tax Appellate Roster`,
+      date: formattedDate,
+      category: "GST & Income Tax",
+      bench: defaultBench,
+      statutes: ["Income-tax Act, 1961", "Section 148 / 148A", "Section 194 / TDS Rules"],
+      holdingSummary: `Judicial statements on faceless income tax assessment natural-justice requirements, TDS 24Q/26Q credit mismatches, and stay of coercive demand during pendency of first appeal.`,
+      practicalTakeaway: `Maintain complete ITR computation sheets, Form 26AS/AIS reconciliations, and TRACES justification reports for scrutiny replies.`,
+      sourceUrl: court.officialUrl
+    },
+    {
+      id: `${court.slug}-fallback-3`,
+      title: `${court.shortName} — DGFT Export Incentives, MSME Recovery & Trademark Protection`,
+      caseNameOrCitation: `${court.shortName} · Commercial & Statutory Writ Bench`,
+      date: formattedDate,
+      category: "Commercial & Arbitration",
+      bench: defaultBench,
+      statutes: ["Foreign Trade (Development & Regulation) Act", "MSMED Act, 2006", "Trade Marks Act, 1999"],
+      holdingSummary: `${court.summary} ${court.chambersPracticeNote}`,
+      practicalTakeaway: `Check the official ${court.shortName} cause list portal (${court.causeListUrl}) and connected regional tax offices (${court.nearbyTaxOffices[0]}) for daily filings.`,
+      sourceUrl: court.causeListUrl
     }
   ];
 
@@ -795,10 +1058,10 @@ export function buildArchiveFallbackReport(
     },
     {
       id: `${court.slug}-notice-fallback-2`,
-      title: `Active Benches & Filing Desk (${court.city})`,
+      title: `Nearby Tax Offices & Filing Desk (${court.city})`,
       date: "Current Roster",
       type: "Bench Roster",
-      summary: `Benches covered: ${court.benches.join(", ")}. ${court.chambersPracticeNote}`
+      summary: `Benches: ${court.benches.join(", ")}. Connected regional tax offices: ${court.nearbyTaxOffices.join(" · ")}. ${court.chambersPracticeNote}`
     }
   ];
 
@@ -808,7 +1071,7 @@ export function buildArchiveFallbackReport(
     fetchedAt: fetchedAtIso,
     sourceMode: "archive-fallback",
     overviewSummary: court.summary,
-    sittingStatus: "Registry & Cause List Portals Active",
+    sittingStatus: "Registry & Cause List Portals Active (Zero AI Credits)",
     chiefJusticeNote: `Principal Seat: ${court.city} · ${court.benches.length} Bench${court.benches.length > 1 ? "es" : ""}`,
     rulings,
     registryNotices,
@@ -818,5 +1081,6 @@ export function buildArchiveFallbackReport(
     ]
   };
 }
+
 
 

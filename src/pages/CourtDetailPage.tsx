@@ -1,456 +1,539 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import * as React from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useParams, Link } from "react-router-dom";
+import {
+  getCourtBySlug,
+  buildArchiveFallbackReport,
+  TAX_AND_REGIONAL_OFFICES,
+  type CourtProfile,
+  type LiveCourtReport,
+  type JudicialRuling,
+} from "@/src/data/courtsRegistry";
+import { COURT_IMAGES } from "@/src/data/assets";
+import { Button } from "@/src/components/ui/button";
+import { ResilientImage } from "@/src/components/ResilientImage";
 import {
   ArrowLeft,
   ExternalLink,
   RefreshCw,
-  AlertCircle,
-  BookOpen,
+  Scale,
+  MapPin,
+  Calendar,
+  Building2,
   FileText,
-  Landmark
+  Landmark,
+  CheckCircle2,
+  Clock,
 } from "lucide-react";
-import { COURT_IMAGES } from "@/src/data/assets";
-import {
-  getCourtBySlug,
-  type BulletinCategory,
-  type LiveCourtReport
-} from "@/src/data/courtsRegistry";
-import { ResilientImage } from "@/src/components/ResilientImage";
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
-import { Separator } from "@/src/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
-import { parseJsonSafely } from "@/src/utils/http";
 
-interface CourtDetailPageProps {
-  onConsultForCourt: (courtSlug: string) => void;
+export interface CourtDetailPageProps {
+  onConsultForCourt: (slug: string) => void;
 }
-
-const CATEGORIES: Array<"All" | BulletinCategory> = [
-  "All",
-  "Tax & Corporate",
-  "Commercial & Arbitration",
-  "Constitutional",
-  "Civil & Property",
-  "Criminal"
-];
 
 export function CourtDetailPage({ onConsultForCourt }: CourtDetailPageProps) {
   const { slug } = useParams<{ slug: string }>();
-  const court = getCourtBySlug(slug);
+  const court: CourtProfile | undefined = slug ? getCourtBySlug(slug) : undefined;
 
   const [report, setReport] = useState<LiveCourtReport | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [categoryFilter, setCategoryFilter] = useState<"All" | BulletinCategory>("All");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<"holdings" | "registry" | "appearance">("holdings");
+  const [categoryFilter, setCategoryFilter] = useState<string>("All");
 
-  const fetchReport = useCallback(
-    async (refresh = false) => {
-      if (!court) return;
-      setLoading(true);
-      setError(null);
-
-      try {
-        const url = refresh
-          ? `/api/courts/${court.slug}/live?refresh=1`
-          : `/api/courts/${court.slug}/live`;
-        const response = await fetch(url);
-        const data = await parseJsonSafely<LiveCourtReport & { error?: string }>(response);
-        if (!response.ok || !data) {
-          throw new Error(data?.error || `Unable to retrieve live report for ${court.name}.`);
-        }
-        setReport(data as LiveCourtReport);
-      } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Live judicial report fetch failed. Please retry."
-        );
-      } finally {
-        setLoading(false);
+  const fetchLiveReport = useCallback(async (forceRefresh = false) => {
+    if (!court) return;
+    setLoading(true);
+    try {
+      const url = `/api/courts/${court.slug}/live${forceRefresh ? "?refresh=true" : ""}`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        const reportPayload: LiveCourtReport = data.report || data;
+        setReport(reportPayload);
       }
-    },
-    [court]
-  );
+    } catch {
+      // Fallback handled via buildArchiveFallbackReport below
+    } finally {
+      setLoading(false);
+    }
+  }, [court]);
 
   useEffect(() => {
-    setCategoryFilter("All");
     setReport(null);
-    void fetchReport(false);
-  }, [fetchReport]);
-
-  const filteredRulings = useMemo(() => {
-    if (!report) return [];
-    if (categoryFilter === "All") return report.rulings;
-    return report.rulings.filter((r) => r.category === categoryFilter);
-  }, [report, categoryFilter]);
+    setCategoryFilter("All");
+    fetchLiveReport(false);
+  }, [fetchLiveReport]);
 
   if (!court) {
     return (
-      <div className="mx-auto max-w-[1280px] px-6 py-20 text-center space-y-5">
-        <h1 className="font-serif text-4xl font-semibold text-foreground">Court Not Found</h1>
-        <p className="text-sm text-muted-foreground">
-          The requested court dossier does not exist in our registry.
+      <div className="mx-auto max-w-4xl px-4 py-20 text-center">
+        <h1 className="font-display text-3xl font-bold text-[#0A2536]">Court Not Found</h1>
+        <p className="mt-2 text-muted-foreground">
+          The court you are looking for could not be found.
         </p>
-        <Button asChild>
-          <Link to="/courts">Return to All Courts</Link>
-        </Button>
+        <Link to="/courts" className="mt-6 inline-block">
+          <Button className="rounded-full">
+            <ArrowLeft className="h-4 w-4" />
+            Return to Courts Directory
+          </Button>
+        </Link>
       </div>
     );
   }
 
+  const fallbackReport = buildArchiveFallbackReport(court, new Date().toISOString());
+  const activeReport = report || fallbackReport;
+  const holdings: JudicialRuling[] =
+    activeReport.rulings && activeReport.rulings.length > 0
+      ? activeReport.rulings
+      : fallbackReport.rulings;
+  const overview = activeReport.overviewSummary || court.summary;
+
+  const nearbyTaxOffices = TAX_AND_REGIONAL_OFFICES.filter(
+    (o) =>
+      o.nearbyCourtSlug === court.slug ||
+      (court.slug === "supreme-court-of-india" &&
+        o.group === "Delhi Tax & Regional Offices")
+  );
+
+  const categories: string[] = [
+    "All",
+    ...Array.from(new Set(holdings.map((h) => String(h.category || "GST & Income Tax")))),
+  ];
+
+  const filteredHoldings =
+    categoryFilter === "All"
+      ? holdings
+      : holdings.filter((h) => h.category === categoryFilter);
+
+  const courtImg =
+    COURT_IMAGES[court.slug] || COURT_IMAGES["supreme-court-of-india"];
+
   return (
-    <div className="mx-auto max-w-[1280px] px-6 py-10 space-y-10">
-      {/* Breadcrumb + Top Actions */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <Link
-          to="/courts"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Back to All Courts
-        </Link>
-
-        <div className="flex flex-wrap items-center gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => fetchReport(true)}
-            disabled={loading}
-          >
-            <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} aria-hidden="true" />
-            Refresh Live Report
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onConsultForCourt(court.slug)}
-          >
-            Consult on {court.shortName} Matter
-          </Button>
-        </div>
-      </div>
-
-      {/* Court Header Banner */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 border border-border bg-white rounded-2xl overflow-hidden shadow-xs">
-        <div className="lg:col-span-5 aspect-[4/3] lg:aspect-auto lg:min-h-[320px] bg-secondary">
-          <ResilientImage
-            src={COURT_IMAGES[court.slug]}
-            alt={`${court.name} architectural view`}
-            fallbackLabel={court.name}
-            imgClassName="lg:h-full"
-          />
-        </div>
-
-        <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-6">
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground tabular-nums">
-              <span className="font-semibold text-primary">
-                {court.tier === "supreme"
-                  ? "Supreme Court"
-                  : court.tier === "tribunal"
-                  ? "Appellate Tribunal"
-                  : "High Court"}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>{court.city}</span>
-              <span aria-hidden="true">·</span>
-              <span>Established {court.establishedYear}</span>
-            </div>
-
-            <h1
-              className="text-3xl sm:text-4xl font-extrabold text-foreground leading-tight"
-              style={{ textWrap: "balance" }}
+    <div className="min-h-screen bg-[#F3FAFF]">
+      {/* Court Header */}
+      <section className="border-b border-border bg-gradient-to-b from-[#F3FAFF] to-[#DAF6EF]/45 text-[#0A2536] py-8 sm:py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <Link
+              to="/courts"
+              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#33566D] hover:text-[#0A2536] transition-colors"
             >
-              {court.name}
-            </h1>
+              <ArrowLeft className="h-3.5 w-3.5" />
+              Back to All Courts
+            </Link>
 
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              {report?.overviewSummary || court.summary}
-            </p>
+            <div className="flex items-center gap-2.5">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fetchLiveReport(true)}
+                disabled={loading}
+                className="rounded-full"
+              >
+                <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
+                {loading ? "Refreshing..." : "Refresh Live Report"}
+              </Button>
+              <Button
+                size="sm"
+                className="rounded-full"
+                onClick={() => onConsultForCourt(court.slug)}
+              >
+                Consult on {court.shortName} Matter
+              </Button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border text-xs">
-            <div className="space-y-1">
-              <p className="text-muted-foreground">Jurisdiction &amp; Benches</p>
-              <p className="font-semibold text-foreground">{court.stateOrJurisdiction}</p>
-              <p className="text-muted-foreground">{court.benches.join(" · ")}</p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-muted-foreground">Official Court Portals</p>
-              <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href={court.officialUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
-                >
-                  Official Website
-                  <ExternalLink className="h-3 w-3" aria-hidden="true" />
-                </a>
-                <a
-                  href={court.causeListUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
-                >
-                  Daily Cause List
-                  <ExternalLink className="h-3 w-3" aria-hidden="true" />
-                </a>
+          <div className="rounded-[26px] border border-[#0A2536]/12 bg-white/85 p-5 sm:p-7 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
+              <div className="lg:col-span-5 relative overflow-hidden rounded-[20px] min-h-[240px] sm:min-h-[280px]">
+                <ResilientImage
+                  src={courtImg}
+                  alt={court.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A2536]/80 via-[#0A2536]/20 to-transparent" />
+                <div className="absolute top-3.5 left-3.5 flex flex-wrap items-center gap-2">
+                  <span className="rounded-full bg-[#0A2536]/85 backdrop-blur-sm px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-[#F3FAFF]">
+                    {court.tier}
+                  </span>
+                  <span className="rounded-full bg-[#DAF6EF]/90 px-3 py-1 font-mono text-[10px] font-semibold text-[#0A2536]">
+                    Est. {court.establishedYear}
+                  </span>
+                </div>
+                <div className="absolute bottom-3.5 left-3.5 right-3.5 text-[#F3FAFF]">
+                  <div className="flex items-center gap-1.5 text-xs text-[#DAF6EF]">
+                    <MapPin className="h-3.5 w-3.5 shrink-0" />
+                    <span>Principal Seat: {court.city}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-7 flex flex-col justify-between space-y-5">
+                <div>
+                  <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#33566D] mb-1">
+                    COURT REPORT &amp; CASE UPDATES · ZERO AI CREDITS
+                  </div>
+                  <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-[#0A2536] leading-[0.98]">
+                    {court.name}
+                  </h1>
+                  <p className="mt-3 text-[#33566D] text-sm sm:text-base leading-relaxed">
+                    {overview}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-border">
+                  <div>
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-[#33566D] mb-1.5">
+                      Jurisdiction &amp; Benches
+                    </div>
+                    <p className="text-xs text-[#0A2536] font-medium mb-2">
+                      {court.stateOrJurisdiction}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {court.benches.map((bench) => (
+                        <span
+                          key={bench}
+                          className="text-[11px] font-mono bg-[#DAF6EF]/70 px-2.5 py-0.5 rounded-full text-[#0A2536]"
+                        >
+                          {bench}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-[#33566D] mb-1.5">
+                      Official Court Portals
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <a
+                        href={court.officialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-between rounded-xl border border-[#0A2536]/15 bg-[#F3FAFF] px-3 py-2 text-xs font-medium text-[#0A2536] hover:bg-[#DAF6EF] transition-colors"
+                      >
+                        <span>Official Court Website</span>
+                        <ExternalLink className="h-3.5 w-3.5 text-[#33566D]" />
+                      </a>
+                      <a
+                        href={court.causeListUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-between rounded-xl border border-[#0A2536]/15 bg-[#F3FAFF] px-3 py-2 text-xs font-medium text-[#0A2536] hover:bg-[#DAF6EF] transition-colors"
+                      >
+                        <span>Cause List &amp; Case Status</span>
+                        <ExternalLink className="h-3.5 w-3.5 text-[#33566D]" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Live Status Bar */}
-      {report && !loading && (
-        <div className="flex flex-wrap items-center justify-between gap-3 border border-border bg-[#DAF6EF]/60 px-4 sm:px-5 py-3 rounded-2xl sm:rounded-full text-xs text-[#33566D]">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 font-semibold text-foreground">
-              <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" aria-hidden="true" />
-              {report.sittingStatus}
-            </span>
-            <span aria-hidden="true">·</span>
-            <span>{report.chiefJusticeNote}</span>
-            <span aria-hidden="true">·</span>
-            <span className="font-semibold text-[#0A2536] tabular-nums">
-              {report.rulings.length} Live Dispatches
-            </span>
-          </div>
-          <span className="font-mono tabular-nums">
-            Updated: {new Date(report.fetchedAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
-          </span>
-        </div>
-      )}
-
-      {/* Loading / Error / Report Tabs */}
-      {loading ? (
-        <div className="space-y-4" aria-busy="true" aria-label={`Fetching live report for ${court.name}`}>
-          <div className="border border-border bg-card p-6 rounded-2xl space-y-3 animate-pulse">
-            <div className="h-4 w-52 bg-secondary rounded-sm" />
-            <div className="h-6 w-2/3 bg-secondary rounded-sm" />
-            <div className="h-4 w-full bg-muted rounded-sm" />
-            <div className="h-4 w-5/6 bg-muted rounded-sm" />
-          </div>
-          <div className="border border-border bg-card p-6 rounded-2xl space-y-3 animate-pulse">
-            <div className="h-4 w-44 bg-secondary rounded-sm" />
-            <div className="h-6 w-3/4 bg-secondary rounded-sm" />
-            <div className="h-4 w-full bg-muted rounded-sm" />
-          </div>
-        </div>
-      ) : error ? (
-        <Card className="border-destructive/40">
-          <CardContent className="p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" aria-hidden="true" />
-              <div className="space-y-1">
-                <h2 className="text-xl font-bold text-foreground">
-                  Could Not Fetch Live Court Updates
-                </h2>
-                <p className="text-sm text-muted-foreground">{error}</p>
-              </div>
+      {/* Main Content */}
+      <section className="py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Status Bar */}
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#0A2536]/12 bg-[#DAF6EF]/70 px-4 py-3">
+            <div className="flex items-center gap-2.5 text-xs">
+              {loading ? (
+                <>
+                  <RefreshCw className="h-4 w-4 text-[#0A2536] animate-spin" />
+                  <span className="text-[#0A2536] font-medium">
+                    Fetching latest public RSS &amp; court statements for {court.shortName}...
+                  </span>
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 className="h-4 w-4 text-[#15803D]" />
+                  <span className="text-[#0A2536] font-medium">
+                    {activeReport.sittingStatus}
+                  </span>
+                </>
+              )}
             </div>
-            <Button type="button" onClick={() => fetchReport(true)}>
-              Try Again
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <Tabs defaultValue="rulings" className="w-full">
-          <div className="overflow-x-auto no-scrollbar pb-1">
-            <TabsList className="w-max min-w-full sm:w-auto">
-              <TabsTrigger value="rulings">
-                <BookOpen className="h-4 w-4 mr-2" aria-hidden="true" />
-                Latest Rulings ({report?.rulings.length ?? 0})
-              </TabsTrigger>
-              <TabsTrigger value="notices">
-                <FileText className="h-4 w-4 mr-2" aria-hidden="true" />
-                Registry &amp; Cause List ({report?.registryNotices.length ?? 0})
-              </TabsTrigger>
-              <TabsTrigger value="chambers">
-                <Landmark className="h-4 w-4 mr-2" aria-hidden="true" />
-                How We Appear Here
-              </TabsTrigger>
-            </TabsList>
+
+            {activeReport.fetchedAt && (
+              <div className="flex items-center gap-1.5 font-mono text-[11px] text-[#33566D]">
+                <Clock className="h-3.5 w-3.5" />
+                <span>
+                  Updated{" "}
+                  {new Date(activeReport.fetchedAt).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+              </div>
+            )}
           </div>
 
-          {/* Tab 1: Rulings Digest */}
-          <TabsContent value="rulings" className="space-y-6">
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1" role="group" aria-label="Filter rulings by category">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setCategoryFilter(cat)}
-                  className={`px-4 py-2 min-h-[40px] text-xs font-semibold rounded-full border whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
-                    categoryFilter === cat
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-card text-muted-foreground border-border hover:text-foreground"
-                  }`}
+          {/* Navigation Tabs */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4 mb-6">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setActiveTab("holdings")}
+                className={`px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-full transition-colors cursor-pointer ${
+                  activeTab === "holdings"
+                    ? "bg-[#0A2536] text-[#F3FAFF] font-semibold"
+                    : "bg-white/80 text-[#33566D] hover:text-[#0A2536] border border-border"
+                }`}
+              >
+                Latest Rulings ({holdings.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("registry")}
+                className={`px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-full transition-colors cursor-pointer ${
+                  activeTab === "registry"
+                    ? "bg-[#0A2536] text-[#F3FAFF] font-semibold"
+                    : "bg-white/80 text-[#33566D] hover:text-[#0A2536] border border-border"
+                }`}
+              >
+                Registry &amp; Cause List
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("appearance")}
+                className={`px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-full transition-colors cursor-pointer ${
+                  activeTab === "appearance"
+                    ? "bg-[#0A2536] text-[#F3FAFF] font-semibold"
+                    : "bg-white/80 text-[#33566D] hover:text-[#0A2536] border border-border"
+                }`}
+              >
+                How We Appear Here &amp; Nearby Tax Offices ({nearbyTaxOffices.length || court.nearbyTaxOffices.length})
+              </button>
+            </div>
+
+            {activeTab === "holdings" && (
+              <div className="flex flex-wrap items-center gap-1.5">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setCategoryFilter(cat)}
+                    className={`px-3 py-1 text-xs rounded-full transition-colors cursor-pointer ${
+                      categoryFilter === cat
+                        ? "bg-[#33566D] text-[#F3FAFF] font-medium"
+                        : "bg-white/70 text-[#33566D] hover:text-[#0A2536] border border-border"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Tab Content: Holdings */}
+          {activeTab === "holdings" && (
+            <div className="space-y-4">
+              {filteredHoldings.map((holding) => (
+                <article
+                  key={holding.id}
+                  className="rounded-[24px] border border-border bg-white/90 p-6 hover:border-[#0A2536]/35 transition-colors shadow-sm"
                 >
-                  {cat}
-                </button>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="rounded-full bg-[#0A2536] px-3 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#F3FAFF] font-semibold">
+                        {holding.category}
+                      </span>
+                      {holding.caseNameOrCitation && (
+                        <span className="font-mono text-xs text-[#33566D] bg-[#DAF6EF]/60 px-2.5 py-0.5 rounded-full">
+                          {holding.caseNameOrCitation}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+                      <Calendar className="h-3.5 w-3.5" />
+                      <span>{holding.date}</span>
+                    </div>
+                  </div>
+
+                  <h3 className="font-display text-2xl font-bold text-[#0A2536] leading-snug">
+                    {holding.title}
+                  </h3>
+
+                  {holding.bench && (
+                    <div className="mt-1.5 flex items-center gap-1.5 text-xs text-[#33566D] font-medium">
+                      <Landmark className="h-3.5 w-3.5 text-[#0A2536]" />
+                      <span>{holding.bench}</span>
+                    </div>
+                  )}
+
+                  <p className="mt-3 text-sm text-[#0A2536]/85 leading-relaxed">
+                    {holding.holdingSummary}
+                  </p>
+
+                  {holding.practicalTakeaway && (
+                    <p className="mt-2 text-xs text-[#33566D] bg-[#DAF6EF]/40 rounded-xl px-3.5 py-2">
+                      <strong className="text-[#0A2536]">Chambers Note:</strong>{" "}
+                      {holding.practicalTakeaway}
+                    </p>
+                  )}
+
+                  <div className="mt-4 pt-4 border-t border-border flex flex-wrap items-center justify-between gap-4">
+                    <a
+                      href={holding.sourceUrl || court.officialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#0A2536] hover:text-[#33566D] font-semibold"
+                    >
+                      <FileText className="h-3.5 w-3.5" />
+                      <span>Source Portal</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="rounded-full"
+                      onClick={() => onConsultForCourt(court.slug)}
+                    >
+                      Ask About a Similar Case →
+                    </Button>
+                  </div>
+                </article>
               ))}
             </div>
+          )}
 
-            {filteredRulings.length === 0 ? (
-              <div className="border border-border bg-card p-10 rounded-2xl text-center space-y-3">
-                <p className="text-xl font-bold text-foreground">
-                  No updates under &ldquo;{categoryFilter}&rdquo; right now
-                </p>
-                <Button type="button" variant="outline" size="sm" onClick={() => setCategoryFilter("All")}>
-                  Show All Categories
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-5" data-testid="court-rulings-list">
-                {filteredRulings.map((ruling) => (
-                  <Card key={ruling.id}>
-                    <CardHeader className="space-y-2 pb-4">
-                      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground">
-                        <span className="font-semibold text-primary">{ruling.category}</span>
-                        <span aria-hidden="true">·</span>
-                        <span className="tabular-nums">{ruling.date}</span>
-                        <span aria-hidden="true">·</span>
-                        <span>{ruling.bench}</span>
-                        <span aria-hidden="true">·</span>
-                        <span className="font-mono text-foreground">{ruling.caseNameOrCitation}</span>
-                      </div>
-                      <CardTitle className="text-xl sm:text-2xl leading-snug">
-                        {ruling.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm sm:text-base text-foreground/90 leading-relaxed">
-                        {ruling.holdingSummary}
-                      </p>
-
-                      <div className="border-t border-border pt-4 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-                        <div className="lg:col-span-8 space-y-1">
-                          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                            Why It Matters
-                          </p>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {ruling.practicalTakeaway}
-                          </p>
-                        </div>
-
-                        <div className="lg:col-span-4 space-y-2 lg:text-right">
-                          {ruling.statutes.length > 0 && (
-                            <p className="text-xs text-muted-foreground">
-                              {ruling.statutes.join(" · ")}
-                            </p>
-                          )}
-                          {ruling.sourceUrl && (
-                            <a
-                              href={ruling.sourceUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
-                            >
-                              Read Source Article
-                              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </TabsContent>
-
-          {/* Tab 2: Registry & Cause List Notices */}
-          <TabsContent value="notices" className="space-y-4">
-            {report && report.registryNotices.length > 0 ? (
-              <div className="border border-border bg-card rounded-2xl divide-y divide-border">
-                {report.registryNotices.map((notice) => (
-                  <div key={notice.id} className="p-6 space-y-2">
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                      <span className="font-semibold text-primary">{notice.type}</span>
-                      <span aria-hidden="true">·</span>
-                      <span className="tabular-nums">{notice.date}</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground">{notice.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{notice.summary}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="border border-border bg-card p-8 rounded-2xl text-sm text-muted-foreground">
-                No recent circulars were returned right now. Check the official{" "}
-                <a
-                  href={court.causeListUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary underline underline-offset-4"
-                >
-                  Cause List Portal
-                </a>{" "}
-                directly.
-              </div>
-            )}
-          </TabsContent>
-
-          {/* Tab 3: Jurisdiction & Chambers Filing Desk */}
-          <TabsContent value="chambers">
-            <Card>
-              <CardHeader>
-                <CardTitle>SJ Associates Matters in {court.shortName}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+          {/* Tab Content: Registry & Cause List */}
+          {activeTab === "registry" && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="rounded-[24px] border border-border bg-white/90 p-6 shadow-sm">
+                <div className="font-mono text-xs uppercase tracking-widest text-[#33566D] mb-2">
+                  FILING &amp; REGISTRY NOTES
+                </div>
+                <h3 className="font-display text-2xl font-bold text-[#0A2536] mb-3">
+                  Filing &amp; Listing Procedure at {court.shortName}
+                </h3>
+                <p className="text-sm text-[#33566D] leading-relaxed">
                   {court.chambersPracticeNote}
                 </p>
-                <Separator />
-                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <dt className="text-xs text-muted-foreground">Jurisdiction Covered</dt>
-                    <dd className="font-semibold text-foreground mt-1">{court.stateOrJurisdiction}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-xs text-muted-foreground">Active Benches</dt>
-                    <dd className="font-semibold text-foreground mt-1">{court.benches.join(", ")}</dd>
-                  </div>
-                </dl>
-                <div className="pt-2">
-                  <Button type="button" onClick={() => onConsultForCourt(court.slug)}>
-                    Discuss a Matter Here
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      )}
 
-      {/* Grounded Sources Directory */}
-      {report && report.sources.length > 0 && (
-        <section className="border border-border bg-card p-6 rounded-2xl space-y-3">
-          <h2 className="text-xl font-bold text-foreground">Sources &amp; Case Links</h2>
-          <p className="text-xs text-muted-foreground">
-            Public legal news and court updates retrieved for {court.name}.
-          </p>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
-            {report.sources.map((src) => (
-              <li key={src.uri} className="text-xs">
-                <a
-                  href={src.uri}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-primary hover:underline break-all"
-                >
-                  <ExternalLink className="h-3 w-3 shrink-0" aria-hidden="true" />
-                  <span>{src.title}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+                <div className="mt-6 space-y-2.5 border-t border-border pt-4 text-xs">
+                  <div className="flex justify-between py-1">
+                    <span className="text-muted-foreground">Principal Registry Seat</span>
+                    <span className="font-medium text-[#0A2536]">{court.city}</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-muted-foreground">Active Circuit / Permanent Benches</span>
+                    <span className="font-medium text-[#0A2536]">
+                      {court.benches.join(", ")}
+                    </span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-muted-foreground">Territorial Jurisdiction</span>
+                    <span className="font-medium text-[#0A2536]">{court.stateOrJurisdiction}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[24px] border border-border bg-white/90 p-6 flex flex-col justify-between shadow-sm">
+                <div>
+                  <div className="font-mono text-xs uppercase tracking-widest text-[#33566D] mb-2">
+                    DIRECT OFFICIAL PORTALS
+                  </div>
+                  <h3 className="font-display text-2xl font-bold text-[#0A2536] mb-3">
+                    Cause Lists, Orders &amp; Judgments
+                  </h3>
+                  <p className="text-sm text-[#33566D] leading-relaxed mb-6">
+                    Access daily cause lists, certified order copies, and case status trackers
+                    directly from the official {court.shortName} portal.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <a
+                    href={court.officialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between rounded-xl border border-border bg-[#F3FAFF] p-3.5 text-sm font-medium text-[#0A2536] hover:border-[#0A2536] transition-colors"
+                  >
+                    <span>Official Portal ({court.shortName})</span>
+                    <ExternalLink className="h-4 w-4 text-[#33566D]" />
+                  </a>
+                  <a
+                    href={court.causeListUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between rounded-xl border border-border bg-[#F3FAFF] p-3.5 text-sm font-medium text-[#0A2536] hover:border-[#0A2536] transition-colors"
+                  >
+                    <span>Daily Cause List &amp; Case Status</span>
+                    <ExternalLink className="h-4 w-4 text-[#33566D]" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tab Content: How We Appear Here & Nearby Tax Offices */}
+          {activeTab === "appearance" && (
+            <div className="space-y-6">
+              <div className="rounded-[24px] border border-border bg-white/90 p-6 sm:p-8 shadow-sm">
+                <div className="max-w-3xl space-y-4">
+                  <div className="font-mono text-xs uppercase tracking-widest text-[#33566D]">
+                    SJ ASSOCIATES · APPEARANCES &amp; LOCAL COUNSEL
+                  </div>
+                  <h3 className="font-display text-3xl font-bold text-[#0A2536]">
+                    Representation Before {court.name} &amp; Nearby Tax Offices
+                  </h3>
+                  <p className="text-sm text-[#33566D] leading-relaxed">
+                    {court.chambersPracticeNote}
+                  </p>
+                  <div className="pt-2 flex flex-wrap gap-3">
+                    <Button
+                      size="lg"
+                      className="rounded-full"
+                      onClick={() => onConsultForCourt(court.slug)}
+                    >
+                      <Scale className="h-4 w-4" />
+                      Discuss a Matter at {court.shortName}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {nearbyTaxOffices.map((office) => (
+                  <div
+                    key={office.slug}
+                    className="rounded-[22px] border border-border bg-white/90 p-5 flex flex-col justify-between shadow-sm"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <span className="rounded-full bg-[#DAF6EF] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#0A2536] font-semibold">
+                          {office.city}
+                        </span>
+                        <Building2 className="h-4 w-4 text-[#33566D]" />
+                      </div>
+                      <h4 className="font-display text-xl font-bold text-[#0A2536]">
+                        {office.name}
+                      </h4>
+                      <p className="mt-1 text-xs text-[#33566D] leading-relaxed">
+                        {office.addressNote}
+                      </p>
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-border">
+                      <button
+                        type="button"
+                        onClick={() => onConsultForCourt(office.slug)}
+                        className="text-xs font-mono uppercase tracking-wider font-semibold text-[#0A2536] hover:text-[#33566D] cursor-pointer"
+                      >
+                        Consult for This Tax Office →
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

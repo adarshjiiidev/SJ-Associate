@@ -1,9 +1,10 @@
+import * as React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { PRACTICE_AREAS } from "@/src/data/firmData";
-import { CorporateSolutionsSection } from "@/src/components/CorporateSolutionsSection";
 import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { CorporateSolutionsSection } from "@/src/components/CorporateSolutionsSection";
+import { PracticeWorkflowShowcase } from "@/src/components/PracticeWorkflowShowcase";
+import { Scale, ArrowRight, CheckCircle2 } from "lucide-react";
 
 interface PracticeAreasPageProps {
   onOpenConsultation: (briefNote?: string) => void;
@@ -11,89 +12,107 @@ interface PracticeAreasPageProps {
 
 export function PracticeAreasPage({ onOpenConsultation }: PracticeAreasPageProps) {
   return (
-    <div>
+    <div className="min-h-screen bg-[#F3FAFF] text-[#0A2536]">
       <section className="bg-gradient-to-b from-[#F3FAFF] to-[#DAF6EF]/45 border-b border-border py-12 sm:py-14">
-        <div className="mx-auto max-w-[1280px] px-6 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div className="space-y-3 max-w-3xl">
-            <p className="text-xs font-bold tracking-[0.14em] uppercase text-primary">
-              Corporate &amp; Taxation Focus
-            </p>
-            <h1
-              className="text-4xl sm:text-5xl font-extrabold text-foreground leading-tight"
-              style={{ textWrap: "balance" }}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <div>
+              <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#33566D] mb-2">
+                AREAS OF PRACTICE · NEW DELHI CHAMBERS
+              </div>
+              <h1 className="font-display text-4xl sm:text-5xl font-bold text-[#0A2536]">
+                How We Can Help You
+              </h1>
+              <p className="mt-3 text-[#33566D] max-w-2xl text-base leading-relaxed">
+                Our chambers represent clients across three structured sections: GST &amp; Tax
+                (Registration, Return Filing, SCN Reply, GSTAT Appeal, Commissioner Appeal, High
+                Court Appeal), Income Tax (Return Filing, TDS Return Filing, Consultancy, Other
+                Matters), and Others (Accounting &amp; Bookkeeping, DGFT Work, MSME Registration,
+                Trademark Registration, Partnership Firm Registration).
+              </p>
+            </div>
+            <Button
+              size="lg"
+              className="rounded-full"
+              onClick={() => onOpenConsultation()}
             >
-              Corporate &amp; Tax Practice Areas
-            </h1>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              Focused on Income Tax &amp; GST filings, GSTAT appeals, business setup, customs, NCLT insolvency, and corporate litigation—representing companies, founders, CFOs, and boards across Indian courts.
-            </p>
+              Book Consultation
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
-          <Button type="button" onClick={() => onOpenConsultation()} size="lg" className="shrink-0">
-            Book Consultation
-          </Button>
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1280px] px-6 py-14 space-y-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-          {PRACTICE_AREAS.map((area) => (
-            <Card
-              key={area.id}
-              id={area.id}
-              className="transition-colors hover:bg-[#DAF6EF]/35 hover:border-[#33566D]/45"
-            >
-              <CardHeader className="space-y-2">
-                <div className="flex items-center justify-between gap-4 text-xs text-muted-foreground">
-                  <span className="font-mono tabular-nums font-bold text-primary">
-                    {area.number}
-                  </span>
-                  <span className="truncate">{area.forums.join(" · ")}</span>
-                </div>
-                <CardTitle className="text-2xl sm:text-3xl">{area.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  {area.shortDesc}
-                </p>
-                <div className="border-t border-border pt-4 space-y-2">
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                    How We Help
+      <section className="py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {PRACTICE_AREAS.map((area, index) => (
+              <div
+                key={area.id}
+                className="rounded-[24px] border border-border bg-white/90 p-7 flex flex-col justify-between hover:border-[#0A2536]/40 transition-colors shadow-sm"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-4 mb-4">
+                    <span className="font-mono text-xs uppercase tracking-widest text-[#33566D]">
+                      0{index + 1} · {area.typicalForums[0]}
+                    </span>
+                    <Scale className="h-4 w-4 text-[#0A2536]" />
+                  </div>
+                  <h2 className="font-display text-2xl font-bold text-[#0A2536]">
+                    {area.title}
+                  </h2>
+                  <p className="mt-3 text-sm text-[#33566D] leading-relaxed">
+                    {area.summary}
                   </p>
-                  <ul className="space-y-1.5 text-sm text-foreground/85">
-                    {area.scope.map((item) => (
-                      <li key={item}>— {item}</li>
-                    ))}
-                  </ul>
+
+                  <div className="mt-6 pt-5 border-t border-border">
+                    <div className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-3">
+                      How We Help
+                    </div>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {area.representationScope.map((item, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-2 text-xs text-[#0A2536]"
+                        >
+                          <CheckCircle2 className="h-3.5 w-3.5 text-[#33566D] shrink-0 mt-0.5" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
 
-        <CorporateSolutionsSection
-          compactHeader
-          onConsultSolutions={(titles) =>
-            onOpenConsultation(`Selected Corporate & Tax Solutions: ${titles.join(", ")}. `)
-          }
-        />
-
-        <div className="border border-[#0A2536]/15 bg-[#0A2536] text-[#F3FAFF] p-8 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-          <div className="space-y-1">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#F3FAFF]">
-              Follow Recent Orders From High Courts &amp; Supreme Court
-            </h2>
-            <p className="text-sm text-[#DAF6EF]/85">
-              Open our Courts page to read live updates and judgments from thirteen Indian courts and tribunals—including Supreme Court, Delhi HC, GSTAT, Chandigarh, and Patna.
-            </p>
+                <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
+                  <Link
+                    to="/courts"
+                    className="text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-[#0A2536]"
+                  >
+                    See Courts We Appear In →
+                  </Link>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full"
+                    onClick={() => onOpenConsultation(area.title)}
+                  >
+                    Discuss a {area.shortTitle} Case
+                  </Button>
+                </div>
+              </div>
+            ))}
           </div>
-          <Button asChild className="bg-[#DAF6EF] text-[#0A2536] hover:bg-white shrink-0">
-            <Link to="/courts">
-              Open Courts Page
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </Button>
         </div>
-      </div>
+      </section>
+
+      {/* Complete 15 Services & Practice Distribution Graph */}
+      <CorporateSolutionsSection
+        onSelectSolution={(solution) => onOpenConsultation(solution.title)}
+        onRequestSelected={(briefNote) => onOpenConsultation(briefNote)}
+      />
+
+      {/* Interactive Workflow Showcase */}
+      <PracticeWorkflowShowcase onOpenConsultation={(briefNote) => onOpenConsultation(briefNote)} />
     </div>
   );
 }
