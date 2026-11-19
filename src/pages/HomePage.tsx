@@ -221,8 +221,8 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
           </div>
 
           <p className="mt-4 max-w-xl mx-auto text-sm sm:text-base text-[#33566D] leading-relaxed">
-            Focused on Income Tax &amp; GST filings, GSTAT appeals, customs, business setup, and
-            High Court litigation before Indian courts.
+            Focused on direct and indirect taxes, Customs, business setup, and High Court
+            litigation before Indian courts.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">

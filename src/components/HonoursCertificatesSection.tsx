@@ -254,17 +254,6 @@ export function HonoursCertificatesSection({
             </div>
 
             <div className="pt-4 border-t border-border flex flex-wrap items-center justify-between gap-2.5">
-              <input
-                ref={(el) => {
-                  fileInputRefs.current[cert.id] = el;
-                }}
-                type="file"
-                accept="image/*"
-                className="sr-only"
-                aria-label={`Upload image for ${cert.title}`}
-                onChange={(e) => handleFileChange(cert.id, e)}
-              />
-
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   type="button"
@@ -297,27 +286,6 @@ export function HonoursCertificatesSection({
                       Official PDF
                     </a>
                   </>
-                )}
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => fileInputRefs.current[cert.id]?.click()}
-                  className="inline-flex min-h-[38px] items-center gap-1.5 rounded-full border border-border bg-[#F3FAFF] px-3.5 py-1.5 text-[11px] font-semibold text-[#33566D] hover:text-[#0A2536] hover:bg-[#DAF6EF]/50 transition-colors cursor-pointer"
-                >
-                  <ImagePlus className="h-3.5 w-3.5" aria-hidden="true" />
-                  Replace Scan
-                </button>
-                {customImage && (
-                  <button
-                    type="button"
-                    aria-label={`Remove uploaded certificate for ${cert.title}`}
-                    onClick={() => removeCertificateImage(cert.id)}
-                    className="inline-flex min-h-[38px] min-w-[38px] items-center justify-center rounded-full border border-border bg-white text-[#33566D] hover:text-destructive transition-colors cursor-pointer"
-                  >
-                    <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
-                  </button>
                 )}
               </div>
             </div>
