@@ -1,0 +1,8 @@
+{
+  "name": "Sj Assosiates",
+  "description": "Constitutional, appellate, and commercial litigation chambers with real-time Supreme Court of India and High Court judicial bulletins.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
