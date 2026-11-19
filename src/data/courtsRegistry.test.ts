@@ -120,7 +120,7 @@ describe("courtsRegistry pure logic", () => {
         </item>
       </channel></rss>
     `;
-    const items = parseRssItemsFromXml(sampleXml, 4);
+    const items = parseRssItemsFromXml(sampleXml, 4, court);
     assert.equal(items.length, 1);
     const liveReport = buildLiveReportFromRss(
       court,
@@ -129,6 +129,46 @@ describe("courtsRegistry pure logic", () => {
     );
     assert.equal(liveReport.sourceMode, "live-rss");
     assert.equal(liveReport.rulings[0].category, "GST & Income Tax");
+  });
+
+  it("strips double-encoded &nbsp; entities, redundant title+source descriptions, and mismatched High Court items", () => {
+    const delhiCourt = getCourtBySlug("delhi-high-court")!;
+    const googleNewsSampleXml = `
+      <rss><channel>
+        <item>
+          <title>Restitution Decree Holder Cannot Seek Divorce On Desertion Within A Year: MP High Court - LawChakra</title>
+          <link>https://example.com/mp-hc-1</link>
+          <pubDate>Thu, 15 May 2025 09:00:00 GMT</pubDate>
+          <source>LawChakra</source>
+          <description>&lt;a href="https://example.com/mp-hc-1"&gt;Restitution Decree Holder Cannot Seek Divorce On Desertion Within A Year: MP High Court&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;font color="#6f6f6f"&gt;LawChakra&lt;/font&gt;</description>
+        </item>
+        <item>
+          <title>Delhi High Court Quashes Unsigned Section 73 GST Demand Order - LiveLaw</title>
+          <link>https://example.com/delhi-hc-1</link>
+          <pubDate>Thu, 15 May 2025 10:30:00 GMT</pubDate>
+          <source>LiveLaw</source>
+          <description>&lt;a href="https://example.com/delhi-hc-1"&gt;Delhi High Court Quashes Unsigned Section 73 GST Demand Order&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;font color="#6f6f6f"&gt;LiveLaw&lt;/font&gt;</description>
+        </item>
+      </channel></rss>
+    `;
+
+    const filteredItems = parseRssItemsFromXml(googleNewsSampleXml, 8, delhiCourt);
+    assert.equal(filteredItems.length, 1);
+    assert.equal(
+      filteredItems[0].title,
+      "Delhi High Court Quashes Unsigned Section 73 GST Demand Order"
+    );
+    assert.equal(filteredItems[0].snippet, "");
+
+    const report = buildLiveReportFromRss(
+      delhiCourt,
+      filteredItems,
+      "2025-05-15T11:00:00.000Z"
+    );
+    assert.equal(report.rulings.length, 1);
+    assert.ok(!report.rulings[0].holdingSummary.includes("&nbsp;"));
+    assert.ok(!report.rulings[0].holdingSummary.includes("MP High Court"));
+    assert.notEqual(report.rulings[0].holdingSummary, report.rulings[0].title);
   });
 
   it("validates consultation input accurately", () => {

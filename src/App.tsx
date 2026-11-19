@@ -26,14 +26,49 @@ import { AboutPage } from "@/src/pages/AboutPage";
 import { ContactPage } from "@/src/pages/ContactPage";
 import { MailPage } from "@/src/pages/MailPage";
 
-const ROUTE_TITLES: Record<string, string> = {
-  "/": "SJ Associates | Advocate Sanjay Kumar Singh — GST, Income Tax & Appellate Chambers",
-  "/courts": "Live Supreme Court, GSTAT & High Court Reports | SJ Associates",
-  "/practice": "GST & Tax, Income Tax & Registrations Practice | SJ Associates",
-  "/about": "Advocate Sanjay Kumar Singh | GST, Income Tax & Appellate Counsel — SJ Associates",
-  "/contact": "Contact Chambers & Tax Offices | SJ Associates — New Delhi & Regional Seats",
-  "/mail": "Chambers Webmail | SJ Associates (services@sjalaw.in)"
+interface RouteSeoConfig {
+  title: string;
+  description: string;
+}
+
+const ROUTE_SEO: Record<string, RouteSeoConfig> = {
+  "/": {
+    title: "SJ Associates | Advocate Sanjay Singh — Delhi & Ghaziabad Tax & High Court Lawyer",
+    description:
+      "SJ Associates — Advocate Sanjay Kumar Singh (Advocate Sanjay Singh), Delhi High Court & Ghaziabad NCR Lawyer for GST, GSTAT, Income Tax, Writ Appeals, DGFT, MSME & Trademark."
+  },
+  "/courts": {
+    title: "Live Supreme Court, Delhi High Court & GSTAT Reports | SJ Associates — Adv. Sanjay Singh",
+    description:
+      "Live judicial bulletins, GST & Income Tax rulings, and nearby Delhi, Ghaziabad & regional tax office directories across the Supreme Court, GSTAT & 11 High Courts."
+  },
+  "/practice": {
+    title: "GST & Tax, Income Tax & Registration Services | Advocate Sanjay Singh — SJ Associates",
+    description:
+      "Delhi & Ghaziabad NCR legal and tax practice by Adv. Sanjay Kumar Singh: GST Registration, Return Filing, SCN Reply, GSTAT Appeal, Commissioner & High Court Appeals, ITR, TDS, DGFT, MSME & Trademark."
+  },
+  "/about": {
+    title: "Advocate Sanjay Kumar Singh (Advocate Sanjay Singh) | Delhi High Court & Ghaziabad Lawyer",
+    description:
+      "Profile of Advocate Sanjay Kumar Singh (Advocate Sanjay Singh), Principal Counsel at SJ Associates, Delhi High Court Advocate & Distinguished Member of the International Council of Jurists (Cert. No. 2529)."
+  },
+  "/contact": {
+    title: "Contact Advocate Sanjay Singh | SJ Associates — Delhi, Ghaziabad & NCR Tax Chambers",
+    description:
+      "Consult Advocate Sanjay Kumar Singh (SJ Associates) for matters at Delhi High Court, Vyapar Bhawan GST, ITO Delhi, Ghaziabad, Noida, Gurugram, Faridabad & GSTAT."
+  },
+  "/mail": {
+    title: "Chambers Webmail | SJ Associates (services@sjalaw.in)",
+    description: "Private chambers webmail portal for SJ Associates (services@sjalaw.in)."
+  }
 };
+
+function setMetaContent(selector: string, content: string) {
+  const el = document.querySelector<HTMLMetaElement>(selector);
+  if (el) {
+    el.setAttribute("content", content);
+  }
+}
 
 function RouteMetadataAndScroll() {
   const { pathname } = useLocation();
@@ -41,17 +76,36 @@ function RouteMetadataAndScroll() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
 
-    if (ROUTE_TITLES[pathname]) {
-      document.title = ROUTE_TITLES[pathname];
-    } else if (pathname.startsWith("/courts/")) {
+    let seo = ROUTE_SEO[pathname];
+    if (!seo && pathname.startsWith("/courts/")) {
       const courtLabel = pathname
         .replace("/courts/", "")
         .split("-")
         .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : ""))
         .join(" ");
-      document.title = `${courtLabel} Live Report | SJ Associates`;
-    } else {
-      document.title = "Page Not Found | SJ Associates";
+      seo = {
+        title: `${courtLabel} Live GST & Tax Rulings | Advocate Sanjay Singh — SJ Associates`,
+        description: `Live ${courtLabel} judicial rulings, GST & Income Tax bench updates, and representation by Advocate Sanjay Kumar Singh (SJ Associates, Delhi & Ghaziabad NCR).`
+      };
+    } else if (!seo) {
+      seo = {
+        title: "SJ Associates | Advocate Sanjay Singh — Delhi & Ghaziabad Lawyer",
+        description: ROUTE_SEO["/"].description
+      };
+    }
+
+    document.title = seo.title;
+    setMetaContent('meta[name="description"]', seo.description);
+    setMetaContent('meta[property="og:title"]', seo.title);
+    setMetaContent('meta[property="og:description"]', seo.description);
+    setMetaContent('meta[name="twitter:title"]', seo.title);
+    setMetaContent('meta[name="twitter:description"]', seo.description);
+
+    const canonicalUrl = `${window.location.origin}${pathname}`;
+    setMetaContent('meta[property="og:url"]', canonicalUrl);
+    const canonicalLink = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonicalLink) {
+      canonicalLink.setAttribute("href", canonicalUrl);
     }
   }, [pathname]);
 

@@ -73,3 +73,18 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.hero-image-knockout-text {
+  background-image:
+    linear-gradient(180deg, rgba(10, 37, 54, 0.2) 0%, rgba(10, 37, 54, 0.36) 100%),
+    url("./assets/images/real_delhi_hc.jpg");
+  background-size: cover;
+  background-position: center 48%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(10, 37, 54, 0.2);
+}
+
+

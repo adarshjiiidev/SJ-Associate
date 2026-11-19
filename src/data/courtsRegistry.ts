@@ -782,18 +782,127 @@ export interface ParsedRssItem {
   snippet: string;
 }
 
-function decodeXmlEntities(text: string): string {
-  return text
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&apos;/g, "'")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+export function decodeXmlEntities(text: string): string {
+  if (!text) return "";
+  let out = text.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1");
+
+  // Run two passes to handle double-encoded entities from Google/Bing RSS (e.g. &amp;nbsp;)
+  for (let pass = 0; pass < 2; pass++) {
+    out = out
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&amp;/gi, "&")
+      .replace(/&nbsp;/gi, " ")
+      .replace(/&#160;/gi, " ")
+      .replace(/&#xa0;/gi, " ")
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">")
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;/gi, "'")
+      .replace(/&apos;/gi, "'")
+      .replace(/&lsquo;|&rsquo;|&#8216;|&#8217;/gi, "'")
+      .replace(/&ldquo;|&rdquo;|&#8220;|&#8221;/gi, '"')
+      .replace(/&ndash;|&#8211;/gi, "–")
+      .replace(/&mdash;|&#8212;/gi, "—")
+      .replace(/&hellip;|&#8230;/gi, "...")
+      .replace(/&#(\d+);/g, (_m, dec) => {
+        const code = Number(dec);
+        return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : " ";
+      })
+      .replace(/&#x([0-9a-f]+);/gi, (_m, hex) => {
+        const code = parseInt(hex, 16);
+        return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : " ";
+      });
+  }
+
+  return out.replace(/\u00A0/g, " ").replace(/\s+/g, " ").trim();
+}
+
+export function cleanRssSnippet(
+  rawDesc: string,
+  cleanTitle: string,
+  sourceName: string
+): string {
+  let text = decodeXmlEntities(rawDesc);
+  if (!text) return "";
+
+  if (sourceName) {
+    const escapedSource = sourceName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    text = text.replace(new RegExp(`[\\s\\-–—|·]*${escapedSource}\\s*$`, "i"), "").trim();
+  }
+
+  if (cleanTitle) {
+    const normTitle = cleanTitle.toLowerCase();
+    const normText = text.toLowerCase();
+    if (normText === normTitle) {
+      return "";
+    }
+    if (normText.startsWith(normTitle)) {
+      text = text.slice(cleanTitle.length).replace(/^[\s\-–—|:·.,]+/, "").trim();
+    }
+  }
+
+  if (text.length < 35) {
+    return "";
+  }
+  return text;
+}
+
+const OTHER_HIGH_COURT_MARKERS: Array<{ slug: CourtImageKey | "other"; patterns: RegExp[] }> = [
+  { slug: "supreme-court-of-india", patterns: [/\bsupreme court\b/i, /\bsc\b/i, /\bapex court\b/i] },
+  { slug: "gstat", patterns: [/\bgstat\b/i, /\bgst appellate tribunal\b/i] },
+  { slug: "delhi-high-court", patterns: [/\bdelhi high court\b/i, /\bdelhi hc\b/i, /\bhigh court of delhi\b/i] },
+  { slug: "punjab-haryana-high-court", patterns: [/\bpunjab\s*(?:&|and)\s*haryana\s*(?:high court|hc)\b/i, /\bp&h high court\b/i, /\bp&h hc\b/i] },
+  { slug: "rajasthan-high-court", patterns: [/\brajasthan high court\b/i, /\brajasthan hc\b/i] },
+  { slug: "allahabad-high-court", patterns: [/\ballahabad high court\b/i, /\ballahabad hc\b/i] },
+  { slug: "gujarat-high-court", patterns: [/\bgujarat high court\b/i, /\bgujarat hc\b/i] },
+  { slug: "patna-high-court", patterns: [/\bpatna high court\b/i, /\bpatna hc\b/i] },
+  { slug: "bombay-high-court", patterns: [/\bbombay high court\b/i, /\bbombay hc\b/i] },
+  { slug: "telangana-high-court", patterns: [/\btelangana high court\b/i, /\btelangana hc\b/i] },
+  { slug: "calcutta-high-court", patterns: [/\bcalcutta high court\b/i, /\bcalcutta hc\b/i] },
+  { slug: "karnataka-high-court", patterns: [/\bkarnataka high court\b/i, /\bkarnataka hc\b/i] },
+  { slug: "madras-high-court", patterns: [/\bmadras high court\b/i, /\bmadras hc\b/i] },
+  {
+    slug: "other",
+    patterns: [
+      /\bmp high court\b/i,
+      /\bmadhya pradesh high court\b/i,
+      /\bkerala high court\b/i,
+      /\bkerala hc\b/i,
+      /\borissa high court\b/i,
+      /\borissa hc\b/i,
+      /\bjharkhand high court\b/i,
+      /\bchhattisgarh high court\b/i,
+      /\bgauhati high court\b/i,
+      /\bhimachal pradesh high court\b/i,
+      /\buttarakhand high court\b/i,
+      /\bandhra pradesh high court\b/i,
+      /\bjammu\s*(?:&|and)\s*kashmir high court\b/i
+    ]
+  }
+];
+
+export function doesRssItemMatchCourt(item: ParsedRssItem, court: CourtProfile): boolean {
+  const combined = `${item.title} ${item.snippet}`;
+  const targetMarker = OTHER_HIGH_COURT_MARKERS.find((m) => m.slug === court.slug);
+  const matchesTarget = targetMarker
+    ? targetMarker.patterns.some((re) => re.test(combined))
+    : combined.toLowerCase().includes(court.shortName.toLowerCase());
+
+  if (!matchesTarget) {
+    return false;
+  }
+
+  // Reject if the headline explicitly attributes the ruling to a different High Court (e.g. ": MP High Court")
+  for (const marker of OTHER_HIGH_COURT_MARKERS) {
+    if (marker.slug === court.slug) continue;
+    // Allow Supreme Court reference in a High Court article unless the headline ends with another court
+    if (marker.slug === "supreme-court-of-india") continue;
+    if (marker.patterns.some((re) => re.test(item.title)) && !(targetMarker?.patterns.some((re) => re.test(item.title)))) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 export function inferCategoryFromHeadline(headline: string): BulletinCategory {
@@ -856,13 +965,17 @@ export function inferCategoryFromHeadline(headline: string): BulletinCategory {
   return "Constitutional";
 }
 
-export function parseRssItemsFromXml(xml: string, limit = 8): ParsedRssItem[] {
+export function parseRssItemsFromXml(
+  xml: string,
+  limit = 8,
+  court?: CourtProfile
+): ParsedRssItem[] {
   const itemMatches = xml.match(/<item>[\s\S]*?<\/item>/gi) ?? [];
   const candidates: Array<ParsedRssItem & { ts: number }> = [];
   const seenLinks = new Set<string>();
   const seenTitles = new Set<string>();
 
-  for (const block of itemMatches.slice(0, 24)) {
+  for (const block of itemMatches.slice(0, 30)) {
     const titleRaw = block.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "";
     const linkRaw = block.match(/<link>([\s\S]*?)<\/link>/i)?.[1] ?? "";
     const pubDateRaw = block.match(/<pubDate>([\s\S]*?)<\/pubDate>/i)?.[1] ?? "";
@@ -894,8 +1007,8 @@ export function parseRssItemsFromXml(xml: string, limit = 8): ParsedRssItem[] {
     if (!sourceName) sourceName = "Legal Press Report";
 
     const escapedSource = sourceName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const cleanTitle = fullTitle.replace(new RegExp(`\\s*-\\s*${escapedSource}$`), "").trim();
-    const snippet = decodeXmlEntities(descRaw);
+    const cleanTitle = fullTitle.replace(new RegExp(`\\s*[-–—|]\\s*${escapedSource}$`, "i"), "").trim();
+    const snippet = cleanRssSnippet(descRaw, cleanTitle, sourceName);
 
     let formattedDate = "Recent";
     let ts = 0;
@@ -911,16 +1024,24 @@ export function parseRssItemsFromXml(xml: string, limit = 8): ParsedRssItem[] {
       }
     }
 
+    const candidateItem: ParsedRssItem = {
+      title: cleanTitle,
+      link,
+      pubDate: formattedDate,
+      sourceName,
+      snippet
+    };
+
+    if (court && !doesRssItemMatchCourt(candidateItem, court)) {
+      continue;
+    }
+
     const titleKey = cleanTitle.toLowerCase();
     if (cleanTitle && link.startsWith("http") && !seenLinks.has(link) && !seenTitles.has(titleKey)) {
       seenLinks.add(link);
       seenTitles.add(titleKey);
       candidates.push({
-        title: cleanTitle,
-        link,
-        pubDate: formattedDate,
-        sourceName,
-        snippet,
+        ...candidateItem,
         ts
       });
     }
@@ -935,21 +1056,35 @@ export function buildLiveReportFromRss(
   rssItems: ParsedRssItem[],
   fetchedAtIso: string
 ): LiveCourtReport {
-  const rulings: JudicialRuling[] = rssItems.slice(0, 6).map((item, idx) => ({
-    id: `${court.slug}-rss-${idx + 1}`,
-    title: item.title,
-    caseNameOrCitation: `${item.sourceName} · Verified Press Dispatch`,
-    date: item.pubDate,
-    category: inferCategoryFromHeadline(item.title),
-    bench: /bench/i.test(court.shortName) ? court.shortName : `${court.shortName} Bench`,
-    statutes: [court.tier === "supreme" ? "Constitution of India" : "High Court Writ / Appellate Jurisdiction"],
-    holdingSummary:
-      item.snippet && item.snippet !== item.title && item.snippet.length > 35
+  const rulings: JudicialRuling[] = rssItems.slice(0, 6).map((item, idx) => {
+    const category = inferCategoryFromHeadline(item.title);
+    const defaultBench = /bench/i.test(court.shortName)
+      ? court.shortName
+      : `${court.shortName} Bench`;
+    const summaryText =
+      item.snippet && item.snippet.length > 35
         ? item.snippet
-        : `Reported from the ${court.name}: ${item.title}. Open the source article to read the full bench observations.`,
-    practicalTakeaway: `Check the ${court.shortName} daily cause list or official order portal if this ruling affects a pending matter.`,
-    sourceUrl: item.link
-  }));
+        : `Judicial order and bench proceedings reported from the ${court.name} (${court.city}) via ${item.sourceName} under ${category} jurisdiction. Open the source portal to review the full order text and bench observations.`;
+
+    return {
+      id: `${court.slug}-rss-${idx + 1}`,
+      title: item.title,
+      caseNameOrCitation: `${item.sourceName} · Verified Press Dispatch`,
+      date: item.pubDate,
+      category,
+      bench: defaultBench,
+      statutes: [
+        court.tier === "supreme"
+          ? "Constitution of India"
+          : court.tier === "tribunal"
+          ? "CGST Act, 2017 · Sec. 112 Appellate Jurisdiction"
+          : "High Court Writ & Appellate Jurisdiction"
+      ],
+      holdingSummary: summaryText,
+      practicalTakeaway: `Check the ${court.shortName} daily cause list or official order portal (${court.officialUrl}) if this ruling affects a pending matter.`,
+      sourceUrl: item.link
+    };
+  });
 
   const registryNotices: RegistryNotice[] = [
     {

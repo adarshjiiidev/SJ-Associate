@@ -185,21 +185,27 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
   return (
     <div className="min-h-screen bg-[#F3FAFF] text-[#0A2536]">
       {/* SECTION 1: HERO */}
-      <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-[#F3FAFF] via-[#ECF8F6] to-[#DAF6EF]/70 pt-14 pb-10 sm:pt-20 sm:pb-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-display text-5xl sm:text-7xl lg:text-[88px] font-extrabold tracking-tight text-[#0A2536] leading-[0.94] max-w-4xl mx-auto">
-            <span className="inline-flex flex-wrap items-center justify-center gap-x-3.5 sm:gap-x-5">
-              <span>SJ</span>
-              <span className="inline-block h-12 w-28 sm:h-16 sm:w-40 lg:h-[74px] lg:w-48 overflow-hidden rounded-full border-[3px] border-white shadow-md align-middle">
-                <ResilientImage
-                  src={COURT_IMAGES["delhi-high-court"]}
-                  alt="High Court of Delhi"
-                  className="h-full w-full object-cover"
-                />
-              </span>
-              <span>Associates</span>
-            </span>
-            <span className="block mt-1.5">Stands For You</span>
+      <section className="relative overflow-hidden border-b border-border pt-14 pb-10 sm:pt-20 sm:pb-12">
+        {/* Layer 0 (Bottom-most layer): Delhi High Court background image */}
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <ResilientImage
+            src={COURT_IMAGES["delhi-high-court"]}
+            alt="High Court of Delhi Background"
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+
+        {/* Layer 1 (Middle layer): Solid white layer completely covering the background outside the text */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-[#F3FAFF] via-[#ECF8F6] to-[#DAF6EF]"
+        />
+
+        {/* Layer 2 (Top layer): Hero text & controls where headline sees through the white layer to the Delhi High Court image */}
+        <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="hero-image-knockout-text font-display text-5xl sm:text-7xl lg:text-[88px] font-extrabold tracking-tight leading-[0.94] max-w-4xl mx-auto">
+            <span className="block">SJ Associates</span>
+            <span className="block mt-1.5 pb-1">Stands For You</span>
           </h1>
 
           <div className="mt-6 space-y-1">
@@ -229,7 +235,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </button>
             <Link
               to="/courts"
-              className="inline-flex items-center gap-3 rounded-full border border-[#0A2536]/15 bg-white pl-6 pr-2.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#0A2536] hover:bg-[#DAF6EF]/60 transition-all shadow-xs"
+              className="inline-flex items-center gap-3 rounded-full border border-[#0A2536]/15 bg-white/95 pl-6 pr-2.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#0A2536] hover:bg-[#DAF6EF]/60 transition-all shadow-xs"
             >
               <span>LIVE COURT UPDATES</span>
               <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#DAF6EF] text-[#0A2536]">

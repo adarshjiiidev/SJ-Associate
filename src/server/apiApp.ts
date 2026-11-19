@@ -60,17 +60,22 @@ async function fetchRssXml(url: string): Promise<string> {
 }
 
 async function fetchCourtNewsRssItems(court: CourtProfile, limit = 8) {
+  const courtSearchPhrase =
+    court.shortName && court.shortName !== court.name
+      ? `("${court.shortName}" OR "${court.name}")`
+      : `"${court.name}"`;
+
   const query =
     court.slug === "gstat"
-      ? `"GSTAT" OR "GST Appellate Tribunal" GST appeal notice ruling`
-      : `"${court.name}" judgment OR order OR GST OR tax OR bench`;
+      ? `("GSTAT" OR "GST Appellate Tribunal") (GST OR appeal OR notice OR ruling OR bench)`
+      : `${courtSearchPhrase} (GST OR "Income Tax" OR tax OR customs OR judgment OR order OR bench)`;
 
   const googleUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(
     query
   )}&hl=en-IN&gl=IN&ceid=IN:en`;
   const googleXml = await fetchRssXml(googleUrl);
   if (googleXml) {
-    const parsed = parseRssItemsFromXml(googleXml, limit);
+    const parsed = parseRssItemsFromXml(googleXml, limit, court);
     if (parsed.length > 0) return parsed;
   }
 
@@ -79,7 +84,7 @@ async function fetchCourtNewsRssItems(court: CourtProfile, limit = 8) {
   )}&format=rss`;
   const bingXml = await fetchRssXml(bingUrl);
   if (bingXml) {
-    return parseRssItemsFromXml(bingXml, limit);
+    return parseRssItemsFromXml(bingXml, limit, court);
   }
   return [];
 }
