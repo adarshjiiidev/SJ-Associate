@@ -679,8 +679,7 @@ export const CHAMBERS_OFFICES: ChambersOffice[] = [
     city: "New Delhi",
     addressLines: [
       "A-40, Rishi Nagar, Captain Satish Marg, Rani Bagh North West",
-      "301, 3rd Floor, Lala Chhanu Mal Building, Rani Bagh Main Market, Pitampura",
-      "Delhi – 110034, India",
+      "Pitampura, Delhi – 110034, India",
     ],
     phone: "+91 97163 18400 / +91 98182 98983",
     email: "services@sjalaw.in",
