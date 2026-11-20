@@ -235,26 +235,20 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
           />
         </div>
 
-        {/* Low-intensity localized blur only over the central portico signage, leaving left & right sides crisp and colorful */}
+        {/* High-intensity localized blur over the central High Court of Delhi portico signage & hero text, keeping left & right court wings colorful */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-10 backdrop-blur-[2.5px] [mask-image:radial-gradient(ellipse_36%_42%_at_50%_48%,#000_38%,transparent_92%)]"
+          className="pointer-events-none absolute inset-0 z-10 backdrop-blur-2xl bg-[radial-gradient(ellipse_46%_52%_at_50%_46%,rgba(243,250,255,0.78)_0%,rgba(243,250,255,0.52)_55%,transparent_92%)] [mask-image:radial-gradient(ellipse_46%_52%_at_50%_46%,#000_60%,transparent_96%)]"
         />
 
-        {/* Soft center-only radial halo for text contrast while keeping left & right court wings in full glorious color */}
+        {/* High-intensity blur & frosted gradient across the lower area so bottom features are 100% visible */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(ellipse_44%_54%_at_50%_46%,rgba(243,250,255,0.68)_0%,rgba(243,250,255,0.36)_54%,transparent_90%)]"
-        />
-
-        {/* Subtle bottom bar strip readability gradient */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 z-10 bg-gradient-to-t from-[#F3FAFF]/82 via-[#F3FAFF]/35 to-transparent"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-10 backdrop-blur-2xl bg-gradient-to-t from-[#F3FAFF]/96 via-[#F3FAFF]/85 to-transparent [mask-image:linear-gradient(to_top,#000_72%,transparent_100%)]"
         />
 
         {/* Hero text & controls with normal solid typography */}
-        <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center [text-shadow:0_1px_14px_rgba(243,250,255,0.95)]">
+        <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center [text-shadow:0_1px_16px_rgba(243,250,255,0.98)]">
           <h1 className="font-display tracking-tight text-[#0A2536] max-w-5xl mx-auto">
             <span className="block text-6xl sm:text-8xl lg:text-[104px] font-extrabold leading-[0.94]">
               S J Associates
@@ -276,7 +270,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </p>
           </div>
 
-          <p className="mt-4 max-w-3xl mx-auto text-sm sm:text-base font-medium text-[#0A2536] leading-relaxed">
+          <p className="mt-4 max-w-3xl mx-auto text-sm sm:text-base font-semibold text-[#0A2536] leading-relaxed">
             Focused on Direct &amp; Indirect Taxation, Financial Accounting and Bookkeeping,
             Corporate Law and Practice, Labour Law, Corporate Litigation, Criminal and Civil
             Litigation, and Arbitration.
@@ -301,8 +295,8 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </Link>
           </div>
 
-          <div className="mt-14 pt-5 border-t border-[#0A2536]/15 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-2 text-xs font-bold text-[#0A2536]">
+          <div className="mt-12 rounded-2xl border border-[#0A2536]/15 bg-[#F3FAFF]/90 backdrop-blur-2xl px-5 py-3.5 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-2 text-xs sm:text-[13px] font-extrabold text-[#0A2536]">
               <span>Direct &amp; Indirect Taxation</span>
               <span>Financial Accounting &amp; Bookkeeping</span>
               <span>Corporate &amp; Labour Law</span>
@@ -311,10 +305,10 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </div>
             <a
               href="#what-we-do"
-              className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.14em] text-[#0A2536] hover:text-[#33566D]"
+              className="inline-flex items-center gap-2.5 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A2536] hover:text-[#33566D] shrink-0"
             >
               <span>SCROLL DOWN</span>
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#0A2536]/12 bg-white text-xs shadow-xs">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#0A2536]/15 bg-white text-xs shadow-xs">
                 ↓
               </span>
             </a>
