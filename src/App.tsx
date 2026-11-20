@@ -34,33 +34,33 @@ interface RouteSeoConfig {
 
 const ROUTE_SEO: Record<string, RouteSeoConfig> = {
   "/": {
-    title: "SJ Associates | Advocate Sanjay Singh — Delhi, Ghaziabad & Bihar Law & Tax Firm",
+    title: "S J Associates | Advocate Sanjay Singh — Delhi, Ghaziabad & Bihar Law & Tax Firm",
     description:
-      "SJ Associates — Advocate Sanjay Kumar Singh, Delhi High Court, Ghaziabad NCR & Muzaffarpur (Bihar) Law & Tax Firm for Direct & Indirect Taxation, Corporate Law, Labour Law, Civil & Criminal Litigation."
+      "S J Associates — Advocate Sanjay Kumar Singh, Delhi High Court, Ghaziabad NCR & Muzaffarpur (Bihar) Law & Tax Firm for Direct & Indirect Taxation, Corporate Law, Labour Law, Civil & Criminal Litigation."
   },
   "/courts": {
-    title: "Live Supreme Court, Delhi High Court & GSTAT Reports | SJ Associates — Adv. Sanjay Singh",
+    title: "Live Supreme Court, Delhi High Court & GSTAT Reports | S J Associates — Adv. Sanjay Singh",
     description:
       "Live judicial bulletins, Goods and Services Tax & Income Tax rulings, and Delhi, Bihar & regional tax office directories across the Supreme Court, GSTAT & 8 High Courts."
   },
   "/practice": {
-    title: "Direct & Indirect Tax, Corporate Law & Litigation Services | Advocate Sanjay Singh — SJ Associates",
+    title: "Direct & Indirect Tax, Corporate Law & Litigation Services | Advocate Sanjay Singh — S J Associates",
     description:
       "Legal and tax practice by Adv. Sanjay Kumar Singh: Goods and Services Tax, Commissioner & GSTAT Appeals, TDS Return Filing, Income Tax Consultancy, ITR Filing, Company Registration, DGFT, MSME, Trademark, Labour, Civil & Criminal Litigation."
   },
   "/about": {
     title: "Advocate Sanjay Kumar Singh (Advocate Sanjay Singh) | Delhi High Court & Bihar Lawyer",
     description:
-      "Profile of Advocate Sanjay Kumar Singh, Founder of SJ Associates, Delhi High Court Advocate & Distinguished Member of the International Council of Jurists (Cert. No. 2529)."
+      "Profile of Advocate Sanjay Kumar Singh, Founder of S J Associates, Delhi High Court Advocate & Distinguished Member of the International Council of Jurists (Cert. No. 2529)."
   },
   "/contact": {
-    title: "Contact Advocate Sanjay Singh | SJ Associates — New Delhi & Muzaffarpur (Bihar) Offices",
+    title: "Contact Advocate Sanjay Singh | S J Associates — New Delhi & Muzaffarpur (Bihar) Offices",
     description:
-      "Consult Advocate Sanjay Kumar Singh (SJ Associates) at our New Delhi (Rani Bagh / Pitampura) and Bihar (Muzaffarpur) offices for Tax, Corporate, Labour, Civil & Criminal matters."
+      "Consult Advocate Sanjay Kumar Singh (S J Associates) at our New Delhi (Rani Bagh / Pitampura) and Bihar (Muzaffarpur) offices for Tax, Corporate, Labour, Civil & Criminal matters."
   },
   "/mail": {
-    title: "Office Webmail | SJ Associates (services@sjalaw.in)",
-    description: "Private office webmail portal for SJ Associates (services@sjalaw.in)."
+    title: "Office Webmail | S J Associates (services@sjalaw.in)",
+    description: "Private office webmail portal for S J Associates (services@sjalaw.in)."
   }
 };
 
@@ -85,12 +85,12 @@ function RouteMetadataAndScroll() {
         .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : ""))
         .join(" ");
       seo = {
-        title: `${courtLabel} Live Goods and Services Tax Rulings | Advocate Sanjay Singh — SJ Associates`,
-        description: `Live ${courtLabel} judicial rulings, GST & Income Tax bench updates, and representation by Advocate Sanjay Kumar Singh (SJ Associates, Delhi & Ghaziabad NCR).`
+        title: `${courtLabel} Live Goods and Services Tax Rulings | Advocate Sanjay Singh — S J Associates`,
+        description: `Live ${courtLabel} judicial rulings, GST & Income Tax bench updates, and representation by Advocate Sanjay Kumar Singh (S J Associates, Delhi & Ghaziabad NCR).`
       };
     } else if (!seo) {
       seo = {
-        title: "SJ Associates | Advocate Sanjay Singh — Delhi & Ghaziabad Lawyer",
+        title: "S J Associates | Advocate Sanjay Singh — Delhi & Ghaziabad Lawyer",
         description: ROUTE_SEO["/"].description
       };
     }

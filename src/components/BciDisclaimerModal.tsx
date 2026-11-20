@@ -110,7 +110,7 @@ export function BciDisclaimerModal() {
               information contained herein constitute a contract, or will form the basis of a
               contract. While, every care has been taken in preparing the content of this website and
               web pages to ensure accuracy at the time of publication and creation, however,{" "}
-              <strong className="font-bold text-[#0A2536]">SJ Associates</strong> assumes no
+              <strong className="font-bold text-[#0A2536]">S J Associates</strong> assumes no
               responsibility for any errors, which despite all precautions may be found herein. All
               disputes, if any, are subject to the exclusive jurisdiction of courts at New Delhi,
               India only.
@@ -125,7 +125,7 @@ export function BciDisclaimerModal() {
               Confirmation Required to Enter Website
             </h3>
             <p className="max-w-lg mx-auto text-xs sm:text-sm text-[#33566D] leading-relaxed">
-              In compliance with the rules of the Bar Council of India, access to the SJ Associates
+              In compliance with the rules of the Bar Council of India, access to the S J Associates
               website is available only upon confirming the Disclaimer &amp; Confirmation notice.
             </p>
             <div className="pt-2">

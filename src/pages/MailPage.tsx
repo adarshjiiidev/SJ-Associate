@@ -562,7 +562,7 @@ export function MailPage() {
             <FirmLogo size={32} />
             <div className="leading-tight">
               <p className="text-sm font-extrabold uppercase tracking-[0.08em] text-[#F3FAFF]">
-                SJ Associates
+                S J Associates
               </p>
               <p className="text-[11px] text-[#DAF6EF]/75">
                 services@sjalaw.in · Office Mail
@@ -744,9 +744,9 @@ export function MailPage() {
         </main>
 
         <div className="mx-auto w-full max-w-[1120px] flex items-center justify-between text-xs text-[#DAF6EF]/65">
-          <span>SJ Associates Private Webmail</span>
+          <span>S J Associates Private Webmail</span>
           <Link to="/" className="hover:text-[#DAF6EF] transition-colors">
-            ← Return to SJ Associates Website
+            ← Return to S J Associates Website
           </Link>
         </div>
       </div>
@@ -762,7 +762,7 @@ export function MailPage() {
             <FirmLogo size={30} />
             <div className="min-w-0 leading-tight">
               <p className="text-sm font-extrabold uppercase tracking-[0.06em] whitespace-nowrap">
-                SJ Associates Mail
+                S J Associates Mail
               </p>
               <p className="text-[11px] text-[#DAF6EF]/80 truncate">
                 {user.email}

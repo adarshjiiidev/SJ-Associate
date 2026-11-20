@@ -311,7 +311,7 @@ export async function forwardConsultationEmailIfConfigured(entry: {
   });
 
   await transporter.sendMail({
-    from: `SJ Associates Chambers <${smtpUser}>`,
+    from: `S J Associates Chambers <${smtpUser}>`,
     to: recipient,
     replyTo: entry.email,
     subject: `[${entry.referenceId}] Chambers Briefing: ${entry.practiceArea} (${entry.fullName})`,

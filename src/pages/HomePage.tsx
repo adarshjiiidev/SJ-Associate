@@ -226,25 +226,31 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
     <div className="min-h-screen bg-[#F3FAFF] text-[#0A2536]">
       {/* SECTION 1: HERO */}
       <section className="relative overflow-hidden border-b border-border pt-14 pb-10 sm:pt-20 sm:pb-12">
-        {/* 4K Delhi High Court background image */}
+        {/* 4K Delhi High Court background image with vibrant natural colors on left & right sides */}
         <div className="pointer-events-none absolute inset-0 z-0">
           <ResilientImage
             src={HERO_IMAGE}
             alt="High Court of Delhi 4K Background"
-            className="h-full w-full object-cover object-center blur-[2.5px] scale-[1.02]"
+            className="h-full w-full object-cover object-center saturate-[1.14] contrast-[1.03]"
           />
         </div>
 
-        {/* Extra blur specifically over the central High Court of Delhi building & portico signage */}
+        {/* Low-intensity localized blur only over the central portico signage, leaving left & right sides crisp and colorful */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-10 backdrop-blur-xl bg-[#F3FAFF]/35 [mask-image:radial-gradient(ellipse_55%_42%_at_50%_52%,#000_55%,transparent_100%)]"
+          className="pointer-events-none absolute inset-0 z-10 backdrop-blur-[2.5px] [mask-image:radial-gradient(ellipse_36%_42%_at_50%_48%,#000_38%,transparent_92%)]"
         />
 
-        {/* Translucent wash so the 4K Delhi High Court background is visible while keeping normal dark text legible */}
+        {/* Soft center-only radial halo for text contrast while keeping left & right court wings in full glorious color */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-[#F3FAFF]/65 via-[#F3FAFF]/58 to-[#DAF6EF]/75 backdrop-blur-[2px]"
+          className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(ellipse_44%_54%_at_50%_46%,rgba(243,250,255,0.68)_0%,rgba(243,250,255,0.36)_54%,transparent_90%)]"
+        />
+
+        {/* Subtle bottom bar strip readability gradient */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 z-10 bg-gradient-to-t from-[#F3FAFF]/82 via-[#F3FAFF]/35 to-transparent"
         />
 
         {/* Hero text & controls with normal solid typography */}
@@ -295,8 +301,8 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </Link>
           </div>
 
-          <div className="mt-14 pt-5 border-t border-[#0A2536]/12 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-2 text-xs font-semibold text-[#33566D]">
+          <div className="mt-14 pt-5 border-t border-[#0A2536]/15 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-2 text-xs font-bold text-[#0A2536]">
               <span>Direct &amp; Indirect Taxation</span>
               <span>Financial Accounting &amp; Bookkeeping</span>
               <span>Corporate &amp; Labour Law</span>
@@ -533,7 +539,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
         <div className="absolute inset-0 opacity-35">
           <ResilientImage
             src={ADVOCATE_CORRIDOR_IMAGE}
-            alt="SJ Associates Legal Support"
+            alt="S J Associates Legal Support"
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0A2536] via-[#0A2536]/85 to-[#0A2536]/55" />

@@ -131,7 +131,7 @@ export function AboutPage({ onOpenConsultation }: AboutPageProps) {
                 <div className="aspect-[4/3] w-full overflow-hidden">
                   <ResilientImage
                     src={ADVOCATE_DESK_IMAGE}
-                    alt="SJ Associates Law and Tax Office Desk"
+                    alt="S J Associates Law and Tax Office Desk"
                     className="w-full h-full object-cover"
                   />
                 </div>

@@ -10,7 +10,7 @@ interface FirmLogoProps {
 }
 
 /**
- * SJ Associates official uploaded emblem (SJA · Justice • Advise • Solution).
+ * S J Associates official uploaded emblem (SJA · Justice • Advise • Solution).
  * Maintains natural horizontal aspect ratio (~1.48:1) on a clean crisp white plaque
  * so the golden scales and SJA lettering stay razor-sharp on both light and dark surfaces.
  */
@@ -40,7 +40,7 @@ export function FirmLogo({
     >
       <img
         src={FIRM_LOGO_SRC}
-        alt="SJA — SJ Associates | Justice • Advise • Solution"
+        alt="SJA — S J Associates | Justice • Advise • Solution"
         className="h-full w-full object-contain"
         loading="eager"
         decoding="async"

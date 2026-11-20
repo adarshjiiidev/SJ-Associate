@@ -126,7 +126,7 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     officialUrl: "https://www.sci.gov.in",
     causeListUrl: "https://www.sci.gov.in/cause-list/",
     chambersPracticeNote:
-      "SJ Associates maintains an active filing desk at Tilak Marg for Special Leave Petitions (Article 136), Writ Petitions (Article 32), Transfer Petitions, and Goods and Services Tax & Income Tax appeals.",
+      "S J Associates maintains an active filing desk at Tilak Marg for Special Leave Petitions (Article 136), Writ Petitions (Article 32), Transfer Petitions, and Goods and Services Tax & Income Tax appeals.",
     summary:
       "Apex constitutional court of the Republic of India exercising original, appellate, and advisory jurisdiction over constitutional, GST, income tax, civil, criminal, and regulatory matters."
   },

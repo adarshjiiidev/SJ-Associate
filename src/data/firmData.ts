@@ -55,7 +55,7 @@ export interface HonourCertificateItem {
 }
 
 export const FIRM_IDENTITY = {
-  name: "SJ Associates",
+  name: "S J Associates",
   monogram: "SJA",
   tagline: "Advocates & Tax Consultants · GST, Income Tax & Registrations",
   barComplianceLine:
@@ -84,7 +84,7 @@ export const PRINCIPAL_ADVOCATE = {
   name: "Adv. Sanjay Kumar Singh",
   title: "Advocate, Delhi High Court",
   designation: "Founder & Advocate, Delhi High Court",
-  firm: "SJ Associates",
+  firm: "S J Associates",
   membership: "Member of International Council Of Jurists",
   standing: "15+ Years of Active Tax, Appellate & Registration Practice",
   education:
@@ -93,13 +93,13 @@ export const PRINCIPAL_ADVOCATE = {
     "Delhi High Court · GSTAT Principal Bench · Supreme Court of India · International Council of Jurists (2026–2030)",
   portraitUrl: "/advocate-sanjay-singh.png",
   quote:
-    "SJ Associates strives to be a multi-skilled knowledge based law and tax firm, driven by ethics and human values, delivering excellence and value in the field of legal and taxation services.",
+    "S J Associates strives to be a multi-skilled knowledge based law and tax firm, driven by ethics and human values, delivering excellence and value in the field of legal and taxation services.",
   overview: [
-    "Set up in 2009, the growth of SJ Associates (“Firm”) is a glowing tribute to its founder, Advocate Sanjay Kumar Singh. His visionary leadership, mentoring and hard work has helped the Firm to emerge as one of the well-known law and taxation firms in the country. Since its inception, it continues to serve a diverse clientele, including domestic and overseas businesses, industrial enterprises, partnership firms and individuals.",
+    "Set up in 2009, the growth of S J Associates (“Firm”) is a glowing tribute to its founder, Advocate Sanjay Kumar Singh. His visionary leadership, mentoring and hard work has helped the Firm to emerge as one of the well-known law and taxation firms in the country. Since its inception, it continues to serve a diverse clientele, including domestic and overseas businesses, industrial enterprises, partnership firms and individuals.",
     "Presently, the Firm has operations in New Delhi, Delhi NCR (including Ghaziabad, Noida, Gurugram and Faridabad) and Muzaffarpur (Bihar), alongside associates across major cities and High Court centres in India. With increasing complexity in the modern professional and business environment, the Firm is committed to providing high quality, flexible, client focused legal, taxation and business advisory services. Every passing year is memorable to us for its challenges, and the multitude of creative solutions that we provide to our clients.",
-    "SJ Associates is a dedicated law and taxation firm advising domestic and commercial clients for over fifteen years and providing a broad range of legal, taxation, regulatory and advisory services to the commercial, industrial and financial communities. SJ Associates serves the need of both small and large businesses, ranging from basic start-up registration work to complex legal issues, tax litigation and regulatory matters.",
-    "SJ Associates draws its expertise from advocates and tax professionals who have gained experience nationally, having worked on varied taxation, appellate and regulatory assignments across India. The broad practice areas of SJ Associates are Direct and Indirect Taxation (Goods and Services Tax ‘GST’, Customs, Income Tax, Corporate Tax, Wealth Tax & TDS), Corporate Law Practice, Labour Law Litigation, Civil Litigation, Criminal Litigation, Arbitration, GSTAT Appeals, High Court Litigation & Writs, Bookkeeping & Accounting, Foreign Trade Policy (DGFT Compliances), MSME Registration, Trademark Registration, Partnership Firm Registration and Company Registration. Our Firm brings together legal advocacy and specialized tax practice, providing an edge which is most critical for the success of commercial transactions.",
-    "Client satisfaction is a cornerstone of our practice. We are proud of the recognition we have received from our clients for our commitment to service, and we value their satisfaction as the best measure of our success. SJ Associates strives to be a multi-skilled knowledge based law and tax firm, driven by ethics and human values, delivering excellence and value in the field of legal and taxation services.",
+    "S J Associates is a dedicated law and taxation firm advising domestic and commercial clients for over fifteen years and providing a broad range of legal, taxation, regulatory and advisory services to the commercial, industrial and financial communities. S J Associates serves the need of both small and large businesses, ranging from basic start-up registration work to complex legal issues, tax litigation and regulatory matters.",
+    "S J Associates draws its expertise from advocates and tax professionals who have gained experience nationally, having worked on varied taxation, appellate and regulatory assignments across India. The broad practice areas of S J Associates are Direct and Indirect Taxation (Goods and Services Tax ‘GST’, Customs, Income Tax, Corporate Tax, Wealth Tax & TDS), Corporate Law Practice, Labour Law Litigation, Civil Litigation, Criminal Litigation, Arbitration, GSTAT Appeals, High Court Litigation & Writs, Bookkeeping & Accounting, Foreign Trade Policy (DGFT Compliances), MSME Registration, Trademark Registration, Partnership Firm Registration and Company Registration. Our Firm brings together legal advocacy and specialized tax practice, providing an edge which is most critical for the success of commercial transactions.",
+    "Client satisfaction is a cornerstone of our practice. We are proud of the recognition we have received from our clients for our commitment to service, and we value their satisfaction as the best measure of our success. S J Associates strives to be a multi-skilled knowledge based law and tax firm, driven by ethics and human values, delivering excellence and value in the field of legal and taxation services.",
     "Our mission is to be the most preferred law and tax firm within the Indian market, providing clients with qualitative and innovative professional advice in a time bound and cost effective manner, and providing advocates and tax professionals with a conducive environment for all round growth and development.",
   ],
   keyHighlights: [
@@ -640,7 +640,7 @@ export const COUNSEL_TEAM: CounselMember[] = [
       "Corporate Law Practice, Company Registration & Regulatory Advisory",
       "Labour Law Litigation, Civil Litigation, Criminal Litigation & Arbitration",
     ],
-    bio: "Founder of SJ Associates practicing before the High Court of Delhi, GSTAT, and Courts across Delhi NCR and Bihar across Goods and Services Tax, Income Tax, Corporate Tax, Wealth Tax, Customs, Corporate Law, Labour Law, Civil, and Criminal Litigation.",
+    bio: "Founder of S J Associates practicing before the High Court of Delhi, GSTAT, and Courts across Delhi NCR and Bihar across Goods and Services Tax, Income Tax, Corporate Tax, Wealth Tax, Customs, Corporate Law, Labour Law, Civil, and Criminal Litigation.",
   },
   {
     id: "adv-rajesh-verma",

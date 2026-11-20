@@ -33,7 +33,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               Something interrupted this view
             </h1>
             <p className="text-sm text-[#33566D] leading-relaxed">
-              Please reload the page or return to the SJ Associates home page.
+              Please reload the page or return to the S J Associates home page.
             </p>
           </div>
           <div className="flex items-center justify-center gap-3">

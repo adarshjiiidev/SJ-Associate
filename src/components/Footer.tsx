@@ -239,7 +239,7 @@ export const Footer: React.FC = () => {
           {/* Bottom Copyright & Back to Top */}
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F3FAFF]/70">
             <p>
-              © {new Date().getFullYear()} SJ Associates — Adv. Sanjay Kumar
+              © {new Date().getFullYear()} S J Associates — Adv. Sanjay Kumar
               Singh | All Rights Reserved
             </p>
             <div className="flex items-center gap-6">
