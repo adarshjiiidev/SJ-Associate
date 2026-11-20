@@ -369,12 +369,12 @@ export const TAX_AND_REGIONAL_OFFICES: TaxRegionalOffice[] = [
     addressNote: "I.P. Estate / Laxmi Nagar / Civic Centre Appellate Ranges, New Delhi"
   },
   {
-    slug: "delhi-itat-cestat",
-    name: "ITAT & CESTAT Principal Benches — Lok Nayak Bhawan / R.K. Puram, New Delhi",
+    slug: "delhi-customs-cestat",
+    name: "Customs & CESTAT Principal Benches — Lok Nayak Bhawan / R.K. Puram, New Delhi",
     city: "New Delhi",
     group: "Delhi Tax & Regional Offices",
     nearbyCourtSlug: "delhi-high-court",
-    jurisdiction: "Income Tax Appellate Tribunal & Customs/Excise Appellate Tribunal",
+    jurisdiction: "Customs, Excise & Service Tax Appellate Tribunal & Direct Tax Appeals",
     addressNote: "Lok Nayak Bhawan, Khan Market & West Block, R.K. Puram, New Delhi"
   },
   {
@@ -1072,7 +1072,7 @@ export function buildArchiveFallbackReport(
     },
     {
       id: `${court.slug}-fallback-2`,
-      title: `${court.shortName} — TDS Compliance, Income Tax Consultancy & Income Tax Return Assessment (Section 148 Notice)`,
+      title: `${court.shortName} — Income Tax Consultancy, Income Tax Return Assessment & TDS Compliance (Section 148 Notice)`,
       caseNameOrCitation: `${court.shortName} · Direct Tax Appellate Roster`,
       date: formattedDate,
       category: "GST & Income Tax",

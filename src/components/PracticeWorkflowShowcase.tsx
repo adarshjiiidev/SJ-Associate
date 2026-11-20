@@ -45,29 +45,29 @@ const WORKFLOW_STAGES: WorkflowStage[] = [
     step: "02",
     badgeSubtitle: "SECTION 02 · 4 INCOME TAX SERVICES (24%)",
     badgeTitle: "Income Tax Practice Wing",
-    leftCardTitle: "TDS Return Filing & Income Tax Consultancy",
-    leftCardSubtitle: "Quarterly 24Q/26Q/27Q · Direct Tax Advisory & Planning",
+    leftCardTitle: "Income Tax Consultancy & ITR Return Filing",
+    leftCardSubtitle: "Income Tax, Corporate Tax & Wealth Tax · ITR-1 to ITR-7",
     leftCardStatus: "Active Desk",
-    centerHubTitle: "TDS Returns, Consultancy, ITR Filing & Assessments",
-    rightTopTitle: "Income Tax Return (ITR) Filing",
-    rightTopSubtitle: "ITR-1 to ITR-7 · Tax Audit & 26AS/AIS Reconciliation",
+    centerHubTitle: "Income Tax Consultancy, ITR & TDS Return Filing",
+    rightTopTitle: "TDS Return Filing & TRACES Compliance",
+    rightTopSubtitle: "Quarterly 24Q/26Q/27Q/27EQ · Form 16/16A & Rectification",
     rightTopStatus: "Active Watch",
-    rightMiddleTitle: "Other Income Tax Matters & ITAT",
-    rightMiddleSubtitle: "Sec. 143(3) Scrutiny · Sec. 148 Notices · CIT(A) & ITAT",
+    rightMiddleTitle: "Other Income Tax Matters & Appeals",
+    rightMiddleSubtitle: "Sec. 143(3) Scrutiny · Sec. 148 Notices · CIT(Appeals)",
     rightMiddleStatus: "Synced",
     ctaTitle: "Direct Income Tax Desk",
     ctaDescription:
-      "TDS Return Filing, Income Tax Consultancy, Income Tax Return Filing & Assessment Matters.",
+      "Income Tax Consultancy, Income Tax Return Filing, TDS Return Filing & Assessment Matters.",
   },
   {
     id: "others-registrations",
     step: "03",
     badgeSubtitle: "SECTION 03 · 7 CORPORATE, REGISTRATION & LITIGATION SERVICES (41%)",
     badgeTitle: "Others — Corporate, Registrations & Litigation",
-    leftCardTitle: "Company Registration & Accounting",
-    leftCardSubtitle: "Pvt Ltd / LLP / OPC · Tally / Audit Books & DGFT",
+    leftCardTitle: "Company Registration & Bookkeeping & Accounting",
+    leftCardSubtitle: "Pvt Ltd / LLP / OPC · Bookkeeping & DGFT Compliances",
     leftCardStatus: "Active Desk",
-    centerHubTitle: "Company Registration, Accounts, DGFT, IP & Litigation",
+    centerHubTitle: "Company Registration, Bookkeeping, DGFT, IP & Litigation",
     rightTopTitle: "MSME, Trademark & Partnership Registration",
     rightTopSubtitle: "Udyam · TM-A Filing & Hearings · Partnership Deed & ROF",
     rightTopStatus: "Active Watch",
@@ -76,7 +76,7 @@ const WORKFLOW_STAGES: WorkflowStage[] = [
     rightMiddleStatus: "Synced",
     ctaTitle: "Corporate & Litigation Desk",
     ctaDescription:
-      "Accounting, DGFT, MSME, Trademark, Partnership, Company Registration & Criminal & Civil Litigation.",
+      "Bookkeeping & Accounting, DGFT Compliances, MSME, Trademark, Partnership, Company Registration & Criminal & Civil Litigation.",
   },
 ];
 
@@ -136,7 +136,7 @@ export const PracticeWorkflowShowcase: React.FC<PracticeWorkflowShowcaseProps> =
           </div>
           <div className="lg:col-span-5">
             <p className="text-sm sm:text-base text-[#33566D] leading-relaxed">
-              Every matter across our three sections—<strong className="text-[#0A2536]">1. Goods and Services Tax</strong>, <strong className="text-[#0A2536]">2. Income Tax</strong>, and <strong className="text-[#0A2536]">3. Others (Accounting, DGFT, MSME, Trademark, Partnership, Company Registration &amp; Criminal &amp; Civil Litigation)</strong>—follows a disciplined sequence across Delhi, Bihar, and regional tax offices, tribunals &amp; courts.
+              Every matter across our three sections—<strong className="text-[#0A2536]">1. Goods and Services Tax</strong>, <strong className="text-[#0A2536]">2. Income Tax</strong>, and <strong className="text-[#0A2536]">3. Others (Bookkeeping &amp; Accounting, DGFT Compliances, MSME, Trademark, Partnership, Company Registration &amp; Criminal &amp; Civil Litigation)</strong>—follows a disciplined sequence across Delhi, Bihar, and regional tax offices, tribunals &amp; courts.
             </p>
           </div>
         </div>

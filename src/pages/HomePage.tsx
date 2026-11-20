@@ -62,14 +62,14 @@ const STANDING_METRICS = [
     value: "17",
     buttonLabel: "Core Services",
     caption:
-      "Structured across 3 sections: 6 Goods and Services Tax, 4 Income Tax (TDS, Consultancy & ITR), and 7 Others including Company Registration & Criminal/Civil Litigation.",
+      "Structured across 3 sections: 6 Goods and Services Tax, 4 Income Tax (Consultancy, ITR & TDS), and 7 Others including Bookkeeping & Accounting, DGFT Compliances, Company Registration & Criminal/Civil Litigation.",
   },
   {
     id: "forums",
     value: "10+",
     buttonLabel: "Courts & Tax Forums",
     caption:
-      "Active representation across the Supreme Court, GSTAT, ITAT, 8 High Courts, and Delhi, Bihar & regional tax authorities.",
+      "Active representation across the Supreme Court, GSTAT, 8 High Courts, and Delhi, Bihar & regional tax authorities.",
   },
 ];
 
@@ -177,10 +177,10 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
       id: "section-02-income-tax",
       title: "Income Tax — Consultancy, ITR & TDS Return Filing",
       summary:
-        "The Direct Tax team offers comprehensive Income Tax Consultancy, Income Tax Return (ITR) Filing, quarterly TDS Return Filing, and representation in scrutiny assessments and appeals before CIT(Appeals) and Tax Authorities.",
+        "The Direct Tax team offers comprehensive Income Tax Consultancy, Income Tax Return (ITR) Filing, quarterly TDS Return Filing, Corporate Tax, Wealth Tax, and representation in scrutiny assessments and appeals before CIT(Appeals) and Tax Authorities.",
       representationScope: [
-        "Income Tax Consultancy on domestic & cross-border tax planning and capital gains structuring",
-        "Income Tax Return (ITR) Filing (ITR-1 to ITR-7), tax audit reports & AIS/TIS reconciliation",
+        "Income Tax Consultancy on domestic & cross-border tax planning, Corporate Tax & Wealth Tax",
+        "Income Tax Return (ITR) Filing (ITR-1 to ITR-7), bookkeeping & AIS/TIS reconciliation",
         "Quarterly TDS & TCS Return Filing (24Q, 26Q, 27Q, 27EQ), Form 16/16A & TRACES rectification",
         "Scrutiny assessments (Sec. 143(3)), Sec. 148A/148 notices & CIT(Appeals) representation",
       ],
@@ -188,12 +188,12 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
     },
     {
       id: "section-03-others",
-      title: "Others — Accounting, Registrations, Corporate & Litigation",
+      title: "Others — Bookkeeping & Accounting, DGFT Compliances, Corporate & Litigation",
       summary:
-        "End-to-end Financial Accounting & Bookkeeping, Corporate Law Practice, statutory registrations, Labour Law, Corporate, Criminal & Civil Litigation, and Arbitration across Delhi NCR, Bihar, and India.",
+        "End-to-end Bookkeeping & Accounting, DGFT Compliances, Customs, Corporate Law Practice, statutory registrations, Labour Law, Corporate, Criminal & Civil Litigation, and Arbitration across Delhi NCR, Bihar, and India.",
       representationScope: [
-        "Financial Accounting & Bookkeeping, Trial Balance, P&L, Balance Sheet & audit support",
-        "Company Registration, Partnership Firm, MSME Udyam, Trademark & DGFT (IEC) Work",
+        "Bookkeeping & Accounting, Trial Balance, P&L, Balance Sheet & ledger reconciliation",
+        "DGFT Compliances (IEC), Company Registration, Partnership Firm, MSME Udyam & Trademark",
         "Corporate Law Practice, Labour Law, Corporate Litigation & Arbitration representation",
         "Criminal & Civil Litigation before District Courts, High Courts & Supreme Court",
       ],
@@ -318,8 +318,8 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             <p className="mt-3 text-sm sm:text-base text-[#33566D] leading-relaxed">
               The Firm&apos;s Direct and Indirect Tax teams are well-equipped and dedicated to
               render advice, manage statutory compliances, and litigate across Goods and Services
-              Tax (&lsquo;GST&rsquo;), Customs, Income Tax, ITAT, GSTAT, High Courts, and Foreign
-              Trade Policy schemes.
+              Tax (&lsquo;GST&rsquo;), Customs, Income Tax, Corporate Tax, Wealth Tax, GSTAT, High
+              Courts, and Foreign Trade Policy (DGFT Compliances) schemes.
             </p>
             <div className="mt-5">
               <Link

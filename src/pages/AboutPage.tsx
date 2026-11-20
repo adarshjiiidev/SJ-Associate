@@ -230,13 +230,13 @@ export function AboutPage({ onOpenConsultation }: AboutPageProps) {
             <div className="rounded-none border border-[#0A2536]/20 bg-white p-6 shadow-xs">
               <Landmark className="h-6 w-6 text-[#0A2536] mb-3" />
               <h2 className="font-display text-2xl font-bold text-[#0A2536]">
-                2. Income Tax (Direct Tax)
+                2. Income Tax, Corporate Tax &amp; Wealth Tax
               </h2>
               <p className="mt-2 text-sm text-[#33566D] leading-relaxed">
                 The Direct Tax team comprising lawyers and tax professionals offers a comprehensive
-                array of tax advisory, compliance, and litigation services—including TDS Return
-                Filing, Income Tax Consultancy, Income Tax Return Filing, and representation before
-                Assessing Authorities, CIT(Appeals), ITAT Tribunal, and High Courts.
+                array of tax advisory, compliance, and litigation services—including Income Tax
+                Consultancy, Income Tax Return Filing, TDS Return Filing, Corporate Tax, Wealth Tax,
+                and representation before Assessing Authorities, CIT(Appeals), and High Courts.
               </p>
             </div>
 
@@ -246,10 +246,10 @@ export function AboutPage({ onOpenConsultation }: AboutPageProps) {
                 3. Corporate, Registrations &amp; Litigation
               </h2>
               <p className="mt-2 text-sm text-[#33566D] leading-relaxed">
-                Comprehensive support across Accounting &amp; Bookkeeping, DGFT Work, MSME
+                Comprehensive support across Bookkeeping &amp; Accounting, DGFT Compliances, MSME
                 Registration, Trademark Registration, Partnership Firm Registration, Company
-                Registration, and Criminal, Civil &amp; Labour Law Litigation across Delhi, Bihar,
-                and India.
+                Registration, and Criminal, Civil, Labour Law Litigation &amp; Arbitration across
+                Delhi, Bihar, and India.
               </p>
             </div>
           </div>

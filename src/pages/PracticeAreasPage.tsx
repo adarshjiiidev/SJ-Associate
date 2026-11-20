@@ -98,7 +98,7 @@ export function PracticeAreasPage({ onOpenConsultation }: PracticeAreasPageProps
                   <span>
                     Managed Services in the area of Compliance and Regulatory matters on an
                     all-India basis which includes within its ambit Goods and Services Tax
-                    registration, filing of returns, facilitation of audit, Show Cause Notice (SCN)
+                    registration, filing of returns, bookkeeping, Show Cause Notice (SCN)
                     replies, refunds under Foreign Trade Policy Schemes, etc.
                   </span>
                 </li>
@@ -114,7 +114,7 @@ export function PracticeAreasPage({ onOpenConsultation }: PracticeAreasPageProps
                   DIRECT TAXATION WING
                 </div>
                 <h2 className="font-display text-3xl font-bold text-[#0A2536] mt-0.5">
-                  Direct Tax (Income Tax &amp; ITAT)
+                  Income Tax, Corporate Tax &amp; Wealth Tax
                 </h2>
               </div>
               <Landmark className="h-6 w-6 text-[#0A2536] shrink-0" />
@@ -122,9 +122,10 @@ export function PracticeAreasPage({ onOpenConsultation }: PracticeAreasPageProps
 
             <p className="text-sm text-[#33566D] leading-relaxed">
               The Direct Tax team comprising lawyers and tax professionals offers a comprehensive
-              array of tax advisory, compliance and litigation services for businesses, partnership
-              firms and organisations in various sectors. We understand the business, accounting and
-              legal intricacies affecting taxation.
+              array of Income Tax, Corporate Tax, and Wealth Tax advisory, compliance, and
+              litigation services for businesses, partnership firms, and organisations in various
+              sectors. We understand the business, accounting and legal intricacies affecting
+              taxation.
             </p>
 
             <div className="space-y-2 pt-1">
@@ -136,21 +137,22 @@ export function PracticeAreasPage({ onOpenConsultation }: PracticeAreasPageProps
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-[#0A2536] shrink-0 mt-0.5" />
                   <span>
-                    Litigation before all forums (Supreme Court, High Court, Income Tax Appellate
-                    Tribunal &lsquo;ITAT&rsquo;, CIT (Appeals), and tax authorities)
+                    Litigation before all forums (Supreme Court, High Court, CIT (Appeals), and tax
+                    authorities)
                   </span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-[#0A2536] shrink-0 mt-0.5" />
                   <span>
-                    Quarterly TDS Return Filing, Income Tax Consultancy relating to domestic and
-                    cross-border tax issues, strategic tax planning, and capital gains structuring
+                    Income Tax Consultancy and Income Tax Return (ITR) Filing relating to domestic
+                    and cross-border tax issues, Corporate Tax, Wealth Tax, strategic tax planning,
+                    and capital gains structuring
                   </span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-[#0A2536] shrink-0 mt-0.5" />
                   <span>
-                    Compliance and Regulatory services including Income Tax Return (ITR) filing,
+                    Quarterly TDS Return Filing, Compliance and Regulatory services including
                     scrutiny assessments (Sec. 143(3)), and reassessment representation
                     (Sec. 148A/148)
                   </span>
