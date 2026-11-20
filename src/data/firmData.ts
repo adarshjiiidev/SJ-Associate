@@ -83,7 +83,7 @@ export const FIRM_IDENTITY = {
 export const PRINCIPAL_ADVOCATE = {
   name: "Adv. Sanjay Kumar Singh",
   title: "Advocate, Delhi High Court",
-  designation: "Founder & Principal Counsel, SJ Associates",
+  designation: "Founder & Advocate, Delhi High Court",
   firm: "SJ Associates",
   membership: "Member of International Council Of Jurists",
   standing: "15+ Years of Active Tax, Appellate & Registration Practice",
@@ -93,15 +93,19 @@ export const PRINCIPAL_ADVOCATE = {
     "Delhi High Court · GSTAT Principal Bench · Supreme Court of India · International Council of Jurists (2026–2030)",
   portraitUrl: "/advocate-sanjay-singh.png",
   quote:
-    "Effective tax and legal representation demands precision at every stage—from the first registration or Show Cause Notice reply to appellate arguments before the Commissioner, GSTAT, and the High Courts.",
+    "SJ Associates strives to be a multi-skilled knowledge based law and tax firm, driven by ethics and human values, delivering excellence and value in the field of legal and taxation services.",
   overview: [
-    "SJ Associates is a New Delhi tax, appellate, and legal chambers led by Adv. Sanjay Kumar Singh, practicing at the High Court of Delhi and registered as a Distinguished Member of the International Council of Jurists (London).",
-    "Our chambers work is organized across three focused sections: 1. GST & Tax (GST Registration, GST Return Filing, SCN Reply, GSTAT Appeal, Commissioner Appeal, and High Court Appeal), 2. Income Tax (Income Tax Return Filing, TDS Return Filing, Income Tax Consultancy, and Other Direct Tax Matters), and 3. Others (Accounting & Bookkeeping, DGFT Work, MSME Registration, Trademark Registration, and Partnership Firm Registration).",
+    "Set up in 2009, the growth of SJ Associates (“Firm”) is a glowing tribute to its founder, Advocate Sanjay Kumar Singh. His visionary leadership, mentoring and hard work has helped the Firm to emerge as one of the well-known law and taxation firms in the country. Since its inception, it continues to serve a diverse clientele, including domestic and overseas businesses, industrial enterprises, partnership firms and individuals.",
+    "Presently, the Firm has operations in New Delhi and Delhi NCR (including Ghaziabad, Noida, Gurugram and Faridabad) and associates across major cities and High Court centres in India. With increasing complexity in the modern professional and business environment, the Firm is committed to providing high quality, flexible, client focused legal, taxation and business advisory services. Every passing year is memorable to us for its challenges, and the multitude of creative solutions that we provide to our clients.",
+    "SJ Associates is a dedicated law and taxation firm advising domestic and commercial clients for over fifteen years and providing a broad range of legal, taxation, regulatory and advisory services to the commercial, industrial and financial communities. SJ Associates serves the need of both small and large businesses, ranging from basic start-up registration work to complex legal issues, tax litigation and regulatory matters.",
+    "SJ Associates draws its expertise from advocates and tax professionals who have gained experience nationally, having worked on varied taxation, appellate and regulatory assignments across India. The broad practice areas of SJ Associates are Goods and Services Tax (‘GST’), Customs, Direct Taxation (Income Tax & TDS), GSTAT Appeals, ITAT Tribunal, High Court Litigation & Writs, Accounting & Bookkeeping, Foreign Trade Policy (DGFT), MSME Registration, Intellectual Property (Trademark) Registration and Partnership Firm Registration. Our Firm brings together legal advocacy and specialized tax practice, providing an edge which is most critical for the success of commercial transactions.",
+    "Client satisfaction is a cornerstone of our practice. We are proud of the recognition we have received from our clients for our commitment to service, and we value their satisfaction as the best measure of our success. SJ Associates strives to be a multi-skilled knowledge based law and tax firm, driven by ethics and human values, delivering excellence and value in the field of legal and taxation services.",
+    "Our mission is to be the most preferred law and tax firm within the Indian market, providing clients with qualitative and innovative professional advice in a time bound and cost effective manner, and providing advocates and tax professionals with a conducive environment for all round growth and development.",
   ],
   keyHighlights: [
-    "Section 01 — GST & Tax: Registration, Return Filing, SCN Reply, GSTAT Appeal, Commissioner Appeal & High Court Appeal",
-    "Section 02 — Income Tax: Return Filing (ITR), TDS Return Filing, Income Tax Consultancy & Other Matters",
-    "Section 03 — Others: Accounting & Bookkeeping, DGFT Work, MSME Registration, Trademark Registration & Partnership Firm Registration",
+    "Section 01 — Goods and Services Tax: Registration, Return Filing, SCN Reply, Commissioner Appeal, GSTAT Appeal & High Court Appeal",
+    "Section 02 — Income Tax (Direct Tax): Return Filing (ITR), TDS Return Filing, Income Tax Consultancy & ITAT / Assessment Matters",
+    "Section 03 — Regulatory & Compliance: Accounting & Bookkeeping, DGFT Work, MSME Registration, Trademark Registration & Partnership Firm Registration",
     "Distinguished Member of the International Council of Jurists (Cert. No. 2529 · Membership No. 471-A/2009)",
   ],
 };
@@ -115,7 +119,7 @@ export const CHAMBERS_METRICS: ChambersMetric[] = [
   {
     label: "Specialized Services Across 3 Sections",
     value: "15",
-    detail: "6 GST & Tax · 4 Income Tax · 5 Accounting, DGFT & Registrations",
+    detail: "6 Goods and Services Tax · 4 Income Tax · 5 Accounting, DGFT & Registrations",
   },
   {
     label: "Delhi & Regional Tax Offices Covered",
@@ -125,7 +129,7 @@ export const CHAMBERS_METRICS: ChambersMetric[] = [
   {
     label: "Core Practice Sections",
     value: "3",
-    detail: "1. GST & Tax · 2. Income Tax · 3. Others (Accounts, DGFT & Registrations)",
+    detail: "1. Goods and Services Tax · 2. Income Tax · 3. Others (Accounts, DGFT & Registrations)",
   },
 ];
 
@@ -133,44 +137,44 @@ export const PRACTICE_AREAS: PracticeAreaItem[] = [
   {
     id: "gst-and-tax-practice",
     number: "01",
-    title: "GST & Tax — Registration, Return Filing & SCN Reply",
-    shortTitle: "GST Registration, Returns & SCN Reply",
+    title: "Goods and Services Tax — Registration, Return Filing & SCN Reply",
+    shortTitle: "Goods and Services Tax Compliance & SCN",
     statutes:
       "Delhi High Court (Tax Bench) · GSTAT · Vyapar Bhawan GST & CGST Offices",
     summary:
-      "Complete Goods and Services Tax compliance and departmental defence: fresh & multi-state GST Registration, monthly and annual GST Return Filing (GSTR-1, GSTR-3B, GSTR-9/9C), and comprehensive replies to Show Cause Notices (SCN / DRC-01 / ASMT-10).",
+      "The Firm’s Indirect Tax team is well-equipped and dedicated to render advice and litigate across the entire spectrum of indirect tax laws. The team aims at suggesting practical and innovative solutions to its clients and has expertise in Goods and Services Tax (‘GST’), Customs, Service Tax, Central Sales Tax/Value Added Tax (‘VAT’), and Central Excise.",
     representationScope: [
-      "GST Registration, amendment of core/non-core fields & revocation of cancelled GSTIN (REG-21)",
-      "Monthly, quarterly & annual GST Return Filing with GSTR-2B Input Tax Credit (ITC) reconciliation",
-      "Show Cause Notice (SCN) replies in Form DRC-06 under Section 73/74, ASMT-10 scrutiny & personal hearings",
+      "Managed Services in Compliance and Regulatory matters on an all-India basis including Goods and Services Tax Registration (REG-01), amendments & revocation (REG-21)",
+      "Filing of periodic and annual GST returns (GSTR-1, GSTR-3B, GSTR-9/9C), facilitation of audit, GSTR-2B reconciliation & refunds under Foreign Trade Policy Schemes",
+      "Drafting of detailed replies to Show Cause Notices (DRC-01 / Section 73 & 74), ASMT-10 scrutiny notices & representation in adjudication hearings",
     ],
     typicalForums: [
       "Vyapar Bhawan Delhi GST & Central CGST Commissionerates",
       "Regional GST Offices near High Courts across India",
     ],
     landmarkContext:
-      "A structured Show Cause Notice reply supported by reconciled GSTR-2B ledgers and judicial precedents protects taxpayers at adjudication and builds the record for appeal.",
+      "The Firm has a dedicated team of experts engaged in providing managed services, compliance advisory, and adjudication defence across Goods and Services Tax and Customs laws.",
   },
   {
     id: "gst-appellate-litigation",
     number: "02",
-    title: "GST & Tax — GSTAT Appeal, Commissioner Appeal & High Court Appeal",
-    shortTitle: "GSTAT, Commissioner & High Court Appeals",
+    title: "Goods and Services Tax — Commissioner Appeal, GSTAT Appeal & High Court Appeal",
+    shortTitle: "Commissioner, GSTAT & High Court Appeals",
     statutes:
-      "GSTAT Principal Bench · Commissioner (Appeals) · Delhi High Court & Supreme Court",
+      "Commissioner (Appeals) · GSTAT Principal Bench · Delhi High Court & Supreme Court",
     summary:
-      "Three-tier appellate advocacy contesting wrongful GST demands, ITC blocks, refund rejections, and detention penalties before the Commissioner (Appeals), the GST Appellate Tribunal (GSTAT), and the High Courts.",
+      "The Firm’s Indirect Tax litigation team represents clients before all forums—Commissioner (Appeals), Tax Tribunals including GSTAT, High Courts, the Supreme Court, and tax authorities—handling disputes involving GST demands, Input Tax Credit disallowances, refund rejections, Customs classification, and detention orders.",
     representationScope: [
-      "Commissioner (Appeals): Section 107 First Appeals (Form GST APL-01), stay of demand & hearings",
-      "GSTAT Appeal: Section 112 Second Appeals (Form GST APL-05) before GST Appellate Tribunal benches",
-      "High Court Appeal & Article 226 Writ Petitions challenging jurisdictional errors & bank attachments",
+      "Litigation before Commissioner (Appeals): Section 107 First Appeals (Form GST APL-01), stay petitions & appellate arguments",
+      "Representation before GST Appellate Tribunal (‘GSTAT’): Section 112 Second Appeals (Form GST APL-05), paperbook compilation & tribunal hearings",
+      "High Court Tax Appeals & Article 226 Writ Petitions before the High Courts and Supreme Court challenging jurisdictional errors & provisional attachments",
     ],
     typicalForums: [
       "Commissioner (Appeals) Delhi & Regional Benches",
       "GSTAT Principal Bench New Delhi · High Court of Delhi & Supreme Court",
     ],
     landmarkContext:
-      "Seamless appellate representation from First Appeal before the Commissioner (Appeals) to GSTAT Second Appeals and High Court tax writs.",
+      "Competent handling of Goods and Services Tax and Customs litigation across all appellate forums, delivering practical and time-bound solutions.",
   },
   {
     id: "income-tax-filings-and-tds",
@@ -180,18 +184,18 @@ export const PRACTICE_AREAS: PracticeAreaItem[] = [
     statutes:
       "Income Tax Department · Pratyaksh Kar Bhawan (ITO / Civic Centre) · TRACES",
     summary:
-      "Accurate Income Tax Return (ITR-1 to ITR-7) filing and quarterly TDS Return filing (24Q, 26Q, 27Q, 27EQ) for businesses, firms, professionals, and individuals with complete AIS/TIS and Form 26AS reconciliation.",
+      "The Direct Tax team, comprising lawyers and tax professionals, offers a comprehensive array of direct tax compliance and reporting services for businesses, partnership firms, professionals, and organisations across sectors. We understand the business, accounting, and legal intricacies affecting direct taxation and statutory reporting.",
     representationScope: [
-      "Income Tax Return Filing (ITR-1 to ITR-7), tax audit reports & financial statement schedules",
-      "Quarterly TDS Return Filing (Forms 24Q, 26Q, 27Q, 27EQ), Form 16/16A & TRACES default resolution",
-      "AIS/TIS, Form 26AS & annual GST turnover reconciliation, updated returns (ITR-U) & lower TDS certificates",
+      "Compilation of financial data and filing of Income Tax Returns (ITR-1 to ITR-7), tax audit reports & balance sheet schedules",
+      "Quarterly TDS and TCS Return Filing (Forms 24Q, 26Q, 27Q, 27EQ), Form 16/16A issuance & TRACES default rectification",
+      "Synchronization of AIS/TIS, Form 26AS & annual GST turnover, updated returns (ITR-U) & lower withholding certificates",
     ],
     typicalForums: [
       "Pratyaksh Kar Bhawan (Civic Centre / ITO New Delhi) & CPC / TRACES",
       "Regional Income Tax Offices (Aayakar Bhawan) across India",
     ],
     landmarkContext:
-      "Synchronizing ITR schedules, TDS statements, Form 26AS/AIS, and GST returns eliminates automated demand intimations.",
+      "We endeavor to deliver efficient and cost-effective direct tax compliance services appreciating the specific needs of clients, so as to provide maximum value.",
   },
   {
     id: "income-tax-consultancy-and-matters",
@@ -201,18 +205,18 @@ export const PRACTICE_AREAS: PracticeAreaItem[] = [
     statutes:
       "NFAC · CIT (Appeals) · ITAT Delhi Benches · High Court Tax Benches",
     summary:
-      "Year-round Income Tax Consultancy, direct tax planning, and representation in faceless scrutiny assessments (Section 143(3)), Section 148/148A reassessment notices, CIT(Appeals), and other direct tax matters.",
+      "The Direct Tax team is acclaimed for its ability to find practical solutions to meet clients’ needs while addressing the complexities of constantly changing tax regimes. Over the years, the team has gained the respect of tax administrators, businesses, and the judiciary alike for its competent handling of litigation before the Supreme Court, High Courts, Tax Tribunals (ITAT), CIT(Appeals), and assessing authorities.",
     representationScope: [
-      "Income Tax Consultancy: Tax planning, capital gains exemptions (Sec. 54/54F) & partnership structuring",
-      "Scrutiny assessment replies (Sec. 142(1) / 143(2)) & Section 148A/148 reassessment defense",
-      "CIT(Appeals) Form 35 appeals, Section 154 rectifications, penalty defense & stay of demand petitions",
+      "Advice and consultancy relating to domestic and cross-border direct tax issues, capital gains exemptions & business structuring",
+      "Representation in faceless scrutiny assessments (Sec. 142(1) / 143(2) / 143(3)) & Section 148A/148 reassessment proceedings",
+      "Appellate litigation before CIT(Appeals) in Form 35, Income Tax Appellate Tribunal (ITAT) benches, Section 154 rectifications & stay petitions",
     ],
     typicalForums: [
       "National Faceless Assessment / Appeal Centre (NFAC) & Jurisdictional ITOs",
       "ITAT Benches & High Court Tax Division Benches",
     ],
     landmarkContext:
-      "Evidence-backed written submissions in faceless assessments and reassessment proceedings safeguard assessees against arbitrary additions.",
+      "Quality advice and representation across the entire spectrum of direct tax laws, right from compilation of assessment records to appellate arguments before ITAT and the High Courts.",
   },
   {
     id: "accounting-bookkeeping-and-dgft",
@@ -222,18 +226,18 @@ export const PRACTICE_AREAS: PracticeAreaItem[] = [
     statutes:
       "DGFT CLA (ITO New Delhi) · Vanijya Bhawan · Regional DGFT & Customs Offices",
     summary:
-      "Systematic Accounting & Bookkeeping kept ready for GST and Income Tax audits, paired with complete Directorate General of Foreign Trade (DGFT) representation for importers and exporters.",
+      "The Firm provides managed services in the area of Accounting, Bookkeeping, and Foreign Trade Policy (DGFT) compliance on an all-India basis. For every commercial and cross-border trade requirement, our team of professionals works closely to maintain audit-ready books and secure export-import authorizations, refunds, and Customs clearances in a time-bound manner.",
     representationScope: [
-      "Accounting & Bookkeeping: Monthly ledgers, bank reconciliation, trial balance & P&L / Balance Sheet preparation",
-      "DGFT Work: Import Export Code (IEC) issuance & modification, Advance Authorization & EPCG licenses",
-      "RoDTEP / RoSCTL scrips, EODC redemption, RCMC registration & DGFT Show Cause Notice replies",
+      "Accounting & Bookkeeping: Compilation of ledgers, bank reconciliation, facilitation of audit & preparation of Trial Balance, P&L, and Balance Sheet",
+      "Foreign Trade Policy & DGFT Work: Import Export Code (IEC) issuance & modification, Advance Authorization & EPCG licenses",
+      "Export incentives & refunds under Foreign Trade Policy schemes (RoDTEP / RoSCTL), EODC redemption & DGFT Show Cause Notice representation",
     ],
     typicalForums: [
       "DGFT CLA Office (ITO, New Delhi) & Vanijya Bhawan",
       "Zonal & Regional DGFT Offices (Mumbai, Kolkata, Chennai, Ahmedabad, Jaipur, Ludhiana)",
     ],
     landmarkContext:
-      "Audit-ready accounting books combined with compliant DGFT authorizations ensure smooth export refunds and customs clearances.",
+      "Understanding the accounting, regulatory, and foreign trade intricacies affecting businesses allows the Firm to deliver holistic, tax-compliant solutions.",
   },
   {
     id: "msme-trademark-partnership-registrations",
@@ -243,22 +247,22 @@ export const PRACTICE_AREAS: PracticeAreaItem[] = [
     statutes:
       "Trade Marks Registry (Dwarka, New Delhi) · Registrar of Firms · Ministry of MSME",
     summary:
-      "End-to-end statutory registration desk handling MSME (Udyam) Registration, Trademark Registration & examination replies, and Partnership Firm Registration & deed drafting.",
+      "The Firm offers services across all stages of development experienced by a business entity, right from its inception and statutory registration to intellectual property protection and commercial documentation. Our team works closely to structure and execute registrations and agreements, thereby providing the client a holistic and legally sound foundation.",
     representationScope: [
-      "MSME Registration: Udyam Registration certificate, NIC classification & MSME Samadhaan delayed-payment filings",
-      "Trademark Registration: Brand search, TM-A filing (Classes 1–45), Section 9/11 objection replies & hearings",
-      "Partnership Firm Registration: Partnership Deed drafting, Registrar of Firms (ROF) registration & reconstitution deeds",
+      "MSME Registration: Udyam Registration certificate issuance, NIC activity classification & MSME Samadhaan delayed-payment recovery representation",
+      "Intellectual Property & Trademark Registration: Availability search, Form TM-A filing (Classes 1–45), Section 9/11 examination replies & hearings",
+      "Partnership Firm Registration: Drafting of Partnership & Reconstitution Deeds, stamp execution & registration before the Registrar of Firms (ROF)",
     ],
     typicalForums: [
       "Trade Marks Registry (Dwarka, New Delhi & Regional Offices)",
       "Registrar of Firms (Delhi & State Registrars) & MSME Facilitation Councils",
     ],
     landmarkContext:
-      "Registered Partnership Deeds, MSME Udyam certificates, and registered Trademarks secure statutory priority and enforceable brand rights.",
+      "From basic start-up registration work to complex statutory and intellectual property protection, the Firm delivers time-bound and cost-effective execution.",
   },
 ];
 
-export type SolutionCategory = "GST & Tax" | "Income Tax" | "Others";
+export type SolutionCategory = "Goods and Services Tax" | "Income Tax" | "Others";
 
 export interface CorporateSolutionItem {
   id: string;
@@ -284,19 +288,19 @@ export const PRACTICE_SECTION_SUMMARY: Array<{
   items: string[];
 }> = [
   {
-    category: "GST & Tax",
-    code: "01 · GST & TAX",
-    title: "GST & Tax (6 Services)",
+    category: "Goods and Services Tax",
+    code: "01 · GOODS AND SERVICES TAX",
+    title: "Goods and Services Tax (6 Services)",
     serviceCount: 6,
     weightPercent: 40,
     tagline:
-      "Registration, Return Filing, SCN Reply, GSTAT Appeal, Commissioner Appeal & High Court Appeal",
+      "Indirect Tax Advisory, Compliance & Litigation Across GST Authorities, Customs, GSTAT & High Courts",
     items: [
       "GST Registration",
       "GST Return Filing",
       "SCN Reply",
-      "GSTAT Appeal",
       "Commissioner Appeal",
+      "GSTAT Appeal",
       "High Court Appeal",
     ],
   },
@@ -307,7 +311,7 @@ export const PRACTICE_SECTION_SUMMARY: Array<{
     serviceCount: 4,
     weightPercent: 27,
     tagline:
-      "Income Tax Return Filing, TDS Return Filing, Income Tax Consultancy & Other Matters",
+      "Direct Tax Compliance, Advisory, Assessments & Appellate Representation Before CIT(A) & ITAT",
     items: [
       "Return Filing (ITR)",
       "TDS Return Filing",
@@ -322,7 +326,7 @@ export const PRACTICE_SECTION_SUMMARY: Array<{
     serviceCount: 5,
     weightPercent: 33,
     tagline:
-      "Accounting & Bookkeeping, DGFT Work, MSME Registration, Trademark Registration & Partnership Firm Registration",
+      "Managed Accounting, Foreign Trade Policy (DGFT), MSME, Intellectual Property & Partnership Setup",
     items: [
       "Accounting & Bookkeeping",
       "DGFT Work",
@@ -335,18 +339,18 @@ export const PRACTICE_SECTION_SUMMARY: Array<{
 
 export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
   // ============================================================================
-  // SECTION 1: GST & Tax (6 items)
+  // SECTION 1: Goods and Services Tax (6 items)
   // ============================================================================
   {
     id: "gst-registration",
-    category: "GST & Tax",
+    category: "Goods and Services Tax",
     title: "GST Registration",
     subtitle: "Fresh GSTIN, Multi-State Setup & Revocation",
     authorityTag: "GSTN · DELHI & STATE GST",
     turnaroundTag: "REG-01 & REG-21 Revocation",
     timelineOrStatute: "Sec. 22–30 CGST Act",
     description:
-      "Fresh GST Registration (REG-01), core/non-core amendments, additional place of business setup, LUT filing for exports, and revocation of cancelled GST registration (REG-21).",
+      "Managed regulatory compliance for fresh Goods and Services Tax Registration (REG-01), multi-state business expansion, core/non-core amendments, LUT filings for exporters, and representation for revocation of cancelled GST registrations (REG-21).",
     deliverables: [
       "Fresh GST Registration & Principal/Additional Place Verification",
       "Core & Non-Core GSTIN Amendments & Revocation (REG-21)",
@@ -356,14 +360,14 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
   },
   {
     id: "gst-return-filing",
-    category: "GST & Tax",
+    category: "Goods and Services Tax",
     title: "GST Return Filing",
     subtitle: "GSTR-1, GSTR-3B, ITC Matching & GSTR-9/9C",
     authorityTag: "GSTN · CBIC",
     turnaroundTag: "Monthly, QRMP & Annual",
     timelineOrStatute: "Sec. 37–44 CGST Act",
     description:
-      "GSTR-1, GSTR-3B, GSTR-9/9C annual reconciliation, GSTR-2B Input Tax Credit (ITC) audit matching, and refund filings.",
+      "All-India managed compliance encompassing periodic and annual Goods and Services Tax Return Filing (GSTR-1, GSTR-3B, GSTR-9/9C), GSTR-2B Input Tax Credit (ITC) reconciliation, facilitation of departmental audit, and export/inverted-duty refund claims.",
     deliverables: [
       "Monthly & Quarterly GSTR-1, IFF, and GSTR-3B Return Filing",
       "GSTR-2B ITC Reconciliation & Annual GSTR-9 / GSTR-9C Filing",
@@ -372,14 +376,14 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
   },
   {
     id: "scn-reply",
-    category: "GST & Tax",
+    category: "Goods and Services Tax",
     title: "SCN Reply (Show Cause Notice)",
     subtitle: "DRC-01, ASMT-10 Scrutiny & Sec. 73/74 Replies",
     authorityTag: "CGST · SGST ADJUDICATION",
     turnaroundTag: "Sec. 73 / 74 & DRC-06",
     timelineOrStatute: "Sec. 61, 73 & 74 CGST Act",
     description:
-      "Drafting comprehensive legal replies and appearing in personal hearings for GST Show Cause Notices (DRC-01), ASMT-10 return scrutiny, ITC mismatch demands, and Rule 86A credit blocks.",
+      "Dedicated indirect tax representation right from compilation of reconciliation data and drafting of replies to Show Cause Notices (DRC-01 under Section 73/74), ASMT-10 scrutiny notices, and Rule 86A credit blocks to personal hearings before adjudicating authorities.",
     deliverables: [
       "Detailed Legal Reply in Form DRC-06 to Section 73/74 SCNs",
       "ASMT-10 Scrutiny Replies & Personal Hearing Representation",
@@ -387,31 +391,15 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     practiceAreaId: "gst-and-tax-practice",
   },
   {
-    id: "gstat-appeal",
-    category: "GST & Tax",
-    title: "GSTAT Appeal",
-    subtitle: "GST Appellate Tribunal Second Appeals",
-    authorityTag: "GSTAT · CGST SEC. 112",
-    turnaroundTag: "Sec. 112 / APL-05 Appeals",
-    timelineOrStatute: "Sec. 112 CGST Act",
-    description:
-      "Second-level appellate representation under Section 112 of the CGST Act against orders of First Appellate (Sec. 107) and Revisional Authorities (Sec. 108)—including GSTAT e-Filing Portal submissions and hearing arguments.",
-    deliverables: [
-      "Form GST APL-05 Appeal Memorandum & Paperbook Filing",
-      "Pre-Deposit Compliance, Stay Petitions & GSTAT Bench Hearings",
-    ],
-    practiceAreaId: "gst-appellate-litigation",
-  },
-  {
     id: "commissioner-appeal",
-    category: "GST & Tax",
+    category: "Goods and Services Tax",
     title: "Commissioner (Appeals)",
     subtitle: "First Appellate Authority Representation",
     authorityTag: "COMMISSIONER (APPEALS) · SEC. 107",
     turnaroundTag: "Form GST APL-01 First Appeal",
     timelineOrStatute: "Sec. 107 CGST Act",
     description:
-      "First appeals under Section 107 of the CGST Act before the Commissioner (Appeals) challenging adjudication demands, penalty orders, refund rejections, and registration cancellations.",
+      "Competent handling of First Appeals under Section 107 of the CGST Act before the Commissioner (Appeals) challenging adjudication demands, Input Tax Credit disallowances, detention penalties, refund rejections, and registration cancellations.",
     deliverables: [
       "Statement of Facts, Grounds of Appeal & Form GST APL-01 Filing",
       "Written Submissions & Personal Hearing Arguments",
@@ -419,15 +407,31 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     practiceAreaId: "gst-appellate-litigation",
   },
   {
+    id: "gstat-appeal",
+    category: "Goods and Services Tax",
+    title: "GSTAT Appeal",
+    subtitle: "GST Appellate Tribunal Second Appeals",
+    authorityTag: "GSTAT · CGST SEC. 112",
+    turnaroundTag: "Sec. 112 / APL-05 Appeals",
+    timelineOrStatute: "Sec. 112 CGST Act",
+    description:
+      "Appellate litigation before the GST Appellate Tribunal (‘GSTAT’) under Section 112 of the CGST Act contesting orders of First Appellate (Sec. 107) and Revisional Authorities (Sec. 108)—from compilation of appeal paperbooks (Form GST APL-05) to stay applications and tribunal arguments.",
+    deliverables: [
+      "Form GST APL-05 Appeal Memorandum & Paperbook Filing",
+      "Pre-Deposit Compliance, Stay Petitions & GSTAT Bench Hearings",
+    ],
+    practiceAreaId: "gst-appellate-litigation",
+  },
+  {
     id: "high-court-appeal",
-    category: "GST & Tax",
+    category: "Goods and Services Tax",
     title: "High Court Appeal & Writ",
     subtitle: "Article 226 Tax Writs & High Court Appeals",
     authorityTag: "DELHI HC · HIGH COURTS",
     turnaroundTag: "Art. 226 Writ & Sec. 117 Appeal",
     timelineOrStatute: "Art. 226 Constitution · Sec. 117 CGST",
     description:
-      "Constitutional Writ Petitions under Article 226 and High Court Tax Appeals challenging jurisdictional defects, natural justice violations, retrospective GST cancellations, and provisional bank attachments.",
+      "High-profile indirect and direct tax litigation before the High Courts and Supreme Court via Article 226 Writ Petitions and statutory Tax Appeals challenging jurisdictional overreach, breach of natural justice, coercive recovery, and provisional bank attachments.",
     deliverables: [
       "Article 226 Writ Petitions against Arbitrary / Unsigned Tax Orders",
       "Urgent Stay Applications & High Court Tax Bench Arguments",
@@ -447,7 +451,7 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     turnaroundTag: "Annual ITR & Tax Audit",
     timelineOrStatute: "Sec. 139 & 44AB Income-tax Act",
     description:
-      "Complete Income Tax Return (ITR-1 to ITR-7) computation and filing for proprietors, professionals, partnership firms, LLPs, companies, and salaried individuals with Form 26AS and AIS/TIS reconciliation.",
+      "Comprehensive direct tax return compliance (ITR-1 to ITR-7) and tax audit coordination for businesses, industrial houses, partnership firms, professionals, and individuals, addressing accounting and legal intricacies with full Form 26AS and AIS/TIS reconciliation.",
     deliverables: [
       "ITR-1 to ITR-7 Filing with AIS/TIS & 26AS Reconciliation",
       "Capital Gains Computation, Balance Sheet Schedules & ITR-U",
@@ -463,7 +467,7 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     turnaroundTag: "Quarterly TDS & Form 16/16A",
     timelineOrStatute: "Sec. 192–206C Income-tax Act",
     description:
-      "Quarterly TDS and TCS return filing (Forms 24Q, 26Q, 27Q, 27EQ), challan verification, Form 16/16A issuance, correction statements, and TRACES default resolution.",
+      "End-to-end withholding tax management covering quarterly TDS and TCS return filings (Forms 24Q, 26Q, 27Q, 27EQ), challan verification, Form 16/16A certification, correction statements, and resolution of TRACES defaults and demand intimations.",
     deliverables: [
       "Quarterly 24Q, 26Q, 27Q & 27EQ Returns & Challan Matching",
       "Form 16 / 16A Generation & TRACES Demand Rectification",
@@ -479,7 +483,7 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     turnaroundTag: "Year-Round Tax Advisory",
     timelineOrStatute: "Income-tax Act, 1961",
     description:
-      "Year-round Income Tax Consultancy on business deductions, tax regime evaluation, capital gains exemptions (Sec. 54/54EC/54F), partnership remuneration structuring, and withholding compliance.",
+      "Quality advice and consultancy across the entire spectrum of direct tax laws—finding practical, risk-averse solutions for business deductions, capital gains structuring (Sec. 54/54EC/54F), partnership remuneration, and domestic and cross-border tax issues.",
     deliverables: [
       "Direct Tax Planning, Advance Tax & Capital Gains Advisory",
       "Written Legal Opinions on Deductions & Withholding Tax",
@@ -490,15 +494,15 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     id: "other-income-tax-matters",
     category: "Income Tax",
     title: "Other Income Tax Matters",
-    subtitle: "Scrutiny Assessments, Sec. 148 Notices & CIT(A)",
+    subtitle: "Scrutiny Assessments, Sec. 148 Notices, CIT(A) & ITAT",
     authorityTag: "NFAC · CIT(A) · ITAT",
     turnaroundTag: "Sec. 143(3) / 148 & Appeals",
     timelineOrStatute: "Sec. 143(3), 148, 154 & 246A",
     description:
-      "Representation in faceless scrutiny assessments (Sec. 143(2)/143(3)), Section 148A/148 reassessment notices, CIT(Appeals) Form 35 filings, Section 154 rectifications, and stay of demand petitions.",
+      "Competent handling of direct tax litigation and assessment proceedings before Assessing Authorities (NFAC), CIT(Appeals), and the Income Tax Appellate Tribunal (‘ITAT’)—covering Section 143(3) scrutiny, Section 148A/148 reassessments, rectifications, and stay of demand petitions.",
     deliverables: [
       "Faceless Scrutiny & Section 148A/148 Reassessment Replies",
-      "CIT(Appeals) Form 35 Filings, Rectifications & Penalty Defense",
+      "CIT(Appeals) Form 35 Filings, ITAT Appeals & Penalty Defense",
     ],
     practiceAreaId: "income-tax-consultancy-and-matters",
   },
@@ -515,7 +519,7 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     turnaroundTag: "Monthly & Annual Books",
     timelineOrStatute: "GST & Income Tax Synchronized Books",
     description:
-      "End-to-end Accounting & Bookkeeping in Tally Prime, Zoho Books, or Busy—covering sales/purchase registers, bank reconciliation, GST/TDS ledger balancing, Trial Balance, P&L, and Balance Sheet.",
+      "Managed accounting and bookkeeping services appreciating the specific business and statutory needs of clients—covering compilation of sales/purchase registers, bank reconciliation, GST/TDS ledger balancing, facilitation of audit, Trial Balance, P&L, and Balance Sheet.",
     deliverables: [
       "Monthly Ledger Maintenance & Bank / Vendor Reconciliations",
       "Trial Balance, Profit & Loss & Balance Sheet Preparation",
@@ -531,7 +535,7 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     turnaroundTag: "IEC, Advance Auth & EPCG",
     timelineOrStatute: "FTDR Act, 1992 · Foreign Trade Policy",
     description:
-      "Import Export Code (IEC) issuance, IEC modification, LUT/bond compliance, Advance Authorization, EPCG license redemption (EODC), RoDTEP scrips, and DGFT show-cause representation.",
+      "Advisory, compliance, and representation under Foreign Trade Policy schemes—including Import Export Code (IEC) issuance and modification, Advance Authorization, EPCG license redemption (EODC), export incentive refunds (RoDTEP/RoSCTL), and DGFT show-cause replies.",
     deliverables: [
       "IEC Registration/Modification, Advance Authorization & EPCG",
       "EODC Redemption, RoDTEP Scrips & DGFT Notice Replies",
@@ -547,7 +551,7 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     turnaroundTag: "Udyam Certificate & Samadhaan",
     timelineOrStatute: "MSMED Act, 2006",
     description:
-      "MSME Udyam Registration certificate issuance for manufacturing and service enterprises, NIC activity mapping, turnover/investment updates, and MSME Samadhaan delayed-payment recovery advisory.",
+      "Holistic advisory and registration under the MSMED Act, 2006—covering Udyam Registration certificate issuance for manufacturing and service enterprises, NIC activity classification, Section 43B(h) tax compliance, and MSME Samadhaan delayed-payment recovery proceedings.",
     deliverables: [
       "Fresh MSME Udyam Registration & NIC Classification",
       "Sec. 43B(h) Compliance & MSME Samadhaan Recovery Filings",
@@ -563,7 +567,7 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     turnaroundTag: "Classes 1–45 · TM-A & Hearings",
     timelineOrStatute: "Trade Marks Act, 1999",
     description:
-      "Public trademark availability search, Form TM-A filing across Classes 1 to 45, legal replies to Section 9 & 11 Examination Report objections, show-cause hearing appearances, and renewals.",
+      "End-to-end Intellectual Property Rights (Trademark) protection right from conducting prior-art availability searches and filing Form TM-A applications across Classes 1 to 45 to drafting replies to Section 9 & 11 Examination Reports and appearing at Registry hearings.",
     deliverables: [
       "Trademark Search & Form TM-A Application Filing",
       "Sec. 9/11 Examination Report Replies & Registry Hearings",
@@ -579,7 +583,7 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     turnaroundTag: "Deed Drafting & ROF Certificate",
     timelineOrStatute: "Indian Partnership Act, 1932",
     description:
-      "Drafting of Partnership Deeds (capital, profit-sharing, Section 40(b) remuneration clauses), stamp paper execution, Form I registration with the Registrar of Firms (ROF), and PAN/TAN/GST setup.",
+      "Structuring and execution of partnership formation from inception—covering drafting of Partnership and Reconstitution Deeds (capital, profit-sharing, Section 40(b) tax clauses), stamp duty execution, Form I registration before the Registrar of Firms, and PAN/TAN/GST setup.",
     deliverables: [
       "Custom Partnership Deed Drafting & ROF Form I Registration",
       "Reconstitution / Admission-Retirement Deeds & Firm PAN/GST",
@@ -602,7 +606,7 @@ export const COUNSEL_TEAM: CounselMember[] = [
       "Income Tax Return, TDS, Consultancy & Assessments",
       "Accounting, DGFT Work, MSME, Trademark & Partnership",
     ],
-    bio: "Founder of SJ Associates practicing before the High Court of Delhi, GSTAT, and Tax Authorities across three dedicated wings: GST & Tax, Income Tax, and Accounting/DGFT/Registrations.",
+    bio: "Founder of SJ Associates practicing before the High Court of Delhi, GSTAT, ITAT Tribunal, and Tax Authorities across three dedicated wings: Goods and Services Tax, Income Tax, and Accounting/DGFT/Registrations.",
   },
   {
     id: "adv-rajesh-verma",
@@ -610,7 +614,7 @@ export const COUNSEL_TEAM: CounselMember[] = [
     designation: "Senior Associate — GST & Appellate Desk",
     enrollmentNote: "Enrolled Bar Council of Delhi · High Court & Tax Bar",
     primaryForums:
-      "GSTAT Principal Bench · Commissioner (Appeals) · Delhi & Punjab & Haryana High Courts",
+      "Commissioner (Appeals) · GSTAT Principal Bench · Delhi & Punjab & Haryana High Courts",
     practiceFocus: [
       "GST Show Cause Notice (DRC-01 / Sec. 73 & 74) Replies",
       "Commissioner (Appeals) APL-01 & GSTAT APL-05 Appeals",
@@ -694,7 +698,7 @@ export const HONOURS_CERTIFICATES: HonourCertificateItem[] = [
     issuingAuthority: "International Council of Jurists (London)",
     seat: "London · New Delhi (Rani Bagh, Delhi – 110034)",
     citation:
-      "This is to certify that Mr. Sanjay Kumar Singh (A-40, Rishi Nagar, Captain Satish Marg, Rani Bagh North West, Delhi-110034) has been registered as Distinguished Member of the International Council of Jurists from 2026 to 2030 (Certificate No. 2529 · Membership No. 471-A/2009), signed by Dr. Adish C. Aggarwala (President, ICJ) and Sarah J. Marchington (Director, ICJ).",
+      "This is to certify that Mr. Sanjay Kumar Singh (A-40, Rishi Nagar, Captain Satish Marg, Rani Bagh North West, Delhi-110034) is a Distinguished Member of the International Council of Jurists from 2026 to 2030 (Certificate No. 2529 · Membership No. 471-A/2009), signed by Dr. Adish C. Aggarwala (President, ICJ) and Sarah J. Marchington (Director, ICJ).",
     category: "International Jurists Honour",
     verificationNote: "Certificate No. 2529 · Membership No. 471-A/2009 · 2026 to 2030",
     defaultImage: "/assets/aistudio/icj-certificate-2529.jpg",

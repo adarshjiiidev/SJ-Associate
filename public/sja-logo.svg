@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" fill="#0A2536" />
+  <rect x="6" y="6" width="108" height="108" stroke="#DAF6EF" stroke-opacity="0.45" stroke-width="1" />
+  <rect x="11" y="11" width="98" height="98" stroke="#F3FAFF" stroke-opacity="0.2" stroke-width="0.75" />
+  <line x1="24" y1="28" x2="96" y2="28" stroke="#DAF6EF" stroke-opacity="0.55" stroke-width="0.9" />
+  <line x1="24" y1="92" x2="96" y2="92" stroke="#DAF6EF" stroke-opacity="0.55" stroke-width="0.9" />
+  <!-- Thin Capital S -->
+  <path
+    d="M39 47.5C39 43.2 35.4 40.5 30.2 40.5C24.8 40.5 21 43.3 21 47.5C21 51.4 24.1 53.3 29.8 54.8C35.8 56.3 39.5 58.6 39.5 63.5C39.5 68.3 35.4 71.5 29.5 71.5C23.8 71.5 19.8 68.4 19.5 63.5"
+    stroke="#F3FAFF"
+    stroke-width="2.1"
+    stroke-linecap="square"
+  />
+  <!-- Thin Capital J -->
+  <path
+    d="M52 41H64M59.5 41V63C59.5 68.2 56.2 71.5 51.2 71.5C47.2 71.5 44.5 69.1 44 65.2"
+    stroke="#DAF6EF"
+    stroke-width="2.1"
+    stroke-linecap="square"
+  />
+  <!-- Thin Capital A -->
+  <path
+    d="M73 71L85.5 40.5L98 71M77.2 61H93.8"
+    stroke="#F3FAFF"
+    stroke-width="2.1"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+  />
+</svg>

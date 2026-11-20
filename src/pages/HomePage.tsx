@@ -56,21 +56,21 @@ const STANDING_METRICS = [
     value: "15+",
     buttonLabel: "Practice Since 2009",
     caption:
-      "Serving clients across GST, Income Tax, GSTAT, High Courts, and the Supreme Court of India from our New Delhi chambers.",
+      "The Firm renders advice and litigates across Direct Tax, Indirect Tax (GST & Customs), GSTAT, ITAT Tribunal, High Courts, and the Supreme Court of India.",
   },
   {
     id: "services",
     value: "15",
     buttonLabel: "Core Services",
     caption:
-      "Structured across 3 sections: 6 GST & Tax services, 4 Income Tax services, and 5 Accounting, DGFT & Registration services.",
+      "Structured across 3 practice wings: Indirect Tax (GST & Customs), Direct Tax (Income Tax & TDS), and Managed Compliance, DGFT & Registrations.",
   },
   {
     id: "forums",
     value: "13+",
     buttonLabel: "Courts & Tax Forums",
     caption:
-      "Active tracking across the Supreme Court, GSTAT, 11 High Courts, Delhi tax commissionerates, and regional tax offices nationwide.",
+      "Active representation and tracking across the Supreme Court, GSTAT, ITAT, 11 High Courts, Delhi tax commissionerates, and regional tax authorities.",
   },
 ];
 
@@ -161,7 +161,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
 
   const carouselCourts = getCarouselCourts();
   const top3Sections = PRACTICE_AREAS.slice(0, 3);
-  const gstSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "GST & Tax");
+  const gstSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Goods and Services Tax");
   const incomeTaxSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Income Tax");
   const otherSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Others");
 
@@ -172,7 +172,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
       courtSlug: c.slug,
       courtName: c.shortName,
       courtShortName: c.shortName,
-      title: fb.rulings[0]?.title || `${c.shortName} GST & Tax Bench Update`,
+      title: fb.rulings[0]?.title || `${c.shortName} Goods and Services Tax Bench Update`,
       date: fb.rulings[0]?.date || "Current Roster",
       category: fb.rulings[0]?.category || "GST & Income Tax",
       summary: fb.rulings[0]?.holdingSummary || c.summary,
@@ -269,15 +269,16 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto">
             <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#33566D] mb-2">
-              WHAT WE DO
+              WHAT WE DO · ETHICS · HUMAN VALUES · EXCELLENCE
             </div>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-[#0A2536] leading-[1.02]">
-              Providing Clear Counsel In Difficult Times
+              Practical, Innovative &amp; Time-Bound Tax &amp; Legal Counsel
             </h2>
-            <p className="mt-3 text-sm sm:text-base text-[#33566D]">
-              Our work is structured across three dedicated practice wings covering GST &amp; Tax
-              litigation, Income Tax compliance &amp; representation, and Accounting, DGFT &amp;
-              Statutory Registrations.
+            <p className="mt-3 text-sm sm:text-base text-[#33566D] leading-relaxed">
+              The Firm&apos;s Direct and Indirect Tax teams are well-equipped and dedicated to
+              render advice, manage statutory compliances, and litigate across Goods and Services
+              Tax (&lsquo;GST&rsquo;), Customs, Income Tax, ITAT, GSTAT, High Courts, and Foreign
+              Trade Policy schemes.
             </p>
             <div className="mt-5">
               <Link
@@ -579,7 +580,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
                       }
                       className="w-full rounded-xl border border-[#F3FAFF]/20 bg-[#0A2536] px-3.5 py-2.5 text-xs text-[#F3FAFF] focus:outline-none focus:border-[#DAF6EF]"
                     >
-                      <optgroup label="1. GST & Tax">
+                      <optgroup label="1. Goods and Services Tax">
                         {gstSolutions.map((s) => (
                           <option key={s.id} value={s.title}>
                             {s.title}
@@ -629,7 +630,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
 
                   <textarea
                     rows={3}
-                    placeholder="Briefly describe your GST SCN, GSTAT/Commissioner appeal, Income Tax notice, or registration requirement..."
+                    placeholder="Briefly describe your GST SCN, Commissioner/GSTAT appeal, Income Tax notice, or registration requirement..."
                     value={quickForm.message}
                     onChange={(e) =>
                       setQuickForm({ ...quickForm, message: e.target.value })
@@ -778,7 +779,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
               <div className="lg:col-span-7 space-y-5">
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#DAF6EF] px-3.5 py-1 font-mono text-[10px] uppercase tracking-widest text-[#0A2536]">
                   <Landmark className="h-3.5 w-3.5" />
-                  PRINCIPAL COUNSEL · NEW DELHI
+                  FOUNDER &amp; ADVOCATE, DELHI HIGH COURT · NEW DELHI
                 </div>
                 <h2 className="font-display text-4xl sm:text-5xl font-bold text-[#0A2536] leading-[1.02]">
                   {PRINCIPAL_ADVOCATE.name}
@@ -793,7 +794,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
                       Section 01
                     </div>
                     <div className="font-display text-lg font-bold text-[#0A2536] mt-0.5">
-                      GST &amp; Tax (6 Services)
+                      Goods and Services Tax (6)
                     </div>
                   </div>
                   <div className="rounded-2xl border border-[#0A2536]/10 bg-[#F3FAFF] p-3.5">

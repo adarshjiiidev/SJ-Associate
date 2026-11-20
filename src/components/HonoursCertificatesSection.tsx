@@ -236,7 +236,7 @@ export function HonoursCertificatesSection({
                 </div>
                 <div className="rounded-2xl border border-[#0A2536]/10 bg-[#F3FAFF] px-3.5 py-2.5">
                   <div className="font-mono text-[10px] uppercase tracking-wider text-[#33566D]">
-                    Registered Office
+                    Council Office
                   </div>
                   <div className="text-xs font-bold text-[#0A2536] mt-0.5">
                     134 Buckingham Palace Rd, London

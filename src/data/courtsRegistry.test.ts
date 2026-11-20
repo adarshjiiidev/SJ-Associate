@@ -186,7 +186,7 @@ describe("courtsRegistry pure logic", () => {
       email: "rajesh@company.in",
       phone: "+91 97163 18400",
       courtSlug: "delhi-gst-vyapar-bhawan",
-      practiceArea: "GST & Tax — SCN Reply",
+      practiceArea: "Goods and Services Tax — SCN Reply",
       briefSummary: "Need reply to GST DRC-01 Show Cause Notice before Delhi GST.",
     });
     assert.equal(valid.valid, true);

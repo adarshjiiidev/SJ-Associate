@@ -29,13 +29,20 @@ export function Header({ onOpenConsultation }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-[#F3FAFF]/92 backdrop-blur-md">
       <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-2.5 sm:py-3">
-        {/* Zone 1: Official SJ Associates Crest Logo + single-line wordmark */}
+        {/* Zone 1: Official SJA Thin-Capital Monogram Logo + Wordmark */}
         <Link
           to="/"
-          className="inline-flex items-center gap-2 sm:gap-2.5 text-sm sm:text-base font-extrabold tracking-tight text-[#0A2536] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl"
+          className="inline-flex items-center gap-2.5 sm:gap-3 text-[#0A2536] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <FirmLogo size={26} />
-          <span className="uppercase tracking-[0.06em] whitespace-nowrap">SJ Associates</span>
+          <FirmLogo size={44} />
+          <div className="flex flex-col leading-none">
+            <span className="text-sm sm:text-base font-light uppercase tracking-[0.22em] text-[#0A2536]">
+              SJ <strong className="font-semibold">Associates</strong>
+            </span>
+            <span className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-[#33566D]">
+              Advocates &amp; Tax Consultants
+            </span>
+          </div>
         </Link>
 
         {/* Zone 2: Clean uppercase geometric nav */}

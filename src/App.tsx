@@ -44,9 +44,9 @@ const ROUTE_SEO: Record<string, RouteSeoConfig> = {
       "Live judicial bulletins, GST & Income Tax rulings, and nearby Delhi, Ghaziabad & regional tax office directories across the Supreme Court, GSTAT & 11 High Courts."
   },
   "/practice": {
-    title: "GST & Tax, Income Tax & Registration Services | Advocate Sanjay Singh — SJ Associates",
+    title: "Goods and Services Tax, Income Tax & Registration Services | Advocate Sanjay Singh — SJ Associates",
     description:
-      "Delhi & Ghaziabad NCR legal and tax practice by Adv. Sanjay Kumar Singh: GST Registration, Return Filing, SCN Reply, GSTAT Appeal, Commissioner & High Court Appeals, ITR, TDS, DGFT, MSME & Trademark."
+      "Delhi & Ghaziabad NCR legal and tax practice by Adv. Sanjay Kumar Singh: GST Registration, Return Filing, SCN Reply, Commissioner Appeal, GSTAT & High Court Appeals, ITR, TDS, DGFT, MSME & Trademark."
   },
   "/about": {
     title: "Advocate Sanjay Kumar Singh (Advocate Sanjay Singh) | Delhi High Court & Ghaziabad Lawyer",
@@ -85,7 +85,7 @@ function RouteMetadataAndScroll() {
         .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : ""))
         .join(" ");
       seo = {
-        title: `${courtLabel} Live GST & Tax Rulings | Advocate Sanjay Singh — SJ Associates`,
+        title: `${courtLabel} Live Goods and Services Tax Rulings | Advocate Sanjay Singh — SJ Associates`,
         description: `Live ${courtLabel} judicial rulings, GST & Income Tax bench updates, and representation by Advocate Sanjay Kumar Singh (SJ Associates, Delhi & Ghaziabad NCR).`
       };
     } else if (!seo) {
@@ -239,7 +239,7 @@ function AppShell() {
           <DialogHeader>
             <DialogTitle>Schedule a GST, Income Tax &amp; Legal Consultation</DialogTitle>
             <DialogDescription>
-              Share a short overview of your GST &amp; Tax, Income Tax, GSTAT/High Court appeal, DGFT, MSME, Trademark, or Partnership matter to arrange a chambers briefing with Advocate Sanjay Kumar Singh.
+              Share a short overview of your Goods and Services Tax, Income Tax, GSTAT/ITAT/High Court appeal, DGFT, MSME, Trademark, or Partnership matter to arrange a briefing with Advocate Sanjay Kumar Singh.
             </DialogDescription>
           </DialogHeader>
           <ConsultationForm

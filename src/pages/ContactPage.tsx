@@ -17,15 +17,16 @@ export function ContactPage() {
       <section className="bg-gradient-to-b from-[#F3FAFF] to-[#DAF6EF]/45 border-b border-border py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#33566D] mb-2">
-            GET IN TOUCH · NEW DELHI CHAMBERS
+            GET IN TOUCH · NEW DELHI &amp; GHAZIABAD (NCR) OFFICES
           </div>
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-[#0A2536]">
             Contact {FIRM_IDENTITY.name}
           </h1>
-          <p className="mt-2 text-[#33566D] max-w-2xl text-base leading-relaxed">
-            Schedule a consultation with {PRINCIPAL_ADVOCATE.name} for GST &amp; Tax,
-            Income Tax, Accounting &amp; Bookkeeping, DGFT, MSME, Trademark, or Partnership Firm
-            Registration matters across Delhi and regional tax offices nationwide.
+          <p className="mt-2 text-[#33566D] max-w-3xl text-base leading-relaxed">
+            Connect with {PRINCIPAL_ADVOCATE.name} and the Firm&apos;s Direct and Indirect Tax teams
+            for advisory, compliance, and litigation matters across Goods and Services Tax
+            (&lsquo;GST&rsquo;), Customs, Income Tax, GSTAT, ITAT Tribunal, High Courts, DGFT, MSME,
+            Trademark, and Partnership Firm Registration.
           </p>
         </div>
       </section>

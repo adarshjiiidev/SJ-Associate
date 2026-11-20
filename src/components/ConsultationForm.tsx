@@ -101,7 +101,7 @@ export function ConsultationForm({
     }
   };
 
-  const gstSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "GST & Tax");
+  const gstSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Goods and Services Tax");
   const incomeTaxSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Income Tax");
   const otherSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Others");
   const delhiOffices = TAX_AND_REGIONAL_OFFICES.filter(
@@ -243,7 +243,7 @@ export function ConsultationForm({
           value={form.practiceArea}
           onChange={(e) => setForm({ ...form, practiceArea: e.target.value })}
         >
-          <optgroup label="1. GST & Tax">
+          <optgroup label="1. Goods and Services Tax">
             {gstSolutions.map((sol) => (
               <option key={sol.id} value={sol.title}>
                 {sol.title} ({sol.authorityTag})

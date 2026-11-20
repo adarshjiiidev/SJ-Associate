@@ -24,8 +24,8 @@ const WORKFLOW_STAGES: WorkflowStage[] = [
   {
     id: "gst-and-tax",
     step: "01",
-    badgeSubtitle: "SECTION 01 · 6 GST & TAX SERVICES (40%)",
-    badgeTitle: "GST & Tax Practice Wing",
+    badgeSubtitle: "SECTION 01 · 6 GOODS AND SERVICES TAX SERVICES (40%)",
+    badgeTitle: "Goods and Services Tax Wing",
     leftCardTitle: "GST Registration & Return Filing",
     leftCardSubtitle: "REG-01/21 · GSTR-1, 3B, 2B & GSTR-9/9C",
     leftCardStatus: "Active Desk",
@@ -38,7 +38,7 @@ const WORKFLOW_STAGES: WorkflowStage[] = [
     rightMiddleStatus: "Synced",
     ctaTitle: "Direct GST & Appellate Desk",
     ctaDescription:
-      "Registration, Return Filing, SCN Reply, GSTAT Appeal, Commissioner Appeal & High Court Appeal.",
+      "Registration, Return Filing, SCN Reply, Commissioner Appeal, GSTAT Appeal & High Court Appeal.",
   },
   {
     id: "income-tax",
@@ -136,7 +136,7 @@ export const PracticeWorkflowShowcase: React.FC<PracticeWorkflowShowcaseProps> =
           </div>
           <div className="lg:col-span-5">
             <p className="text-sm sm:text-base text-[#33566D] leading-relaxed">
-              Every matter across our three sections—<strong className="text-[#0A2536]">1. GST &amp; Tax</strong>, <strong className="text-[#0A2536]">2. Income Tax</strong>, and <strong className="text-[#0A2536]">3. Others (Accounting, DGFT, MSME, Trademark &amp; Partnership)</strong>—follows a disciplined chambers sequence across Delhi and regional tax offices &amp; courts.
+              Every matter across our three sections—<strong className="text-[#0A2536]">1. Goods and Services Tax</strong>, <strong className="text-[#0A2536]">2. Income Tax</strong>, and <strong className="text-[#0A2536]">3. Others (Accounting, DGFT, MSME, Trademark &amp; Partnership)</strong>—follows a disciplined sequence across Delhi and regional tax offices, tribunals &amp; courts.
             </p>
           </div>
         </div>

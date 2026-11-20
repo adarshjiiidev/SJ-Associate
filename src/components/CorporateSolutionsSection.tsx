@@ -33,7 +33,7 @@ interface CorporateSolutionsSectionProps {
 
 const CATEGORIES: Array<"All" | SolutionCategory> = [
   "All",
-  "GST & Tax",
+  "Goods and Services Tax",
   "Income Tax",
   "Others",
 ];
@@ -125,19 +125,23 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2.5">
-              <FirmLogo size={22} />
+              <FirmLogo size={24} />
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#33566D]">
-                3 PRACTICE SECTIONS · GST, INCOME TAX &amp; REGISTRATIONS
+                INDIRECT TAX · DIRECT TAX · REGULATORY &amp; COMPLIANCE
               </p>
             </div>
             <h2
               className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0A2536] leading-[0.98]"
               style={{ textWrap: "balance" }}
             >
-              GST &amp; Tax, Income Tax &amp; Registration Catalogue
+              Direct Tax, Indirect Tax &amp; Regulatory Services
             </h2>
             <p className="text-sm sm:text-base text-[#33566D] leading-relaxed">
-              Select any service across our 3 sections (<strong className="text-[#0A2536]">GST &amp; Tax</strong>, <strong className="text-[#0A2536]">Income Tax</strong>, or <strong className="text-[#0A2536]">Others</strong>) with <strong className="text-[#0A2536]">+</strong> to build a single chambers brief for Adv. Sanjay Kumar Singh&apos;s team.
+              The Firm has a dedicated team of experts engaged in providing, <em>inter alia</em>,
+              advisory, managed compliance, and litigation services across{" "}
+              <strong className="text-[#0A2536]">Goods and Services Tax</strong>,{" "}
+              <strong className="text-[#0A2536]">Direct Tax (Income Tax &amp; ITAT)</strong>, and{" "}
+              <strong className="text-[#0A2536]">Accounting, DGFT &amp; Registrations</strong>.
             </p>
           </div>
 
@@ -170,7 +174,7 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
         <div className="rounded-[24px] border border-border bg-[#F3FAFF] p-5 sm:p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#0A2536]">
-              Chambers Work Distribution Across 3 Sections (15 Services)
+              Firm Practice Distribution Across Indirect Tax, Direct Tax &amp; Regulatory Wings (15 Services)
             </p>
             <p className="text-xs text-[#33566D] tabular-nums">
               Click any section bar to filter catalogue
@@ -182,13 +186,13 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
               type="button"
               onClick={() =>
                 setActiveCategory(
-                  activeCategory === "GST & Tax" ? "All" : "GST & Tax"
+                  activeCategory === "Goods and Services Tax" ? "All" : "Goods and Services Tax"
                 )
               }
               style={{ width: "40%" }}
-              title="1. GST & Tax (6 Services · 40%)"
+              title="1. Goods and Services Tax (6 Services · 40%)"
               className={`h-full transition-opacity cursor-pointer ${
-                activeCategory === "All" || activeCategory === "GST & Tax"
+                activeCategory === "All" || activeCategory === "Goods and Services Tax"
                   ? "bg-[#0A2536]"
                   : "bg-[#0A2536]/30"
               }`}

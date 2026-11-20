@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ShieldAlert, CheckCircle2, XCircle } from "lucide-react";
+import { FirmLogo } from "@/src/components/FirmLogo";
 
 const DISCLAIMER_STORAGE_KEY = "sj_associates_bci_disclaimer_agreed_v1";
 
@@ -53,9 +54,7 @@ export function BciDisclaimerModal() {
         {/* Top Header Bar */}
         <div className="flex items-center justify-between gap-3 border-b-2 border-[#0A2536] bg-[#DAF6EF] px-6 py-4 sm:px-8 rounded-none">
           <div className="flex items-center gap-3.5">
-            <div className="flex h-10 w-10 items-center justify-center border border-[#0A2536] bg-[#0A2536] text-[#F3FAFF] font-display text-lg font-extrabold tracking-wider rounded-none shrink-0">
-              SJA
-            </div>
+            <FirmLogo size={48} />
             <div>
               <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#33566D]">
                 BAR COUNCIL OF INDIA · STATUTORY NOTICE

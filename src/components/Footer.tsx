@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUp, Mail, Phone, Scale } from "lucide-react";
+import { ArrowRight, ArrowUp, Mail, Phone } from "lucide-react";
 import { COURT_IMAGES } from "../data/assets";
 import { FIRM_IDENTITY } from "../data/firmData";
+import { FirmLogo } from "./FirmLogo";
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -63,7 +64,7 @@ export const Footer: React.FC = () => {
           {/* Centered CTA Content */}
           <div className="mx-auto max-w-xl text-center space-y-5 relative z-10">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#33566D]">
-              SPEAK WITH CHAMBERS
+              ETHICS · HUMAN VALUES · EXCELLENCE
             </p>
             <h2
               className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0A2536] leading-[0.98]"
@@ -92,19 +93,17 @@ export const Footer: React.FC = () => {
         </div>
       </section>
 
-      {/* Main Dark Cape-Cod Footer (#0A2536) (Exact Original UI from r11-footer.png) */}
+      {/* Main Dark Cape-Cod Footer (#0A2536) */}
       <div className="bg-[#0A2536] text-[#F3FAFF] py-14 sm:py-16">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
             {/* Column 1: Brand & Counsel (5 cols) */}
             <div className="md:col-span-5 space-y-5">
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-[#DAF6EF]">
-                  <Scale className="h-4 w-4" aria-hidden="true" />
-                </span>
+              <div className="flex items-center gap-3.5">
+                <FirmLogo size={54} variant="light" />
                 <div>
-                  <p className="text-lg font-extrabold tracking-wide uppercase text-white leading-none">
-                    SJ ASSOCIATES
+                  <p className="text-lg font-light tracking-[0.22em] uppercase text-white leading-none">
+                    SJ <strong className="font-semibold">ASSOCIATES</strong>
                   </p>
                   <p className="text-xs text-[#F3FAFF]/75 mt-1">
                     Adv. Sanjay Kumar Singh · Advocate, Delhi High Court
@@ -113,11 +112,12 @@ export const Footer: React.FC = () => {
               </div>
 
               <p className="text-xs sm:text-sm text-[#F3FAFF]/80 leading-relaxed max-w-sm">
-                Distinguished Member of International Council Of Jurists.
-                Representing clients in GST &amp; Tax, Income Tax, GSTAT,
-                Accounting, DGFT, MSME, Trademark &amp; Partnership matters
-                before the Delhi High Court, Supreme Court of India, and High
-                Courts nationwide.
+                A multi-skilled, knowledge-based law and tax firm rendering
+                advisory, compliance, and litigation services across Direct and
+                Indirect Taxation (GST &amp; Customs), GSTAT, ITAT Tribunal,
+                Accounting, Foreign Trade Policy (DGFT), MSME, Trademark, and
+                Partnership laws before the Supreme Court, High Courts, and tax
+                authorities across India.
               </p>
 
               <div>
