@@ -220,9 +220,10 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </p>
           </div>
 
-          <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-[#33566D] leading-relaxed">
-            Direct and Indirect Taxation, Corporate Law Practice, Labour Law Litigation, Civil
-            Litigation, and Criminal Litigation.
+          <p className="mt-4 max-w-3xl mx-auto text-sm sm:text-base text-[#33566D] leading-relaxed">
+            Focused on Direct &amp; Indirect Taxation, Financial Accounting and Bookkeeping,
+            Corporate Law and Practice, Labour Law, Corporate Litigation, Criminal and Civil
+            Litigation, and Arbitration.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
@@ -245,11 +246,12 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
           </div>
 
           <div className="mt-14 pt-5 border-t border-[#0A2536]/12 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-7 gap-y-2 text-xs font-semibold text-[#33566D]">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-2 text-xs font-semibold text-[#33566D]">
               <span>Direct &amp; Indirect Taxation</span>
-              <span>Corporate Law Practice</span>
-              <span>Labour Law Litigation</span>
-              <span>Civil &amp; Criminal Litigation</span>
+              <span>Financial Accounting &amp; Bookkeeping</span>
+              <span>Corporate &amp; Labour Law</span>
+              <span>Corporate, Criminal &amp; Civil Litigation</span>
+              <span>Arbitration</span>
             </div>
             <a
               href="#what-we-do"
