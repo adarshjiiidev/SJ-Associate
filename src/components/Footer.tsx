@@ -53,7 +53,7 @@ export const Footer: React.FC = () => {
               </div>
               <div className="absolute right-20 top-20 h-28 w-28 rounded-full border-4 border-white shadow-md overflow-hidden bg-white">
                 <img
-                  src={COURT_IMAGES["madras-high-court"]}
+                  src={COURT_IMAGES["patna-high-court"]}
                   alt=""
                   className="h-full w-full object-cover"
                 />
@@ -114,10 +114,10 @@ export const Footer: React.FC = () => {
               <p className="text-xs sm:text-sm text-[#F3FAFF]/80 leading-relaxed max-w-sm">
                 A multi-skilled, knowledge-based law and tax firm rendering
                 advisory, compliance, and litigation services across Direct and
-                Indirect Taxation (GST &amp; Customs), GSTAT, ITAT Tribunal,
-                Accounting, Foreign Trade Policy (DGFT), MSME, Trademark, and
-                Partnership laws before the Supreme Court, High Courts, and tax
-                authorities across India.
+                Indirect Taxation, Corporate Law Practice, Labour Law
+                Litigation, Civil Litigation, and Criminal Litigation before the
+                Supreme Court, High Courts, Tribunals, and authorities across
+                Delhi, Bihar, and India.
               </p>
 
               <div>
@@ -192,7 +192,7 @@ export const Footer: React.FC = () => {
                     to="/mail"
                     className="text-[#DAF6EF] hover:underline transition-colors"
                   >
-                    CHAMBERS WEBMAIL (/MAIL)
+                    OFFICE WEBMAIL (/MAIL)
                   </Link>
                 </li>
               </ul>
@@ -229,9 +229,9 @@ export const Footer: React.FC = () => {
               </div>
 
               <p className="text-xs text-[#F3FAFF]/70 leading-relaxed pt-1">
-                A-40, Rishi Nagar, Captain Satish Marg, Rani Bagh North West,
-                Delhi – 110034 · Chambers Block, Delhi High Court Complex, Sher
-                Shah Road, New Delhi – 110503
+                New Delhi: A-40, Rishi Nagar, Captain Satish Marg, Rani Bagh
+                North West, Delhi – 110034 · Bihar: Krishna Shanti Sadan,
+                Baikuntpuri, Bariya, Ward No. 1, Muzaffarpur, Bihar – 842003
               </p>
             </div>
           </div>

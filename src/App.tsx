@@ -34,33 +34,33 @@ interface RouteSeoConfig {
 
 const ROUTE_SEO: Record<string, RouteSeoConfig> = {
   "/": {
-    title: "SJ Associates | Advocate Sanjay Singh — Delhi & Ghaziabad Tax & High Court Lawyer",
+    title: "SJ Associates | Advocate Sanjay Singh — Delhi, Ghaziabad & Bihar Law & Tax Firm",
     description:
-      "SJ Associates — Advocate Sanjay Kumar Singh (Advocate Sanjay Singh), Delhi High Court & Ghaziabad NCR Lawyer for GST, GSTAT, Income Tax, Writ Appeals, DGFT, MSME & Trademark."
+      "SJ Associates — Advocate Sanjay Kumar Singh, Delhi High Court, Ghaziabad NCR & Muzaffarpur (Bihar) Law & Tax Firm for Direct & Indirect Taxation, Corporate Law, Labour Law, Civil & Criminal Litigation."
   },
   "/courts": {
     title: "Live Supreme Court, Delhi High Court & GSTAT Reports | SJ Associates — Adv. Sanjay Singh",
     description:
-      "Live judicial bulletins, GST & Income Tax rulings, and nearby Delhi, Ghaziabad & regional tax office directories across the Supreme Court, GSTAT & 11 High Courts."
+      "Live judicial bulletins, Goods and Services Tax & Income Tax rulings, and Delhi, Bihar & regional tax office directories across the Supreme Court, GSTAT & 8 High Courts."
   },
   "/practice": {
-    title: "Goods and Services Tax, Income Tax & Registration Services | Advocate Sanjay Singh — SJ Associates",
+    title: "Direct & Indirect Tax, Corporate Law & Litigation Services | Advocate Sanjay Singh — SJ Associates",
     description:
-      "Delhi & Ghaziabad NCR legal and tax practice by Adv. Sanjay Kumar Singh: GST Registration, Return Filing, SCN Reply, Commissioner Appeal, GSTAT & High Court Appeals, ITR, TDS, DGFT, MSME & Trademark."
+      "Legal and tax practice by Adv. Sanjay Kumar Singh: Goods and Services Tax, Commissioner & GSTAT Appeals, TDS Return Filing, Income Tax Consultancy, ITR Filing, Company Registration, DGFT, MSME, Trademark, Labour, Civil & Criminal Litigation."
   },
   "/about": {
-    title: "Advocate Sanjay Kumar Singh (Advocate Sanjay Singh) | Delhi High Court & Ghaziabad Lawyer",
+    title: "Advocate Sanjay Kumar Singh (Advocate Sanjay Singh) | Delhi High Court & Bihar Lawyer",
     description:
-      "Profile of Advocate Sanjay Kumar Singh (Advocate Sanjay Singh), Principal Counsel at SJ Associates, Delhi High Court Advocate & Distinguished Member of the International Council of Jurists (Cert. No. 2529)."
+      "Profile of Advocate Sanjay Kumar Singh, Founder of SJ Associates, Delhi High Court Advocate & Distinguished Member of the International Council of Jurists (Cert. No. 2529)."
   },
   "/contact": {
-    title: "Contact Advocate Sanjay Singh | SJ Associates — Delhi, Ghaziabad & NCR Tax Chambers",
+    title: "Contact Advocate Sanjay Singh | SJ Associates — New Delhi & Muzaffarpur (Bihar) Offices",
     description:
-      "Consult Advocate Sanjay Kumar Singh (SJ Associates) for matters at Delhi High Court, Vyapar Bhawan GST, ITO Delhi, Ghaziabad, Noida, Gurugram, Faridabad & GSTAT."
+      "Consult Advocate Sanjay Kumar Singh (SJ Associates) at our New Delhi (Rani Bagh / Pitampura) and Bihar (Muzaffarpur) offices for Tax, Corporate, Labour, Civil & Criminal matters."
   },
   "/mail": {
-    title: "Chambers Webmail | SJ Associates (services@sjalaw.in)",
-    description: "Private chambers webmail portal for SJ Associates (services@sjalaw.in)."
+    title: "Office Webmail | SJ Associates (services@sjalaw.in)",
+    description: "Private office webmail portal for SJ Associates (services@sjalaw.in)."
   }
 };
 
@@ -120,10 +120,10 @@ function NotFoundView() {
         404 · Page Not Found
       </p>
       <h1 className="text-4xl sm:text-5xl font-extrabold text-[#0A2536]">
-        This chambers page could not be found
+        This page could not be found
       </h1>
       <p className="text-base text-[#33566D] leading-relaxed">
-        The address may have changed or moved. Return to the main chambers overview or browse real-time reports across Indian courts.
+        The address may have changed or moved. Return to the main overview or browse real-time reports across Indian courts.
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
         <Button asChild size="lg" className="w-full sm:w-auto rounded-full px-7">
@@ -237,9 +237,9 @@ function AppShell() {
       <Dialog open={consultOpen} onOpenChange={setConsultOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Schedule a GST, Income Tax &amp; Legal Consultation</DialogTitle>
+            <DialogTitle>Schedule a Legal &amp; Tax Consultation</DialogTitle>
             <DialogDescription>
-              Share a short overview of your Goods and Services Tax, Income Tax, GSTAT/ITAT/High Court appeal, DGFT, MSME, Trademark, or Partnership matter to arrange a briefing with Advocate Sanjay Kumar Singh.
+              Share a short overview of your Goods and Services Tax, TDS / Income Tax, Company Registration, Corporate Law, Labour Law, Civil, or Criminal Litigation matter to arrange a consultation with Advocate Sanjay Kumar Singh.
             </DialogDescription>
           </DialogHeader>
           <ConsultationForm

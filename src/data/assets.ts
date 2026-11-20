@@ -11,10 +11,7 @@ import allahabadHighImg from "@/src/assets/images/real_allahabad_hc.jpg";
 import gujaratHighImg from "@/src/assets/images/real_gujarat_hc.jpg";
 import patnaHighImg from "@/src/assets/images/real_patna_hc.jpg";
 import bombayHighImg from "@/src/assets/images/real_bombay_hc.jpg";
-import telanganaHighImg from "@/src/assets/images/real_telangana_hc.jpg";
 import calcuttaHighImg from "@/src/assets/images/real_calcutta_hc.jpg";
-import karnatakaHighImg from "@/src/assets/images/real_karnataka_hc.jpg";
-import madrasHighImg from "@/src/assets/images/real_madras_hc.jpg";
 import type { CourtImageKey } from "./courtsRegistry";
 
 export const HERO_IMAGE = heroStepsImg;
@@ -32,8 +29,5 @@ export const COURT_IMAGES: Record<CourtImageKey, string> = {
   "gujarat-high-court": gujaratHighImg,
   "patna-high-court": patnaHighImg,
   "bombay-high-court": bombayHighImg,
-  "telangana-high-court": telanganaHighImg,
-  "calcutta-high-court": calcuttaHighImg,
-  "karnataka-high-court": karnatakaHighImg,
-  "madras-high-court": madrasHighImg
+  "calcutta-high-court": calcuttaHighImg
 };

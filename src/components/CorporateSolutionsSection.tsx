@@ -13,6 +13,7 @@ import {
   ShieldAlert,
   Landmark,
   Users,
+  Building2,
   Plus,
   Check,
   ArrowRight,
@@ -68,6 +69,10 @@ function getSolutionIcon(id: string) {
       return <Award className="h-5 w-5" />;
     case "partnership-registration":
       return <Users className="h-5 w-5" />;
+    case "company-registration":
+      return <Building2 className="h-5 w-5" />;
+    case "criminal-civil-litigation":
+      return <Gavel className="h-5 w-5" />;
     default:
       return <Scale className="h-5 w-5" />;
   }
@@ -174,7 +179,7 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
         <div className="rounded-[24px] border border-border bg-[#F3FAFF] p-5 sm:p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#0A2536]">
-              Firm Practice Distribution Across Indirect Tax, Direct Tax &amp; Regulatory Wings (15 Services)
+              Firm Practice Distribution Across Indirect Tax, Direct Tax &amp; Corporate / Litigation Wings (17 Services)
             </p>
             <p className="text-xs text-[#33566D] tabular-nums">
               Click any section bar to filter catalogue
@@ -189,8 +194,8 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
                   activeCategory === "Goods and Services Tax" ? "All" : "Goods and Services Tax"
                 )
               }
-              style={{ width: "40%" }}
-              title="1. Goods and Services Tax (6 Services · 40%)"
+              style={{ width: "35%" }}
+              title="1. Goods and Services Tax (6 Services · 35%)"
               className={`h-full transition-opacity cursor-pointer ${
                 activeCategory === "All" || activeCategory === "Goods and Services Tax"
                   ? "bg-[#0A2536]"
@@ -204,8 +209,8 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
                   activeCategory === "Income Tax" ? "All" : "Income Tax"
                 )
               }
-              style={{ width: "27%" }}
-              title="2. Income Tax (4 Services · 27%)"
+              style={{ width: "24%" }}
+              title="2. Income Tax (4 Services · 24%)"
               className={`h-full border-l border-white transition-opacity cursor-pointer ${
                 activeCategory === "All" || activeCategory === "Income Tax"
                   ? "bg-[#33566D]"
@@ -219,8 +224,8 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
                   activeCategory === "Others" ? "All" : "Others"
                 )
               }
-              style={{ width: "33%" }}
-              title="3. Others (5 Services · 33%)"
+              style={{ width: "41%" }}
+              title="3. Others (7 Services · 41%)"
               className={`h-full border-l border-white transition-opacity cursor-pointer ${
                 activeCategory === "All" || activeCategory === "Others"
                   ? "bg-[#15803D]"

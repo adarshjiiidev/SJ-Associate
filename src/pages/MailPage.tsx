@@ -548,7 +548,7 @@ export function MailPage() {
       <div className="min-h-screen bg-[#0A2536] flex items-center justify-center p-6">
         <div className="flex items-center gap-3 text-[#DAF6EF] text-sm font-semibold">
           <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
-          Checking Chambers Webmail Session...
+          Checking Office Webmail Session...
         </div>
       </div>
     );
@@ -565,7 +565,7 @@ export function MailPage() {
                 SJ Associates
               </p>
               <p className="text-[11px] text-[#DAF6EF]/75">
-                services@sjalaw.in · Chambers Mail
+                services@sjalaw.in · Office Mail
               </p>
             </div>
           </Link>
@@ -580,7 +580,7 @@ export function MailPage() {
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-[#33566D]">
                 <ShieldCheck className="h-4 w-4 text-[#0A2536]" aria-hidden="true" />
-                Private Chambers Mailbox
+                Private Office Mailbox
               </div>
               <h1 className="text-3xl font-extrabold text-[#0A2536] leading-tight">
                 Sign In to Webmail
@@ -746,7 +746,7 @@ export function MailPage() {
         <div className="mx-auto w-full max-w-[1120px] flex items-center justify-between text-xs text-[#DAF6EF]/65">
           <span>SJ Associates Private Webmail</span>
           <Link to="/" className="hover:text-[#DAF6EF] transition-colors">
-            ← Return to Chambers Portal
+            ← Return to SJ Associates Website
           </Link>
         </div>
       </div>
@@ -1239,7 +1239,7 @@ export function MailPage() {
       <Dialog open={composeOpen} onOpenChange={setComposeOpen}>
         <DialogContent className="max-w-xl">
           <DialogHeader>
-            <DialogTitle>New Chambers Email</DialogTitle>
+            <DialogTitle>New Email</DialogTitle>
             <DialogDescription>
               Sending as {user.email} via {user.smtpHost}:{user.smtpPort} (TLS)
             </DialogDescription>
@@ -1319,7 +1319,7 @@ export function MailPage() {
                 rows={7}
                 value={composeBody}
                 onChange={(e) => setComposeBody(e.target.value)}
-                placeholder="Write your chambers message..."
+                placeholder="Write your message..."
                 className="w-full rounded-xl border border-border bg-[#F3FAFF]/60 p-3 text-xs text-[#0A2536] leading-relaxed"
               />
             </div>

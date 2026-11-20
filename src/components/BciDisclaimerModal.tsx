@@ -122,7 +122,7 @@ export function BciDisclaimerModal() {
               <XCircle className="h-6 w-6" aria-hidden="true" />
             </div>
             <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#0A2536]">
-              Confirmation Required to Enter Chambers Portal
+              Confirmation Required to Enter Website
             </h3>
             <p className="max-w-lg mx-auto text-xs sm:text-sm text-[#33566D] leading-relaxed">
               In compliance with the rules of the Bar Council of India, access to the SJ Associates

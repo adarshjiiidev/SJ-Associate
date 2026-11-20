@@ -143,16 +143,16 @@ export function PracticeAreasPage({ onOpenConsultation }: PracticeAreasPageProps
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-[#0A2536] shrink-0 mt-0.5" />
                   <span>
-                    Advice and consultancy relating to both domestic and cross-border tax issues,
-                    strategic tax planning, and capital gains structuring
+                    Quarterly TDS Return Filing, Income Tax Consultancy relating to domestic and
+                    cross-border tax issues, strategic tax planning, and capital gains structuring
                   </span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-[#0A2536] shrink-0 mt-0.5" />
                   <span>
                     Compliance and Regulatory services including Income Tax Return (ITR) filing,
-                    quarterly TDS Return filing, scrutiny assessments (Sec. 143(3)), and
-                    reassessment representation (Sec. 148A/148)
+                    scrutiny assessments (Sec. 143(3)), and reassessment representation
+                    (Sec. 148A/148)
                   </span>
                 </li>
               </ul>

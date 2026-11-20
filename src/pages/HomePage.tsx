@@ -56,21 +56,21 @@ const STANDING_METRICS = [
     value: "15+",
     buttonLabel: "Practice Since 2009",
     caption:
-      "The Firm renders advice and litigates across Direct Tax, Indirect Tax (GST & Customs), GSTAT, ITAT Tribunal, High Courts, and the Supreme Court of India.",
+      "The Firm renders advice and litigates across Direct & Indirect Taxation, Corporate Law, Labour Law, Civil & Criminal Litigation before Courts and Tribunals.",
   },
   {
     id: "services",
-    value: "15",
+    value: "17",
     buttonLabel: "Core Services",
     caption:
-      "Structured across 3 practice wings: Indirect Tax (GST & Customs), Direct Tax (Income Tax & TDS), and Managed Compliance, DGFT & Registrations.",
+      "Structured across 3 sections: 6 Goods and Services Tax, 4 Income Tax (TDS, Consultancy & ITR), and 7 Others including Company Registration & Criminal/Civil Litigation.",
   },
   {
     id: "forums",
-    value: "13+",
+    value: "10+",
     buttonLabel: "Courts & Tax Forums",
     caption:
-      "Active representation and tracking across the Supreme Court, GSTAT, ITAT, 11 High Courts, Delhi tax commissionerates, and regional tax authorities.",
+      "Active representation across the Supreme Court, GSTAT, ITAT, 8 High Courts, and Delhi, Bihar & regional tax authorities.",
   },
 ];
 
@@ -220,9 +220,9 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </p>
           </div>
 
-          <p className="mt-4 max-w-xl mx-auto text-sm sm:text-base text-[#33566D] leading-relaxed">
-            Focused on direct and indirect taxes, GSTAT appeals, Customs, business setup, ITAT
-            Tribunal, and High Court litigation before Indian courts.
+          <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-[#33566D] leading-relaxed">
+            Direct and Indirect Taxation, Corporate Law Practice, Labour Law Litigation, Civil
+            Litigation, and Criminal Litigation.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
@@ -246,10 +246,10 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
 
           <div className="mt-14 pt-5 border-t border-[#0A2536]/12 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-7 gap-y-2 text-xs font-semibold text-[#33566D]">
-              <span>Income Tax &amp; GST Filing</span>
-              <span>GSTAT &amp; Customs Appeals</span>
-              <span>Business &amp; MSME Setup</span>
-              <span>Delhi HC &amp; Supreme Court</span>
+              <span>Direct &amp; Indirect Taxation</span>
+              <span>Corporate Law Practice</span>
+              <span>Labour Law Litigation</span>
+              <span>Civil &amp; Criminal Litigation</span>
             </div>
             <a
               href="#what-we-do"
@@ -481,7 +481,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
         <div className="absolute inset-0 opacity-35">
           <ResilientImage
             src={ADVOCATE_CORRIDOR_IMAGE}
-            alt="New Delhi Chambers Support"
+            alt="SJ Associates Legal Support"
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0A2536] via-[#0A2536]/85 to-[#0A2536]/55" />
@@ -503,15 +503,15 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
                 What&apos;s going on?
               </h3>
               <p className="text-xs text-[#DAF6EF]/85 mt-1">
-                Select your GST, Income Tax, or registration matter and the relevant Delhi or
-                regional tax office or High Court below.
+                Select your Goods and Services Tax, Income Tax, Company Registration, or Litigation
+                matter and the relevant Delhi, Bihar, or regional court/tax office below.
               </p>
 
               {quickSentRef ? (
                 <div className="mt-6 rounded-2xl border border-[#DAF6EF]/30 bg-[#DAF6EF]/15 p-5">
                   <div className="flex items-center gap-2 text-[#DAF6EF] font-semibold text-sm">
                     <CheckCircle2 className="h-4 w-4" />
-                    <span>Chambers Inquiry Logged ({quickSentRef})</span>
+                    <span>Consultation Inquiry Logged ({quickSentRef})</span>
                   </div>
                   <p className="mt-2 text-xs text-[#F3FAFF]/85 leading-relaxed">
                     Thank you. Your inquiry for <strong>{quickForm.service}</strong> has been
@@ -810,7 +810,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
                       Section 03
                     </div>
                     <div className="font-display text-lg font-bold text-[#0A2536] mt-0.5">
-                      Others (5 Services)
+                      Others (7 Services)
                     </div>
                   </div>
                 </div>

@@ -17,16 +17,15 @@ export function ContactPage() {
       <section className="bg-gradient-to-b from-[#F3FAFF] to-[#DAF6EF]/45 border-b border-border py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#33566D] mb-2">
-            GET IN TOUCH · NEW DELHI &amp; GHAZIABAD (NCR) OFFICES
+            GET IN TOUCH · NEW DELHI, NCR &amp; MUZAFFARPUR (BIHAR) OFFICES
           </div>
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-[#0A2536]">
             Contact {FIRM_IDENTITY.name}
           </h1>
           <p className="mt-2 text-[#33566D] max-w-3xl text-base leading-relaxed">
-            Connect with {PRINCIPAL_ADVOCATE.name} and the Firm&apos;s Direct and Indirect Tax teams
-            for advisory, compliance, and litigation matters across Goods and Services Tax
-            (&lsquo;GST&rsquo;), Customs, Income Tax, GSTAT, ITAT Tribunal, High Courts, DGFT, MSME,
-            Trademark, and Partnership Firm Registration.
+            Connect with {PRINCIPAL_ADVOCATE.name} and the Firm&apos;s team across our New Delhi and
+            Muzaffarpur (Bihar) offices for Direct and Indirect Taxation, Corporate Law Practice,
+            Company Registration, Labour Law Litigation, Civil Litigation, and Criminal Litigation.
           </p>
         </div>
       </section>
@@ -72,7 +71,7 @@ export function ContactPage() {
             <div className="lg:col-span-7">
               <div className="rounded-[24px] border border-border bg-white/90 p-6 sm:p-8 shadow-sm">
                 <div className="font-mono text-xs uppercase tracking-widest text-[#33566D] mb-1">
-                  DIRECT CHAMBERS NOTE
+                  DIRECT OFFICE INQUIRY
                 </div>
                 <h2 className="font-display text-3xl font-bold text-[#0A2536] mb-2">
                   Send Us Your Case Or Tax Office Details

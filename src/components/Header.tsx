@@ -69,7 +69,7 @@ export function Header({ onOpenConsultation }: HeaderProps) {
         <div className="flex items-center gap-2.5 shrink-0">
           <a
             href="tel:+919716318400"
-            aria-label="Call SJ Associates Chambers"
+            aria-label="Call SJ Associates Office"
             className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white text-[#0A2536] hover:bg-[#DAF6EF] transition-colors"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />

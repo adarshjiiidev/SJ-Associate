@@ -119,7 +119,7 @@ export function ConsultationForm({
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-mono text-[11px] uppercase tracking-widest text-[#33566D]">
-                Chambers Note Logged
+                Consultation Note Logged
               </span>
               {deliveryResult?.referenceId && (
                 <span className="rounded-full bg-[#0A2536] px-2.5 py-0.5 font-mono text-[10px] font-semibold text-[#F3FAFF]">
@@ -128,7 +128,7 @@ export function ConsultationForm({
               )}
             </div>
             <h4 className="font-display text-2xl font-bold text-[#0A2536]">
-              Thank you, {form.fullName}. Your note has been sent to our chambers.
+              Thank you, {form.fullName}. Your note has been sent to our office.
             </h4>
             <p className="text-sm text-[#33566D] leading-relaxed">
               Your consultation request regarding{" "}
@@ -137,7 +137,7 @@ export function ConsultationForm({
               <span className="font-mono text-xs font-semibold text-[#0A2536]">
                 {deliveryResult?.inboxEmail || "services@sjalaw.in"}
               </span>{" "}
-              for Adv. Sanjay Kumar Singh&apos;s chambers in New Delhi.
+              for Adv. Sanjay Kumar Singh&apos;s office.
             </p>
             <div className="pt-2">
               <Button
@@ -257,7 +257,7 @@ export function ConsultationForm({
               </option>
             ))}
           </optgroup>
-          <optgroup label="3. Others (Accounts, DGFT & Registrations)">
+          <optgroup label="3. Others (Corporate, Registrations & Litigation)">
             {otherSolutions.map((sol) => (
               <option key={sol.id} value={sol.title}>
                 {sol.title} ({sol.authorityTag})

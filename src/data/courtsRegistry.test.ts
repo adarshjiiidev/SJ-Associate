@@ -13,10 +13,11 @@ import {
 } from "./courtsRegistry";
 
 describe("courtsRegistry pure logic", () => {
-  it("contains Supreme Court on top, GSTAT, and High Courts ordered by distance from Delhi", () => {
-    assert.equal(COURTS_REGISTRY.length, 13);
+  it("contains Supreme Court on top, GSTAT, and High Courts ordered by distance from Delhi (excluding South Indian courts)", () => {
+    assert.equal(COURTS_REGISTRY.length, 10);
     assert.equal(COURTS_REGISTRY[0].slug, "supreme-court-of-india");
     assert.equal(COURTS_REGISTRY[0].tier, "supreme");
+    assert.ok(!COURTS_REGISTRY.some((c) => ["madras-high-court", "karnataka-high-court", "telangana-high-court"].includes(c.slug)));
 
     const gstat = getCourtBySlug("gstat");
     assert.ok(gstat);
@@ -29,8 +30,8 @@ describe("courtsRegistry pure logic", () => {
     }
   });
 
-  it("includes Delhi Tax Offices and Regional Tax Offices nearby all High Courts", () => {
-    assert.ok(TAX_AND_REGIONAL_OFFICES.length >= 15);
+  it("includes Delhi Tax Offices and Regional Tax Offices nearby High Courts", () => {
+    assert.ok(TAX_AND_REGIONAL_OFFICES.length >= 14);
     const delhiOffices = TAX_AND_REGIONAL_OFFICES.filter(
       (o) => o.group === "Delhi Tax & Regional Offices"
     );
@@ -38,7 +39,7 @@ describe("courtsRegistry pure logic", () => {
       (o) => o.group === "Regional Tax Offices (Near High Courts)"
     );
     assert.ok(delhiOffices.length >= 5);
-    assert.ok(regionalOffices.length >= 10);
+    assert.ok(regionalOffices.length >= 8);
   });
 
   it("filters courts by tier, region, and search query including nearby tax offices", () => {

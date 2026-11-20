@@ -24,7 +24,7 @@ const WORKFLOW_STAGES: WorkflowStage[] = [
   {
     id: "gst-and-tax",
     step: "01",
-    badgeSubtitle: "SECTION 01 · 6 GOODS AND SERVICES TAX SERVICES (40%)",
+    badgeSubtitle: "SECTION 01 · 6 GOODS AND SERVICES TAX SERVICES (35%)",
     badgeTitle: "Goods and Services Tax Wing",
     leftCardTitle: "GST Registration & Return Filing",
     leftCardSubtitle: "REG-01/21 · GSTR-1, 3B, 2B & GSTR-9/9C",
@@ -43,40 +43,40 @@ const WORKFLOW_STAGES: WorkflowStage[] = [
   {
     id: "income-tax",
     step: "02",
-    badgeSubtitle: "SECTION 02 · 4 INCOME TAX SERVICES (27%)",
+    badgeSubtitle: "SECTION 02 · 4 INCOME TAX SERVICES (24%)",
     badgeTitle: "Income Tax Practice Wing",
-    leftCardTitle: "Income Tax Return (ITR) Filing",
-    leftCardSubtitle: "ITR-1 to ITR-7 · Tax Audit & 26AS/AIS",
+    leftCardTitle: "TDS Return Filing & Income Tax Consultancy",
+    leftCardSubtitle: "Quarterly 24Q/26Q/27Q · Direct Tax Advisory & Planning",
     leftCardStatus: "Active Desk",
-    centerHubTitle: "ITR Filing, TDS Returns, Consultancy & Assessments",
-    rightTopTitle: "TDS Return Filing (24Q / 26Q / 27Q)",
-    rightTopSubtitle: "Quarterly Filings · Form 16/16A & TRACES",
+    centerHubTitle: "TDS Returns, Consultancy, ITR Filing & Assessments",
+    rightTopTitle: "Income Tax Return (ITR) Filing",
+    rightTopSubtitle: "ITR-1 to ITR-7 · Tax Audit & 26AS/AIS Reconciliation",
     rightTopStatus: "Active Watch",
-    rightMiddleTitle: "Income Tax Consultancy & Other Matters",
-    rightMiddleSubtitle: "Tax Planning · Sec. 143(3) Scrutiny · Sec. 148 & CIT(A)",
+    rightMiddleTitle: "Other Income Tax Matters & ITAT",
+    rightMiddleSubtitle: "Sec. 143(3) Scrutiny · Sec. 148 Notices · CIT(A) & ITAT",
     rightMiddleStatus: "Synced",
     ctaTitle: "Direct Income Tax Desk",
     ctaDescription:
-      "ITR Return Filing, TDS Return Filing, Income Tax Consultancy & Assessment Matters.",
+      "TDS Return Filing, Income Tax Consultancy, Income Tax Return Filing & Assessment Matters.",
   },
   {
     id: "others-registrations",
     step: "03",
-    badgeSubtitle: "SECTION 03 · 5 REGISTRATION & ADVISORY SERVICES (33%)",
-    badgeTitle: "Others — Accounts, DGFT & Registrations",
-    leftCardTitle: "Accounting & Bookkeeping",
-    leftCardSubtitle: "Tally / Zoho Books · Trial Balance & Audit P&L",
+    badgeSubtitle: "SECTION 03 · 7 CORPORATE, REGISTRATION & LITIGATION SERVICES (41%)",
+    badgeTitle: "Others — Corporate, Registrations & Litigation",
+    leftCardTitle: "Company Registration & Accounting",
+    leftCardSubtitle: "Pvt Ltd / LLP / OPC · Tally / Audit Books & DGFT",
     leftCardStatus: "Active Desk",
-    centerHubTitle: "Accounting, DGFT Work, MSME, Trademark & Partnership",
-    rightTopTitle: "DGFT Work & MSME Registration",
-    rightTopSubtitle: "IEC Code · Advance Auth · EPCG · Udyam Certificate",
+    centerHubTitle: "Company Registration, Accounts, DGFT, IP & Litigation",
+    rightTopTitle: "MSME, Trademark & Partnership Registration",
+    rightTopSubtitle: "Udyam · TM-A Filing & Hearings · Partnership Deed & ROF",
     rightTopStatus: "Active Watch",
-    rightMiddleTitle: "Trademark & Partnership Firm Registration",
-    rightMiddleSubtitle: "TM-A Filing & Objections · Partnership Deed & ROF",
+    rightMiddleTitle: "Criminal, Civil & Labour Law Litigation",
+    rightMiddleSubtitle: "Bail, Quashing, Sec. 138 · Recovery, Injunctions & Labour",
     rightMiddleStatus: "Synced",
-    ctaTitle: "Registrations & DGFT Desk",
+    ctaTitle: "Corporate & Litigation Desk",
     ctaDescription:
-      "Accounting & Bookkeeping, DGFT Work, MSME, Trademark & Partnership Firm Registration.",
+      "Accounting, DGFT, MSME, Trademark, Partnership, Company Registration & Criminal & Civil Litigation.",
   },
 ];
 
@@ -113,7 +113,7 @@ export const PracticeWorkflowShowcase: React.FC<PracticeWorkflowShowcaseProps> =
 
   return (
     <section
-      aria-label="Chambers Process and 3-Section Work Graph"
+      aria-label="Firm Process and 3-Section Work Graph"
       className="bg-[#F3FAFF] border-t border-border py-16 sm:py-20"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -123,7 +123,7 @@ export const PracticeWorkflowShowcase: React.FC<PracticeWorkflowShowcaseProps> =
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
           <div className="lg:col-span-7 space-y-2.5">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#33566D]">
-              CHAMBERS PROCESS · 3 SECTIONS OF WORK
+              FIRM PROCESS · 3 SECTIONS OF WORK
             </p>
             <h2
               className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0A2536] leading-[0.98]"
@@ -136,7 +136,7 @@ export const PracticeWorkflowShowcase: React.FC<PracticeWorkflowShowcaseProps> =
           </div>
           <div className="lg:col-span-5">
             <p className="text-sm sm:text-base text-[#33566D] leading-relaxed">
-              Every matter across our three sections—<strong className="text-[#0A2536]">1. Goods and Services Tax</strong>, <strong className="text-[#0A2536]">2. Income Tax</strong>, and <strong className="text-[#0A2536]">3. Others (Accounting, DGFT, MSME, Trademark &amp; Partnership)</strong>—follows a disciplined sequence across Delhi and regional tax offices, tribunals &amp; courts.
+              Every matter across our three sections—<strong className="text-[#0A2536]">1. Goods and Services Tax</strong>, <strong className="text-[#0A2536]">2. Income Tax</strong>, and <strong className="text-[#0A2536]">3. Others (Accounting, DGFT, MSME, Trademark, Partnership, Company Registration &amp; Criminal &amp; Civil Litigation)</strong>—follows a disciplined sequence across Delhi, Bihar, and regional tax offices, tribunals &amp; courts.
             </p>
           </div>
         </div>
@@ -350,7 +350,7 @@ export const PracticeWorkflowShowcase: React.FC<PracticeWorkflowShowcaseProps> =
               })}
             </div>
             <span className="text-xs text-[#33566D] tabular-nums">
-              Section {stage.step} of 03 · 15 Services Total
+              Section {stage.step} of 03 · 17 Services Total
             </span>
           </div>
         </div>

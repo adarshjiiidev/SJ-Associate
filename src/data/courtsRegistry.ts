@@ -5,15 +5,12 @@ export type CourtImageKey =
   | "gstat"
   | "delhi-high-court"
   | "bombay-high-court"
-  | "madras-high-court"
   | "calcutta-high-court"
-  | "karnataka-high-court"
   | "allahabad-high-court"
   | "gujarat-high-court"
   | "punjab-haryana-high-court"
   | "patna-high-court"
-  | "rajasthan-high-court"
-  | "telangana-high-court";
+  | "rajasthan-high-court";
 
 export type BulletinCategory =
   | "Constitutional"
@@ -30,7 +27,7 @@ export interface CourtProfile {
   city: string;
   distanceFromDelhiKm: number;
   stateOrJurisdiction: string;
-  region: "National" | "North" | "West" | "South" | "East";
+  region: "National" | "North" | "West" | "East";
   establishedYear: number;
   benches: string[];
   nearbyTaxOffices: string[];
@@ -126,7 +123,7 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
     officialUrl: "https://www.sci.gov.in",
     causeListUrl: "https://www.sci.gov.in/cause-list/",
     chambersPracticeNote:
-      "Chambers maintains an active filing desk at Tilak Marg for Special Leave Petitions (Article 136), Writ Petitions (Article 32), Transfer Petitions, and GST & Income Tax appeals.",
+      "SJ Associates maintains an active filing desk at Tilak Marg for Special Leave Petitions (Article 136), Writ Petitions (Article 32), Transfer Petitions, and Goods and Services Tax & Income Tax appeals.",
     summary:
       "Apex constitutional court of the Republic of India exercising original, appellate, and advisory jurisdiction over constitutional, GST, income tax, civil, criminal, and regulatory matters."
   },
@@ -315,29 +312,6 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
       "Chartered High Court seated in Fort, Mumbai, shaping India's financial, GST, income tax, customs, and commercial jurisprudence."
   },
   {
-    slug: "telangana-high-court",
-    name: "High Court for the State of Telangana",
-    shortName: "Telangana High Court",
-    tier: "high",
-    city: "Hyderabad",
-    distanceFromDelhiKm: 1254,
-    stateOrJurisdiction: "State of Telangana",
-    region: "South",
-    establishedYear: 1919,
-    benches: ["Madina, Hyderabad (Principal Seat)"],
-    nearbyTaxOffices: [
-      "GST Bhavan & CGST Commissionerate, Basheerbagh, Hyderabad",
-      "Aayakar Bhawan / IT Towers (Income Tax), Basheerbagh / Masab Tank, Hyderabad",
-      "Regional DGFT & MSME Facilitation Office, Hyderabad"
-    ],
-    officialUrl: "https://tshc.gov.in",
-    causeListUrl: "https://tshc.gov.in/getCauseList",
-    chambersPracticeNote:
-      "GST refund & SCN writs, Income Tax reassessment challenges, customs/SEZ taxation, and DGFT trade representation in Hyderabad.",
-    summary:
-      "Principal appellate forum in Hyderabad governing GST, income tax, customs/SEZ taxation, and statutory registration disputes."
-  },
-  {
     slug: "calcutta-high-court",
     name: "High Court at Calcutta",
     shortName: "Calcutta High Court",
@@ -359,52 +333,6 @@ const UNSORTED_COURTS_REGISTRY: CourtProfile[] = [
       "GST Show Cause Notice (SCN) writs, Commissioner (Appeals) & GSTAT matters, income tax appeals, and DGFT customs challenges.",
     summary:
       "India's oldest Chartered High Court (1862), exercising writ and appellate tax jurisdiction across Eastern India."
-  },
-  {
-    slug: "karnataka-high-court",
-    name: "High Court of Karnataka",
-    shortName: "Karnataka High Court",
-    tier: "high",
-    city: "Bengaluru",
-    distanceFromDelhiKm: 1740,
-    stateOrJurisdiction: "State of Karnataka",
-    region: "South",
-    establishedYear: 1884,
-    benches: ["Bengaluru (Principal Seat)", "Dharwad", "Kalaburagi"],
-    nearbyTaxOffices: [
-      "CR Building (CGST & Income Tax), Queen's Road, Bengaluru",
-      "Vanijya Therige Karyalaya (Karnataka State GST), Gandhinagar, Bengaluru",
-      "Regional DGFT Office (Koramangala) & MSME Facilitation Desk, Bengaluru"
-    ],
-    officialUrl: "https://karnatakajudiciary.kar.nic.in",
-    causeListUrl: "https://karnatakajudiciary.kar.nic.in/causelist.php",
-    chambersPracticeNote:
-      "GST & Income Tax appeals, TDS & reassessment writs, DGFT export compliance, and trademark protection from our MG Road desk.",
-    summary:
-      "Seated at Attara Kacheri in Bengaluru, adjudicating direct tax, GST, customs, and registration disputes."
-  },
-  {
-    slug: "madras-high-court",
-    name: "High Court of Judicature at Madras",
-    shortName: "Madras High Court",
-    tier: "high",
-    city: "Chennai",
-    distanceFromDelhiKm: 1756,
-    stateOrJurisdiction: "Tamil Nadu & Puducherry",
-    region: "South",
-    establishedYear: 1862,
-    benches: ["Chennai (Principal Seat)", "Madurai Bench"],
-    nearbyTaxOffices: [
-      "GST Bhawan & Aayakar Bhawan, Nungambakkam High Road, Chennai",
-      "Tamil Nadu Commercial Taxes (State GST), Ezhilagam / Greams Road, Chennai",
-      "Zonal DGFT (Shastri Bhavan) & Trademark Registry (Guindy), Chennai"
-    ],
-    officialUrl: "https://www.hcmadras.tn.nic.in",
-    causeListUrl: "https://www.hcmadras.tn.nic.in/causelist.php",
-    chambersPracticeNote:
-      "GST and customs writ litigation, Show Cause Notice (SCN) defense, income tax appeals, and trademark enforcement.",
-    summary:
-      "Historic Chartered High Court in Chennai renowned for constitutional protection, indirect tax rulings, and trademark IP jurisprudence."
   }
 ];
 
@@ -522,6 +450,15 @@ export const TAX_AND_REGIONAL_OFFICES: TaxRegionalOffice[] = [
     addressNote: "Birchand Patel Path & Bailey Road, Patna, Bihar"
   },
   {
+    slug: "muzaffarpur-bihar-tax-office",
+    name: "Muzaffarpur & North Bihar Regional GST, Income Tax & District Courts",
+    city: "Muzaffarpur, Bihar",
+    group: "Regional Tax Offices (Near High Courts)",
+    nearbyCourtSlug: "patna-high-court",
+    jurisdiction: "Muzaffarpur Tirhut Division — CGST, Bihar State GST, ITO & Civil/Criminal Courts",
+    addressNote: "Near Bariya / Baikuntpuri & Civil Court Road, Muzaffarpur, Bihar — 842003"
+  },
+  {
     slug: "mumbai-regional-tax-office",
     name: "Mumbai Regional Aayakar Bhawan, GST Bhavan, DGFT & Trademark Office",
     city: "Mumbai",
@@ -531,15 +468,6 @@ export const TAX_AND_REGIONAL_OFFICES: TaxRegionalOffice[] = [
     addressNote: "M.K. Road, Churchgate & Fort, Mumbai — 400001 / 400020"
   },
   {
-    slug: "hyderabad-regional-tax-office",
-    name: "Hyderabad Regional GST Bhavan, Income Tax Towers & DGFT Office",
-    city: "Hyderabad",
-    group: "Regional Tax Offices (Near High Courts)",
-    nearbyCourtSlug: "telangana-high-court",
-    jurisdiction: "Near Telangana High Court — Basheerbagh & Masab Tank Tax Circles",
-    addressNote: "Basheerbagh & Masab Tank, Hyderabad, Telangana"
-  },
-  {
     slug: "kolkata-regional-tax-office",
     name: "Kolkata Regional Aayakar Bhawan, GST Bhawan, DGFT & Trademark Office",
     city: "Kolkata",
@@ -547,24 +475,6 @@ export const TAX_AND_REGIONAL_OFFICES: TaxRegionalOffice[] = [
     nearbyCourtSlug: "calcutta-high-court",
     jurisdiction: "Near Calcutta High Court — Chowringhee, Rajdanga & Salt Lake",
     addressNote: "P-7 Chowringhee Square & Esplanade, Kolkata, West Bengal"
-  },
-  {
-    slug: "bengaluru-regional-tax-office",
-    name: "Bengaluru Regional CR Building (Income Tax & CGST), State GST & DGFT",
-    city: "Bengaluru",
-    group: "Regional Tax Offices (Near High Courts)",
-    nearbyCourtSlug: "karnataka-high-court",
-    jurisdiction: "Near Karnataka High Court — Queen's Road, Gandhinagar & Koramangala",
-    addressNote: "Queen's Road & MG Road Corridor, Bengaluru, Karnataka"
-  },
-  {
-    slug: "chennai-regional-tax-office",
-    name: "Chennai Regional GST Bhawan, Aayakar Bhawan, DGFT & Trademark Office",
-    city: "Chennai",
-    group: "Regional Tax Offices (Near High Courts)",
-    nearbyCourtSlug: "madras-high-court",
-    jurisdiction: "Near Madras High Court — Nungambakkam, Greams Road & Guindy",
-    addressNote: "Nungambakkam High Road & Guindy, Chennai, Tamil Nadu"
   }
 ];
 
@@ -857,13 +767,16 @@ const OTHER_HIGH_COURT_MARKERS: Array<{ slug: CourtImageKey | "other"; patterns:
   { slug: "gujarat-high-court", patterns: [/\bgujarat high court\b/i, /\bgujarat hc\b/i] },
   { slug: "patna-high-court", patterns: [/\bpatna high court\b/i, /\bpatna hc\b/i] },
   { slug: "bombay-high-court", patterns: [/\bbombay high court\b/i, /\bbombay hc\b/i] },
-  { slug: "telangana-high-court", patterns: [/\btelangana high court\b/i, /\btelangana hc\b/i] },
   { slug: "calcutta-high-court", patterns: [/\bcalcutta high court\b/i, /\bcalcutta hc\b/i] },
-  { slug: "karnataka-high-court", patterns: [/\bkarnataka high court\b/i, /\bkarnataka hc\b/i] },
-  { slug: "madras-high-court", patterns: [/\bmadras high court\b/i, /\bmadras hc\b/i] },
   {
     slug: "other",
     patterns: [
+      /\btelangana high court\b/i,
+      /\btelangana hc\b/i,
+      /\bkarnataka high court\b/i,
+      /\bkarnataka hc\b/i,
+      /\bmadras high court\b/i,
+      /\bmadras hc\b/i,
       /\bmp high court\b/i,
       /\bmadhya pradesh high court\b/i,
       /\bkerala high court\b/i,
@@ -1159,7 +1072,7 @@ export function buildArchiveFallbackReport(
     },
     {
       id: `${court.slug}-fallback-2`,
-      title: `${court.shortName} — Income Tax Return Assessment, Section 148 Notice & TDS Compliance`,
+      title: `${court.shortName} — TDS Compliance, Income Tax Consultancy & Income Tax Return Assessment (Section 148 Notice)`,
       caseNameOrCitation: `${court.shortName} · Direct Tax Appellate Roster`,
       date: formattedDate,
       category: "GST & Income Tax",

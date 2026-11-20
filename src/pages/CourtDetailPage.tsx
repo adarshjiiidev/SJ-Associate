@@ -370,7 +370,7 @@ export function CourtDetailPage({ onConsultForCourt }: CourtDetailPageProps) {
 
                   {holding.practicalTakeaway && (
                     <p className="mt-2 text-xs text-[#33566D] bg-[#DAF6EF]/40 rounded-xl px-3.5 py-2">
-                      <strong className="text-[#0A2536]">Chambers Note:</strong>{" "}
+                      <strong className="text-[#0A2536]">Practice Note:</strong>{" "}
                       {holding.practicalTakeaway}
                     </p>
                   )}

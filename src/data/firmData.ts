@@ -96,16 +96,16 @@ export const PRINCIPAL_ADVOCATE = {
     "SJ Associates strives to be a multi-skilled knowledge based law and tax firm, driven by ethics and human values, delivering excellence and value in the field of legal and taxation services.",
   overview: [
     "Set up in 2009, the growth of SJ Associates (“Firm”) is a glowing tribute to its founder, Advocate Sanjay Kumar Singh. His visionary leadership, mentoring and hard work has helped the Firm to emerge as one of the well-known law and taxation firms in the country. Since its inception, it continues to serve a diverse clientele, including domestic and overseas businesses, industrial enterprises, partnership firms and individuals.",
-    "Presently, the Firm has operations in New Delhi and Delhi NCR (including Ghaziabad, Noida, Gurugram and Faridabad) and associates across major cities and High Court centres in India. With increasing complexity in the modern professional and business environment, the Firm is committed to providing high quality, flexible, client focused legal, taxation and business advisory services. Every passing year is memorable to us for its challenges, and the multitude of creative solutions that we provide to our clients.",
+    "Presently, the Firm has operations in New Delhi, Delhi NCR (including Ghaziabad, Noida, Gurugram and Faridabad) and Muzaffarpur (Bihar), alongside associates across major cities and High Court centres in India. With increasing complexity in the modern professional and business environment, the Firm is committed to providing high quality, flexible, client focused legal, taxation and business advisory services. Every passing year is memorable to us for its challenges, and the multitude of creative solutions that we provide to our clients.",
     "SJ Associates is a dedicated law and taxation firm advising domestic and commercial clients for over fifteen years and providing a broad range of legal, taxation, regulatory and advisory services to the commercial, industrial and financial communities. SJ Associates serves the need of both small and large businesses, ranging from basic start-up registration work to complex legal issues, tax litigation and regulatory matters.",
-    "SJ Associates draws its expertise from advocates and tax professionals who have gained experience nationally, having worked on varied taxation, appellate and regulatory assignments across India. The broad practice areas of SJ Associates are Goods and Services Tax (‘GST’), Customs, Direct Taxation (Income Tax & TDS), GSTAT Appeals, ITAT Tribunal, High Court Litigation & Writs, Accounting & Bookkeeping, Foreign Trade Policy (DGFT), MSME Registration, Intellectual Property (Trademark) Registration and Partnership Firm Registration. Our Firm brings together legal advocacy and specialized tax practice, providing an edge which is most critical for the success of commercial transactions.",
+    "SJ Associates draws its expertise from advocates and tax professionals who have gained experience nationally, having worked on varied taxation, appellate and regulatory assignments across India. The broad practice areas of SJ Associates are Direct and Indirect Taxation (Goods and Services Tax ‘GST’, Customs, Income Tax & TDS), Corporate Law Practice, Labour Law Litigation, Civil Litigation, Criminal Litigation, GSTAT Appeals, ITAT Tribunal, High Court Litigation & Writs, Accounting & Bookkeeping, Foreign Trade Policy (DGFT), MSME Registration, Trademark Registration, Partnership Firm Registration and Company Registration. Our Firm brings together legal advocacy and specialized tax practice, providing an edge which is most critical for the success of commercial transactions.",
     "Client satisfaction is a cornerstone of our practice. We are proud of the recognition we have received from our clients for our commitment to service, and we value their satisfaction as the best measure of our success. SJ Associates strives to be a multi-skilled knowledge based law and tax firm, driven by ethics and human values, delivering excellence and value in the field of legal and taxation services.",
     "Our mission is to be the most preferred law and tax firm within the Indian market, providing clients with qualitative and innovative professional advice in a time bound and cost effective manner, and providing advocates and tax professionals with a conducive environment for all round growth and development.",
   ],
   keyHighlights: [
     "Section 01 — Goods and Services Tax: Registration, Return Filing, SCN Reply, Commissioner Appeal, GSTAT Appeal & High Court Appeal",
-    "Section 02 — Income Tax (Direct Tax): Return Filing (ITR), TDS Return Filing, Income Tax Consultancy & ITAT / Assessment Matters",
-    "Section 03 — Regulatory & Compliance: Accounting & Bookkeeping, DGFT Work, MSME Registration, Trademark Registration & Partnership Firm Registration",
+    "Section 02 — Income Tax (Direct Tax): TDS Return Filing, Income Tax Consultancy, Income Tax Return Filing & ITAT / Assessment Matters",
+    "Section 03 — Others: Accounting & Bookkeeping, DGFT Work, MSME, Trademark, Partnership Firm, Company Registration & Criminal & Civil Litigation",
     "Distinguished Member of the International Council of Jurists (Cert. No. 2529 · Membership No. 471-A/2009)",
   ],
 };
@@ -113,23 +113,23 @@ export const PRINCIPAL_ADVOCATE = {
 export const CHAMBERS_METRICS: ChambersMetric[] = [
   {
     label: "Courts & Tribunals With Live Reports",
-    value: "13",
-    detail: "Supreme Court, GSTAT & 11 High Courts with direct RSS updates",
+    value: "10",
+    detail: "Supreme Court, GSTAT & 8 High Courts across North, West & East India",
   },
   {
     label: "Specialized Services Across 3 Sections",
-    value: "15",
-    detail: "6 Goods and Services Tax · 4 Income Tax · 5 Accounting, DGFT & Registrations",
+    value: "17",
+    detail: "6 Goods and Services Tax · 4 Income Tax · 7 Others (Registrations & Litigation)",
   },
   {
-    label: "Delhi & Regional Tax Offices Covered",
-    value: "17+",
-    detail: "Delhi GST/ITO/DGFT/TM Offices & Regional Tax Offices near High Courts",
+    label: "Delhi, Bihar & Regional Tax Offices Covered",
+    value: "15+",
+    detail: "Delhi GST/ITO/DGFT/TM Offices, Muzaffarpur/Patna Bihar & Regional Tax Offices",
   },
   {
     label: "Core Practice Sections",
     value: "3",
-    detail: "1. Goods and Services Tax · 2. Income Tax · 3. Others (Accounts, DGFT & Registrations)",
+    detail: "1. Goods and Services Tax · 2. Income Tax · 3. Others (Accounts, Registrations & Litigation)",
   },
 ];
 
@@ -179,37 +179,37 @@ export const PRACTICE_AREAS: PracticeAreaItem[] = [
   {
     id: "income-tax-filings-and-tds",
     number: "03",
-    title: "Income Tax — Return Filing (ITR) & TDS Return Filing",
-    shortTitle: "Income Tax & TDS Return Filing",
+    title: "Income Tax — TDS Return Filing, Consultancy & Return Filing (ITR)",
+    shortTitle: "TDS Returns, Consultancy & ITR Filing",
     statutes:
       "Income Tax Department · Pratyaksh Kar Bhawan (ITO / Civic Centre) · TRACES",
     summary:
-      "The Direct Tax team, comprising lawyers and tax professionals, offers a comprehensive array of direct tax compliance and reporting services for businesses, partnership firms, professionals, and organisations across sectors. We understand the business, accounting, and legal intricacies affecting direct taxation and statutory reporting.",
+      "The Direct Tax team, comprising lawyers and tax professionals, offers a comprehensive array of TDS compliance, direct tax consultancy, and Income Tax Return filing services for businesses, partnership firms, professionals, and organisations across sectors. We understand the business, accounting, and legal intricacies affecting direct taxation.",
     representationScope: [
-      "Compilation of financial data and filing of Income Tax Returns (ITR-1 to ITR-7), tax audit reports & balance sheet schedules",
       "Quarterly TDS and TCS Return Filing (Forms 24Q, 26Q, 27Q, 27EQ), Form 16/16A issuance & TRACES default rectification",
-      "Synchronization of AIS/TIS, Form 26AS & annual GST turnover, updated returns (ITR-U) & lower withholding certificates",
+      "Income Tax Consultancy relating to domestic and cross-border tax issues, strategic tax planning & capital gains structuring",
+      "Compilation of financial data and Income Tax Return Filing (ITR-1 to ITR-7), tax audit reports, AIS/TIS & Form 26AS reconciliation",
     ],
     typicalForums: [
       "Pratyaksh Kar Bhawan (Civic Centre / ITO New Delhi) & CPC / TRACES",
-      "Regional Income Tax Offices (Aayakar Bhawan) across India",
+      "Regional Income Tax Offices (Aayakar Bhawan) across Delhi, Bihar & India",
     ],
     landmarkContext:
-      "We endeavor to deliver efficient and cost-effective direct tax compliance services appreciating the specific needs of clients, so as to provide maximum value.",
+      "We endeavor to deliver efficient and cost-effective direct tax consultancy and compliance services appreciating the specific needs of clients, so as to provide maximum value.",
   },
   {
     id: "income-tax-consultancy-and-matters",
     number: "04",
-    title: "Income Tax — Consultancy, Assessments & Other Matters",
-    shortTitle: "Income Tax Consultancy & Other Matters",
+    title: "Income Tax — Assessments, ITAT & Other Matters",
+    shortTitle: "Income Tax Assessments & ITAT",
     statutes:
       "NFAC · CIT (Appeals) · ITAT Delhi Benches · High Court Tax Benches",
     summary:
       "The Direct Tax team is acclaimed for its ability to find practical solutions to meet clients’ needs while addressing the complexities of constantly changing tax regimes. Over the years, the team has gained the respect of tax administrators, businesses, and the judiciary alike for its competent handling of litigation before the Supreme Court, High Courts, Tax Tribunals (ITAT), CIT(Appeals), and assessing authorities.",
     representationScope: [
-      "Advice and consultancy relating to domestic and cross-border direct tax issues, capital gains exemptions & business structuring",
       "Representation in faceless scrutiny assessments (Sec. 142(1) / 143(2) / 143(3)) & Section 148A/148 reassessment proceedings",
       "Appellate litigation before CIT(Appeals) in Form 35, Income Tax Appellate Tribunal (ITAT) benches, Section 154 rectifications & stay petitions",
+      "Penalty defence under Section 270A/271, revision petitions under Section 263/264 & High Court direct tax appeals",
     ],
     typicalForums: [
       "National Faceless Assessment / Appeal Centre (NFAC) & Jurisdictional ITOs",
@@ -221,44 +221,44 @@ export const PRACTICE_AREAS: PracticeAreaItem[] = [
   {
     id: "accounting-bookkeeping-and-dgft",
     number: "05",
-    title: "Others — Accounting & Bookkeeping and DGFT Work",
-    shortTitle: "Accounting, Bookkeeping & DGFT Work",
+    title: "Others — Accounting, Bookkeeping, DGFT & Company Registration",
+    shortTitle: "Accounting, DGFT & Company Registration",
     statutes:
-      "DGFT CLA (ITO New Delhi) · Vanijya Bhawan · Regional DGFT & Customs Offices",
+      "DGFT CLA (ITO New Delhi) · MCA / ROC Delhi & Bihar · Vanijya Bhawan",
     summary:
-      "The Firm provides managed services in the area of Accounting, Bookkeeping, and Foreign Trade Policy (DGFT) compliance on an all-India basis. For every commercial and cross-border trade requirement, our team of professionals works closely to maintain audit-ready books and secure export-import authorizations, refunds, and Customs clearances in a time-bound manner.",
+      "The Firm provides managed services in Accounting, Bookkeeping, Foreign Trade Policy (DGFT), and Corporate Law / Company Registration across Delhi, Bihar, and India. Our team works closely to incorporate companies and LLPs, maintain audit-ready books, and secure export-import authorizations and Customs clearances in a time-bound manner.",
     representationScope: [
       "Accounting & Bookkeeping: Compilation of ledgers, bank reconciliation, facilitation of audit & preparation of Trial Balance, P&L, and Balance Sheet",
-      "Foreign Trade Policy & DGFT Work: Import Export Code (IEC) issuance & modification, Advance Authorization & EPCG licenses",
-      "Export incentives & refunds under Foreign Trade Policy schemes (RoDTEP / RoSCTL), EODC redemption & DGFT Show Cause Notice representation",
+      "Foreign Trade Policy & DGFT Work: Import Export Code (IEC) issuance & modification, Advance Authorization, EPCG & RoDTEP refunds",
+      "Company Registration & Corporate Law Practice: Private Limited, LLP, OPC & Section 8 incorporation (SPICe+), MOA/AOA drafting & ROC compliance",
     ],
     typicalForums: [
-      "DGFT CLA Office (ITO, New Delhi) & Vanijya Bhawan",
-      "Zonal & Regional DGFT Offices (Mumbai, Kolkata, Chennai, Ahmedabad, Jaipur, Ludhiana)",
+      "DGFT CLA Office (ITO, New Delhi) & Registrar of Companies (MCA / ROC)",
+      "Zonal & Regional DGFT & Corporate Filing Offices across India",
     ],
     landmarkContext:
-      "Understanding the accounting, regulatory, and foreign trade intricacies affecting businesses allows the Firm to deliver holistic, tax-compliant solutions.",
+      "Understanding the accounting, corporate, and foreign trade intricacies affecting businesses allows the Firm to deliver holistic, tax-compliant solutions.",
   },
   {
     id: "msme-trademark-partnership-registrations",
     number: "06",
-    title: "Others — MSME, Trademark & Partnership Firm Registration",
-    shortTitle: "MSME, Trademark & Partnership Registration",
+    title: "Others — MSME, Trademark, Partnership & Criminal / Civil Litigation",
+    shortTitle: "Registrations, Labour, Civil & Criminal Litigation",
     statutes:
-      "Trade Marks Registry (Dwarka, New Delhi) · Registrar of Firms · Ministry of MSME",
+      "Trade Marks Registry · Registrar of Firms · District Courts, Labour Courts & High Courts",
     summary:
-      "The Firm offers services across all stages of development experienced by a business entity, right from its inception and statutory registration to intellectual property protection and commercial documentation. Our team works closely to structure and execute registrations and agreements, thereby providing the client a holistic and legally sound foundation.",
+      "The Firm offers comprehensive representation spanning MSME Udyam, Trademark, and Partnership Firm Registration alongside dedicated Criminal Litigation, Civil Litigation, and Labour Law Litigation before District Courts, Labour Tribunals, High Courts, and the Supreme Court.",
     representationScope: [
-      "MSME Registration: Udyam Registration certificate issuance, NIC activity classification & MSME Samadhaan delayed-payment recovery representation",
-      "Intellectual Property & Trademark Registration: Availability search, Form TM-A filing (Classes 1–45), Section 9/11 examination replies & hearings",
-      "Partnership Firm Registration: Drafting of Partnership & Reconstitution Deeds, stamp execution & registration before the Registrar of Firms (ROF)",
+      "MSME Udyam Registration, Trademark Registration (Form TM-A, Sec. 9/11 replies & hearings) & Partnership Firm Registration before ROF",
+      "Criminal Litigation: Anticipatory & regular bail, FIR quashing, Section 138 NI Act cheque bounce, economic offences & trial defence",
+      "Civil & Labour Law Litigation: Recovery suits, injunctions, property & contractual disputes, industrial disputes & employment litigation",
     ],
     typicalForums: [
-      "Trade Marks Registry (Dwarka, New Delhi & Regional Offices)",
-      "Registrar of Firms (Delhi & State Registrars) & MSME Facilitation Councils",
+      "Trade Marks Registry (Dwarka, New Delhi) & Registrar of Firms",
+      "District Courts (Delhi, NCR & Muzaffarpur), Labour Courts, High Courts & Supreme Court",
     ],
     landmarkContext:
-      "From basic start-up registration work to complex statutory and intellectual property protection, the Firm delivers time-bound and cost-effective execution.",
+      "From start-up registrations and intellectual property protection to determined trial and appellate advocacy in Criminal, Civil, and Labour disputes.",
   },
 ];
 
@@ -292,7 +292,7 @@ export const PRACTICE_SECTION_SUMMARY: Array<{
     code: "01 · GOODS AND SERVICES TAX",
     title: "Goods and Services Tax (6 Services)",
     serviceCount: 6,
-    weightPercent: 40,
+    weightPercent: 35,
     tagline:
       "Indirect Tax Advisory, Compliance & Litigation Across GST Authorities, Customs, GSTAT & High Courts",
     items: [
@@ -309,30 +309,32 @@ export const PRACTICE_SECTION_SUMMARY: Array<{
     code: "02 · INCOME TAX",
     title: "Income Tax (4 Services)",
     serviceCount: 4,
-    weightPercent: 27,
+    weightPercent: 24,
     tagline:
-      "Direct Tax Compliance, Advisory, Assessments & Appellate Representation Before CIT(A) & ITAT",
+      "Direct Tax TDS Compliance, Advisory, ITR Filing, Assessments & Appellate Representation Before CIT(A) & ITAT",
     items: [
-      "Return Filing (ITR)",
       "TDS Return Filing",
       "Income Tax Consultancy",
+      "Income Tax Return Filing",
       "Other Matters",
     ],
   },
   {
     category: "Others",
     code: "03 · OTHERS",
-    title: "Others (5 Services)",
-    serviceCount: 5,
-    weightPercent: 33,
+    title: "Others (7 Services)",
+    serviceCount: 7,
+    weightPercent: 41,
     tagline:
-      "Managed Accounting, Foreign Trade Policy (DGFT), MSME, Intellectual Property & Partnership Setup",
+      "Accounting, DGFT, MSME, Trademark, Partnership, Company Registration & Criminal, Civil & Labour Litigation",
     items: [
       "Accounting & Bookkeeping",
       "DGFT Work",
       "MSME Registration",
       "Trademark Registration",
       "Partnership Firm Registration",
+      "Company Registration",
+      "Criminal & Civil Litigation",
     ],
   },
 ];
@@ -440,24 +442,8 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
   },
 
   // ============================================================================
-  // SECTION 2: Income Tax (4 items)
+  // SECTION 2: Income Tax (4 items — TDS Return Filing & Consultancy before ITR Filing)
   // ============================================================================
-  {
-    id: "itr-return-filing",
-    category: "Income Tax",
-    title: "Income Tax Return Filing",
-    subtitle: "ITR-1 to ITR-7 & Tax Audit Filings",
-    authorityTag: "INCOME TAX · CBDT",
-    turnaroundTag: "Annual ITR & Tax Audit",
-    timelineOrStatute: "Sec. 139 & 44AB Income-tax Act",
-    description:
-      "Comprehensive direct tax return compliance (ITR-1 to ITR-7) and tax audit coordination for businesses, industrial houses, partnership firms, professionals, and individuals, addressing accounting and legal intricacies with full Form 26AS and AIS/TIS reconciliation.",
-    deliverables: [
-      "ITR-1 to ITR-7 Filing with AIS/TIS & 26AS Reconciliation",
-      "Capital Gains Computation, Balance Sheet Schedules & ITR-U",
-    ],
-    practiceAreaId: "income-tax-filings-and-tds",
-  },
   {
     id: "tds-return-filing",
     category: "Income Tax",
@@ -488,7 +474,23 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
       "Direct Tax Planning, Advance Tax & Capital Gains Advisory",
       "Written Legal Opinions on Deductions & Withholding Tax",
     ],
-    practiceAreaId: "income-tax-consultancy-and-matters",
+    practiceAreaId: "income-tax-filings-and-tds",
+  },
+  {
+    id: "itr-return-filing",
+    category: "Income Tax",
+    title: "Income Tax Return Filing",
+    subtitle: "ITR-1 to ITR-7 & Tax Audit Filings",
+    authorityTag: "INCOME TAX · CBDT",
+    turnaroundTag: "Annual ITR & Tax Audit",
+    timelineOrStatute: "Sec. 139 & 44AB Income-tax Act",
+    description:
+      "Comprehensive direct tax return compliance (ITR-1 to ITR-7) and tax audit coordination for businesses, industrial houses, partnership firms, professionals, and individuals, addressing accounting and legal intricacies with full Form 26AS and AIS/TIS reconciliation.",
+    deliverables: [
+      "ITR-1 to ITR-7 Filing with AIS/TIS & 26AS Reconciliation",
+      "Capital Gains Computation, Balance Sheet Schedules & ITR-U",
+    ],
+    practiceAreaId: "income-tax-filings-and-tds",
   },
   {
     id: "other-income-tax-matters",
@@ -590,23 +592,55 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     ],
     practiceAreaId: "msme-trademark-partnership-registrations",
   },
+  {
+    id: "company-registration",
+    category: "Others",
+    title: "Company Registration",
+    subtitle: "Private Limited, LLP, OPC & Section 8 Incorporation",
+    authorityTag: "MCA · ROC DELHI & BIHAR",
+    turnaroundTag: "SPICe+ · COI, MOA & AOA",
+    timelineOrStatute: "Companies Act, 2013 · LLP Act, 2008",
+    description:
+      "End-to-end Corporate Law Practice and entity formation covering setting up of Private Limited Companies, Limited Liability Partnerships (LLP), One Person Companies (OPC), and Section 8 entities—including name reservation, DIN/DSC, MOA & AOA drafting, Certificate of Incorporation, and annual ROC compliance.",
+    deliverables: [
+      "SPICe+ Incorporation, Certificate of Incorporation, PAN & TAN",
+      "MOA/AOA Drafting, DIN/DSC & Annual ROC / MCA Compliance",
+    ],
+    practiceAreaId: "accounting-bookkeeping-and-dgft",
+  },
+  {
+    id: "criminal-civil-litigation",
+    category: "Others",
+    title: "Criminal & Civil Litigation",
+    subtitle: "Bail, Quashing, Recovery, Injunctions & Labour Disputes",
+    authorityTag: "DISTRICT COURTS · HIGH COURTS · SC",
+    turnaroundTag: "Trial, Writ & Appellate Defence",
+    timelineOrStatute: "BNS / BNSS · CPC · NI Act Sec. 138",
+    description:
+      "Dedicated litigation representation across Criminal, Civil, and Labour Law matters before District Courts, Labour Tribunals, High Courts, and the Supreme Court—covering anticipatory & regular bail, FIR quashing, Section 138 cheque bounce, economic offences, civil recovery suits, injunctions, property disputes, and employment litigation.",
+    deliverables: [
+      "Anticipatory / Regular Bail, FIR Quashing & Sec. 138 NI Act Trials",
+      "Civil Recovery Suits, Injunctions, Property & Labour Law Litigation",
+    ],
+    practiceAreaId: "msme-trademark-partnership-registrations",
+  },
 ];
 
 export const COUNSEL_TEAM: CounselMember[] = [
   {
     id: "adv-sanjay-singh",
     name: "Adv. Sanjay Kumar Singh",
-    designation: "Founder & Principal Counsel",
+    designation: "Founder & Advocate, Delhi High Court",
     enrollmentNote:
       "Advocate, Delhi High Court · Distinguished Member, International Council of Jurists (Cert. No. 2529)",
     primaryForums:
       "Supreme Court of India · GSTAT Principal Bench · Delhi High Court · Commissioner (Appeals)",
     practiceFocus: [
-      "GST Registration, Returns, SCN Reply & GSTAT/HC Appeals",
-      "Income Tax Return, TDS, Consultancy & Assessments",
-      "Accounting, DGFT Work, MSME, Trademark & Partnership",
+      "Direct & Indirect Taxation (GST, Customs, TDS, Income Tax & ITAT)",
+      "Corporate Law Practice, Company Registration & Regulatory Advisory",
+      "Labour Law Litigation, Civil Litigation & Criminal Litigation",
     ],
-    bio: "Founder of SJ Associates practicing before the High Court of Delhi, GSTAT, ITAT Tribunal, and Tax Authorities across three dedicated wings: Goods and Services Tax, Income Tax, and Accounting/DGFT/Registrations.",
+    bio: "Founder of SJ Associates practicing before the High Court of Delhi, GSTAT, ITAT Tribunal, and Courts across Delhi NCR and Bihar across Goods and Services Tax, Income Tax, Corporate Law, Labour Law, Civil, and Criminal Litigation.",
   },
   {
     id: "adv-rajesh-verma",
@@ -625,23 +659,23 @@ export const COUNSEL_TEAM: CounselMember[] = [
   {
     id: "adv-meera-kulkarni",
     name: "Adv. Meera Kulkarni",
-    designation: "Associate Counsel — Income Tax & Registrations Desk",
-    enrollmentNote: "Enrolled Bar Council of Delhi · Tax & Trademark Bar",
+    designation: "Associate Counsel — Income Tax & Corporate Desk",
+    enrollmentNote: "Enrolled Bar Council of Delhi · Tax & Corporate Bar",
     primaryForums:
-      "Income Tax Authorities · CIT(Appeals) · Trade Marks Registry Dwarka · DGFT CLA Delhi",
+      "Income Tax Authorities · CIT(Appeals) · MCA / ROC · Trade Marks Registry Dwarka · DGFT CLA Delhi",
     practiceFocus: [
-      "Income Tax Return (ITR) & Quarterly TDS Return Filing",
-      "Income Tax Consultancy & Assessment Matters",
-      "Accounting, DGFT, MSME, Trademark & Partnership Registration",
+      "Quarterly TDS Return Filing, Income Tax Consultancy & ITR Filing",
+      "Company Registration, Accounting, DGFT, MSME, Trademark & Partnership",
+      "Civil, Labour Law & Commercial Documentation",
     ],
-    bio: "Leads chambers' Income Tax filing and consultancy desk alongside Accounting & Bookkeeping, DGFT export-import work, MSME, Trademark, and Partnership Firm registrations.",
+    bio: "Leads the Firm's TDS Return Filing, Income Tax Consultancy, and ITR filing desk alongside Company Registration, Accounting & Bookkeeping, DGFT, MSME, Trademark, and Partnership Firm registrations.",
   },
 ];
 
 export const CHAMBERS_OFFICES: ChambersOffice[] = [
   {
     id: "new-delhi-rani-bagh-hq",
-    title: "Principal Chambers — Rani Bagh / Pitampura, Delhi",
+    title: "New Delhi Office — Rani Bagh / Pitampura",
     city: "New Delhi",
     addressLines: [
       "A-40, Rishi Nagar, Captain Satish Marg, Rani Bagh North West",
@@ -651,38 +685,38 @@ export const CHAMBERS_OFFICES: ChambersOffice[] = [
     phone: "+91 97163 18400 / +91 98182 98983",
     email: "services@sjalaw.in",
     courtProximity:
-      "Direct corridor to Rohini Courts, Vyapar Bhawan GST HQ, ITO Income Tax Office, GSTAT & Delhi High Court",
+      "Direct connectivity to Rohini Courts, Vyapar Bhawan GST HQ, ITO Income Tax Office, GSTAT & Delhi High Court",
     consultationHours: "Monday – Saturday · 10:00 AM to 7:30 PM IST",
   },
   {
-    id: "new-delhi-high-court-chambers",
-    title: "Delhi High Court & GSTAT Filing Desk",
-    city: "Central New Delhi",
+    id: "bihar-muzaffarpur-office",
+    title: "Bihar Office — Muzaffarpur",
+    city: "Muzaffarpur, Bihar",
     addressLines: [
-      "Chambers Block, Delhi High Court Complex",
-      "Sher Shah Road / Tilak Marg Judicial Corridor",
-      "New Delhi – 110503",
+      "Krishna Shanti Sadan, Baikuntpuri, Bariya",
+      "Ward No. 1, Muzaffarpur",
+      "Bihar – 842003, India",
     ],
-    phone: "+91 97163 18400",
+    phone: "+91 97163 18400 / +91 98182 98983",
     email: "services@sjalaw.in",
     courtProximity:
-      "Walking access to Delhi High Court, Supreme Court of India, GSTAT Principal Bench, Vyapar Bhawan & Pratyaksh Kar Bhawan",
-    consultationHours: "Court Sitting Hours · 9:30 AM to 4:30 PM IST",
+      "Serving Muzaffarpur District Courts, North Bihar GST & Income Tax Circles, and Patna High Court matters",
+    consultationHours: "Monday – Saturday · 10:00 AM to 7:30 PM IST",
   },
   {
     id: "regional-high-court-tax-desk",
-    title: "Regional High Courts & Tax Offices Desk",
-    city: "Chandigarh · NCR · Jaipur · Prayagraj · Mumbai",
+    title: "Regional High Courts & Tax Offices Network",
+    city: "Delhi NCR · Patna · Prayagraj · Chandigarh · Jaipur · Mumbai",
     addressLines: [
       "Coordinated Appearance & Regional Tax Office Network",
-      "High Courts, GSTAT Benches & Nearby Regional GST / Income Tax Offices",
-      "Pan-India Representation from New Delhi Chambers",
+      "High Courts, GSTAT & ITAT Benches, and Regional GST / Income Tax Offices",
+      "Representation across North, West & East India",
     ],
     phone: "+91 97163 18400",
     email: "services@sjalaw.in",
     courtProximity:
-      "Covers all 13 Courts & nearby Regional GST Bhawans, Aayakar Bhawans, DGFT & Trademark Registries",
-    consultationHours: "Prior Briefing & Case Conference via Principal Chambers",
+      "Covers 10 Courts & Tribunals plus Regional GST Bhawans, Aayakar Bhawans, MCA/ROC, DGFT & Trademark Registries",
+    consultationHours: "Prior Appointment & Case Conference via New Delhi or Bihar Office",
   },
 ];
 

@@ -138,10 +138,10 @@ export function AboutPage({ onOpenConsultation }: AboutPageProps) {
                 <div className="border-t border-[#0A2536]/15 bg-[#0A2536] px-5 py-3.5 text-[#F3FAFF] flex items-center justify-between gap-3">
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#DAF6EF]">
-                      NEW DELHI &amp; GHAZIABAD (NCR)
+                      NEW DELHI, NCR &amp; MUZAFFARPUR (BIHAR)
                     </p>
                     <p className="text-xs font-semibold text-[#F3FAFF] mt-0.5">
-                      Goods and Services Tax · Direct Tax · GSTAT · ITAT · High Courts
+                      Direct &amp; Indirect Tax · Corporate · Labour, Civil &amp; Criminal Litigation
                     </p>
                   </div>
                   <FirmLogo size={26} variant="light" />
@@ -234,8 +234,8 @@ export function AboutPage({ onOpenConsultation }: AboutPageProps) {
               </h2>
               <p className="mt-2 text-sm text-[#33566D] leading-relaxed">
                 The Direct Tax team comprising lawyers and tax professionals offers a comprehensive
-                array of tax advisory, compliance, and litigation services—including Income Tax
-                Return Filing, TDS Return Filing, strategic tax planning, and representation before
+                array of tax advisory, compliance, and litigation services—including TDS Return
+                Filing, Income Tax Consultancy, Income Tax Return Filing, and representation before
                 Assessing Authorities, CIT(Appeals), ITAT Tribunal, and High Courts.
               </p>
             </div>
@@ -243,13 +243,13 @@ export function AboutPage({ onOpenConsultation }: AboutPageProps) {
             <div className="rounded-none border border-[#0A2536]/20 bg-white p-6 shadow-xs">
               <ShieldCheck className="h-6 w-6 text-[#0A2536] mb-3" />
               <h2 className="font-display text-2xl font-bold text-[#0A2536]">
-                3. Accounting, DGFT &amp; Regulatory
+                3. Corporate, Registrations &amp; Litigation
               </h2>
               <p className="mt-2 text-sm text-[#33566D] leading-relaxed">
-                Managed Services in the area of compliance and regulatory matters on an all-India
-                basis—encompassing Accounting &amp; Bookkeeping, DGFT Work &amp; Foreign Trade
-                Policy refunds, MSME Registration, Trademark Registration, and Partnership Firm
-                Registration.
+                Comprehensive support across Accounting &amp; Bookkeeping, DGFT Work, MSME
+                Registration, Trademark Registration, Partnership Firm Registration, Company
+                Registration, and Criminal, Civil &amp; Labour Law Litigation across Delhi, Bihar,
+                and India.
               </p>
             </div>
           </div>

@@ -63,7 +63,7 @@
   <url>
     <loc>https://www.sjalaw.in/courts/patna-high-court</loc>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.sjalaw.in/courts/bombay-high-court</loc>
@@ -71,22 +71,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sjalaw.in/courts/telangana-high-court</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.sjalaw.in/courts/calcutta-high-court</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sjalaw.in/courts/karnataka-high-court</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sjalaw.in/courts/madras-high-court</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>

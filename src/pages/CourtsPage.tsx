@@ -7,7 +7,7 @@ import { ResilientImage } from "@/src/components/ResilientImage";
 import { Button } from "@/src/components/ui/button";
 import { Input, Select } from "@/src/components/ui/fields";
 
-const REGIONS = ["All", "National", "North", "West", "South", "East"] as const;
+const REGIONS = ["All", "National", "North", "West", "East"] as const;
 
 export function CourtsPage() {
   const [tier, setTier] = useState<"all" | CourtTier>("all");
