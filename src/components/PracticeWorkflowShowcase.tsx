@@ -258,7 +258,7 @@ export const PracticeWorkflowShowcase: React.FC<PracticeWorkflowShowcaseProps> =
 
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0A2536] px-3 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#F3FAFF]">
                   <Radar className="h-3 w-3 text-[#DAF6EF]" aria-hidden="true" />
-                  SJ ASSOCIATES
+                  S J ASSOCIATES
                 </span>
 
                 <h3 className="text-xl sm:text-2xl font-extrabold text-[#0A2536] leading-tight px-2">

@@ -477,7 +477,7 @@ export function CourtDetailPage({ onConsultForCourt }: CourtDetailPageProps) {
               <div className="rounded-[24px] border border-border bg-white/90 p-6 sm:p-8 shadow-sm">
                 <div className="max-w-3xl space-y-4">
                   <div className="font-mono text-xs uppercase tracking-widest text-[#33566D]">
-                    SJ ASSOCIATES · APPEARANCES &amp; LOCAL COUNSEL
+                    S J ASSOCIATES · APPEARANCES &amp; LOCAL COUNSEL
                   </div>
                   <h3 className="font-display text-3xl font-bold text-[#0A2536]">
                     Representation Before {court.name} &amp; Nearby Tax Offices

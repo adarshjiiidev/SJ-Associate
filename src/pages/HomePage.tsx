@@ -235,20 +235,26 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
           />
         </div>
 
-        {/* High-intensity localized blur over the central High Court of Delhi portico signage & hero text, keeping left & right court wings colorful */}
+        {/* Moderate (+1) localized blur only over the central portico signage, leaving left & right sides crisp and colorful */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-10 backdrop-blur-2xl bg-[radial-gradient(ellipse_46%_52%_at_50%_46%,rgba(243,250,255,0.78)_0%,rgba(243,250,255,0.52)_55%,transparent_92%)] [mask-image:radial-gradient(ellipse_46%_52%_at_50%_46%,#000_60%,transparent_96%)]"
+          className="pointer-events-none absolute inset-0 z-10 backdrop-blur-[4.5px] [mask-image:radial-gradient(ellipse_38%_44%_at_50%_48%,#000_42%,transparent_92%)]"
         />
 
-        {/* High-intensity blur & frosted gradient across the lower area so bottom features are 100% visible */}
+        {/* Soft center-only radial halo (+1 intensity) for text contrast while keeping left & right court wings in full glorious color */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-10 backdrop-blur-2xl bg-gradient-to-t from-[#F3FAFF]/96 via-[#F3FAFF]/85 to-transparent [mask-image:linear-gradient(to_top,#000_72%,transparent_100%)]"
+          className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(ellipse_45%_54%_at_50%_46%,rgba(243,250,255,0.74)_0%,rgba(243,250,255,0.42)_55%,transparent_90%)]"
+        />
+
+        {/* Bottom bar strip readability gradient (+1 intensity) so bottom practice features are fully visible */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 z-10 backdrop-blur-[4px] bg-gradient-to-t from-[#F3FAFF]/90 via-[#F3FAFF]/55 to-transparent [mask-image:linear-gradient(to_top,#000_65%,transparent_100%)]"
         />
 
         {/* Hero text & controls with normal solid typography */}
-        <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center [text-shadow:0_1px_16px_rgba(243,250,255,0.98)]">
+        <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center [text-shadow:0_1px_14px_rgba(243,250,255,0.96)]">
           <h1 className="font-display tracking-tight text-[#0A2536] max-w-5xl mx-auto">
             <span className="block text-6xl sm:text-8xl lg:text-[104px] font-extrabold leading-[0.94]">
               S J Associates
@@ -270,7 +276,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </p>
           </div>
 
-          <p className="mt-4 max-w-3xl mx-auto text-sm sm:text-base font-semibold text-[#0A2536] leading-relaxed">
+          <p className="mt-4 max-w-3xl mx-auto text-sm sm:text-base font-medium text-[#0A2536] leading-relaxed">
             Focused on Direct &amp; Indirect Taxation, Financial Accounting and Bookkeeping,
             Corporate Law and Practice, Labour Law, Corporate Litigation, Criminal and Civil
             Litigation, and Arbitration.
@@ -295,17 +301,17 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             </Link>
           </div>
 
-          <div className="mt-12 rounded-2xl border border-[#0A2536]/15 bg-[#F3FAFF]/90 backdrop-blur-2xl px-5 py-3.5 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-2 text-xs sm:text-[13px] font-extrabold text-[#0A2536]">
-              <span>Direct &amp; Indirect Taxation</span>
-              <span>Financial Accounting &amp; Bookkeeping</span>
-              <span>Corporate &amp; Labour Law</span>
-              <span>Corporate, Criminal &amp; Civil Litigation</span>
-              <span>Arbitration</span>
+          <div className="mt-12 rounded-2xl border border-[#0A2536]/15 bg-[#F3FAFF]/90 backdrop-blur-2xl px-4 sm:px-5 py-3.5 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-3.5">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap items-center justify-center lg:justify-start gap-y-2 sm:gap-x-3.5 lg:gap-x-3.5 xl:gap-x-5 text-xs font-extrabold text-[#0A2536] whitespace-nowrap">
+              <span className="block">Direct &amp; Indirect Taxation</span>
+              <span className="block">Financial Accounting &amp; Bookkeeping</span>
+              <span className="block">Corporate &amp; Labour Law</span>
+              <span className="block">Corporate, Criminal &amp; Civil Litigation</span>
+              <span className="block">Arbitration</span>
             </div>
             <a
               href="#what-we-do"
-              className="inline-flex items-center gap-2.5 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A2536] hover:text-[#33566D] shrink-0"
+              className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.14em] text-[#0A2536] hover:text-[#33566D] shrink-0 whitespace-nowrap pt-1 lg:pt-0"
             >
               <span>SCROLL DOWN</span>
               <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#0A2536]/15 bg-white text-xs shadow-xs">

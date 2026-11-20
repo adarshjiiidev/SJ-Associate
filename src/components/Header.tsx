@@ -32,14 +32,14 @@ export function Header({ onOpenConsultation }: HeaderProps) {
         {/* Zone 1: Official SJA Thin-Capital Monogram Logo + Wordmark */}
         <Link
           to="/"
-          className="inline-flex items-center gap-2.5 sm:gap-3 text-[#0A2536] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex items-center gap-3 sm:gap-3.5 text-[#0A2536] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <FirmLogo size={44} />
+          <FirmLogo size={54} />
           <div className="flex flex-col leading-none">
-            <span className="text-sm sm:text-base font-light uppercase tracking-[0.22em] text-[#0A2536]">
-              SJ <strong className="font-semibold">Associates</strong>
+            <span className="text-base sm:text-xl lg:text-[22px] font-normal uppercase tracking-[0.2em] text-[#0A2536]">
+              S J <strong className="font-bold">Associates</strong>
             </span>
-            <span className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-[#33566D]">
+            <span className="mt-1 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-[#33566D]">
               Advocates &amp; Tax Consultants
             </span>
           </div>

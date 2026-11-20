@@ -103,7 +103,7 @@ export const Footer: React.FC = () => {
                 <FirmLogo size={54} variant="light" />
                 <div>
                   <p className="text-lg font-light tracking-[0.22em] uppercase text-white leading-none">
-                    SJ <strong className="font-semibold">ASSOCIATES</strong>
+                    S J <strong className="font-semibold">ASSOCIATES</strong>
                   </p>
                   <p className="text-xs text-[#F3FAFF]/75 mt-1">
                     Adv. Sanjay Kumar Singh · Advocate, Delhi High Court
