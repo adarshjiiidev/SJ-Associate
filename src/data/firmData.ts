@@ -179,16 +179,16 @@ export const PRACTICE_AREAS: PracticeAreaItem[] = [
   {
     id: "income-tax-filings-and-tds",
     number: "03",
-    title: "Income Tax — TDS Return Filing, Consultancy & Return Filing (ITR)",
-    shortTitle: "TDS Returns, Consultancy & ITR Filing",
+    title: "Income Tax — Consultancy, ITR & TDS Return Filing",
+    shortTitle: "Consultancy, ITR & TDS Return Filing",
     statutes:
       "Income Tax Department · Pratyaksh Kar Bhawan (ITO / Civic Centre) · TRACES",
     summary:
-      "The Direct Tax team, comprising lawyers and tax professionals, offers a comprehensive array of TDS compliance, direct tax consultancy, and Income Tax Return filing services for businesses, partnership firms, professionals, and organisations across sectors. We understand the business, accounting, and legal intricacies affecting direct taxation.",
+      "The Direct Tax team, comprising lawyers and tax professionals, offers a comprehensive array of direct tax consultancy, Income Tax Return (ITR) filing, and quarterly TDS compliance services for businesses, partnership firms, professionals, and organisations across sectors. We understand the business, accounting, and legal intricacies affecting direct taxation.",
     representationScope: [
-      "Quarterly TDS and TCS Return Filing (Forms 24Q, 26Q, 27Q, 27EQ), Form 16/16A issuance & TRACES default rectification",
       "Income Tax Consultancy relating to domestic and cross-border tax issues, strategic tax planning & capital gains structuring",
-      "Compilation of financial data and Income Tax Return Filing (ITR-1 to ITR-7), tax audit reports, AIS/TIS & Form 26AS reconciliation",
+      "Compilation of financial data and Income Tax Return (ITR) Filing (ITR-1 to ITR-7), tax audit reports, AIS/TIS & Form 26AS reconciliation",
+      "Quarterly TDS and TCS Return Filing (Forms 24Q, 26Q, 27Q, 27EQ), Form 16/16A issuance & TRACES default rectification",
     ],
     typicalForums: [
       "Pratyaksh Kar Bhawan (Civic Centre / ITO New Delhi) & CPC / TRACES",
@@ -311,11 +311,11 @@ export const PRACTICE_SECTION_SUMMARY: Array<{
     serviceCount: 4,
     weightPercent: 24,
     tagline:
-      "Direct Tax TDS Compliance, Advisory, ITR Filing, Assessments & Appellate Representation Before CIT(A) & ITAT",
+      "Income Tax Consultancy, ITR & TDS Return Filing, Corporate Tax, Wealth Tax & Assessments",
     items: [
-      "TDS Return Filing",
       "Income Tax Consultancy",
       "Income Tax Return Filing",
+      "TDS Return Filing",
       "Other Matters",
     ],
   },
@@ -442,8 +442,40 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
   },
 
   // ============================================================================
-  // SECTION 2: Income Tax (4 items — TDS Return Filing & Consultancy before ITR Filing)
+  // SECTION 2: Income Tax (4 items — Consultancy & ITR Filing above TDS Return Filing)
   // ============================================================================
+  {
+    id: "income-tax-consultancy",
+    category: "Income Tax",
+    title: "Income Tax Consultancy",
+    subtitle: "Income Tax, Corporate Tax & Wealth Tax Advisory",
+    authorityTag: "INCOME TAX · ADVISORY DESK",
+    turnaroundTag: "Year-Round Tax Advisory",
+    timelineOrStatute: "Income-tax Act, 1961",
+    description:
+      "Quality advice and consultancy across the entire spectrum of income tax, corporate tax, and wealth tax laws—finding practical, risk-averse solutions for business deductions, capital gains structuring (Sec. 54/54EC/54F), partnership remuneration, and domestic and cross-border tax issues.",
+    deliverables: [
+      "Income Tax, Corporate Tax & Capital Gains Advisory",
+      "Written Legal Opinions on Deductions & Withholding Tax",
+    ],
+    practiceAreaId: "income-tax-filings-and-tds",
+  },
+  {
+    id: "itr-return-filing",
+    category: "Income Tax",
+    title: "Income Tax Return Filing",
+    subtitle: "ITR-1 to ITR-7 & Tax Audit Filings",
+    authorityTag: "INCOME TAX · CBDT",
+    turnaroundTag: "Annual ITR & Tax Audit",
+    timelineOrStatute: "Sec. 139 & 44AB Income-tax Act",
+    description:
+      "Comprehensive Income Tax Return compliance (ITR-1 to ITR-7) and tax audit coordination for businesses, industrial houses, partnership firms, professionals, and individuals, addressing accounting and legal intricacies with full Form 26AS and AIS/TIS reconciliation.",
+    deliverables: [
+      "ITR-1 to ITR-7 Filing with AIS/TIS & 26AS Reconciliation",
+      "Capital Gains Computation, Balance Sheet Schedules & ITR-U",
+    ],
+    practiceAreaId: "income-tax-filings-and-tds",
+  },
   {
     id: "tds-return-filing",
     category: "Income Tax",
@@ -461,50 +493,18 @@ export const CORPORATE_SOLUTIONS: CorporateSolutionItem[] = [
     practiceAreaId: "income-tax-filings-and-tds",
   },
   {
-    id: "income-tax-consultancy",
-    category: "Income Tax",
-    title: "Income Tax Consultancy",
-    subtitle: "Direct Tax Planning, Structuring & Advisory",
-    authorityTag: "DIRECT TAX · ADVISORY DESK",
-    turnaroundTag: "Year-Round Tax Advisory",
-    timelineOrStatute: "Income-tax Act, 1961",
-    description:
-      "Quality advice and consultancy across the entire spectrum of direct tax laws—finding practical, risk-averse solutions for business deductions, capital gains structuring (Sec. 54/54EC/54F), partnership remuneration, and domestic and cross-border tax issues.",
-    deliverables: [
-      "Direct Tax Planning, Advance Tax & Capital Gains Advisory",
-      "Written Legal Opinions on Deductions & Withholding Tax",
-    ],
-    practiceAreaId: "income-tax-filings-and-tds",
-  },
-  {
-    id: "itr-return-filing",
-    category: "Income Tax",
-    title: "Income Tax Return Filing",
-    subtitle: "ITR-1 to ITR-7 & Tax Audit Filings",
-    authorityTag: "INCOME TAX · CBDT",
-    turnaroundTag: "Annual ITR & Tax Audit",
-    timelineOrStatute: "Sec. 139 & 44AB Income-tax Act",
-    description:
-      "Comprehensive direct tax return compliance (ITR-1 to ITR-7) and tax audit coordination for businesses, industrial houses, partnership firms, professionals, and individuals, addressing accounting and legal intricacies with full Form 26AS and AIS/TIS reconciliation.",
-    deliverables: [
-      "ITR-1 to ITR-7 Filing with AIS/TIS & 26AS Reconciliation",
-      "Capital Gains Computation, Balance Sheet Schedules & ITR-U",
-    ],
-    practiceAreaId: "income-tax-filings-and-tds",
-  },
-  {
     id: "other-income-tax-matters",
     category: "Income Tax",
     title: "Other Income Tax Matters",
-    subtitle: "Scrutiny Assessments, Sec. 148 Notices, CIT(A) & ITAT",
-    authorityTag: "NFAC · CIT(A) · ITAT",
+    subtitle: "Scrutiny Assessments, Sec. 148 Notices & Appeals",
+    authorityTag: "NFAC · CIT(A) · INCOME TAX",
     turnaroundTag: "Sec. 143(3) / 148 & Appeals",
     timelineOrStatute: "Sec. 143(3), 148, 154 & 246A",
     description:
-      "Competent handling of direct tax litigation and assessment proceedings before Assessing Authorities (NFAC), CIT(Appeals), and the Income Tax Appellate Tribunal (‘ITAT’)—covering Section 143(3) scrutiny, Section 148A/148 reassessments, rectifications, and stay of demand petitions.",
+      "Competent handling of income tax, corporate tax, and assessment proceedings before Assessing Authorities (NFAC) and CIT(Appeals)—covering Section 143(3) scrutiny, Section 148A/148 reassessments, rectifications, and stay of demand petitions.",
     deliverables: [
       "Faceless Scrutiny & Section 148A/148 Reassessment Replies",
-      "CIT(Appeals) Form 35 Filings, ITAT Appeals & Penalty Defense",
+      "CIT(Appeals) Form 35 Filings, Rectifications & Penalty Defense",
     ],
     practiceAreaId: "income-tax-consultancy-and-matters",
   },

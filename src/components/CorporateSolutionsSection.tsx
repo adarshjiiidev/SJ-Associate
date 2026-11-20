@@ -132,21 +132,23 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
             <div className="flex items-center gap-2.5">
               <FirmLogo size={24} />
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#33566D]">
-                INDIRECT TAX · DIRECT TAX · REGULATORY &amp; COMPLIANCE
+                DIRECT TAX · INDIRECT TAX · REGULATORY &amp; COMPLIANCE
               </p>
             </div>
             <h2
               className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0A2536] leading-[0.98]"
               style={{ textWrap: "balance" }}
             >
-              Direct Tax, Indirect Tax &amp; Regulatory Services
+              Direct and Indirect Taxes &amp; Regulatory Services
             </h2>
             <p className="text-sm sm:text-base text-[#33566D] leading-relaxed">
               The Firm has a dedicated team of experts engaged in providing, <em>inter alia</em>,
               advisory, managed compliance, and litigation services across{" "}
               <strong className="text-[#0A2536]">Goods and Services Tax</strong>,{" "}
-              <strong className="text-[#0A2536]">Direct Tax (Income Tax &amp; ITAT)</strong>, and{" "}
-              <strong className="text-[#0A2536]">Accounting, DGFT &amp; Registrations</strong>.
+              <strong className="text-[#0A2536]">
+                Income Tax, Corporate Tax, Wealth Tax, Customs, DGFT Compliances, and Bookkeeping &amp; Accounting
+              </strong>
+              .
             </p>
           </div>
 
@@ -179,7 +181,7 @@ export const CorporateSolutionsSection: React.FC<CorporateSolutionsSectionProps>
         <div className="rounded-[24px] border border-border bg-[#F3FAFF] p-5 sm:p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#0A2536]">
-              Firm Practice Distribution Across Indirect Tax, Direct Tax &amp; Corporate / Litigation Wings (17 Services)
+              Firm Practice Distribution Across Direct and Indirect Taxes &amp; Corporate / Litigation Wings (17 Services)
             </p>
             <p className="text-xs text-[#33566D] tabular-nums">
               Click any section bar to filter catalogue

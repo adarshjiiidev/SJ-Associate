@@ -21,11 +21,11 @@ export function PracticeAreasPage({ onOpenConsultation }: PracticeAreasPageProps
               <div className="flex items-center gap-2.5 mb-2">
                 <FirmLogo size={24} />
                 <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#33566D]">
-                  PRACTICE AREAS · DIRECT TAX &amp; GOODS AND SERVICES TAX (INDIRECT TAX)
+                  PRACTICE AREAS · DIRECT AND INDIRECT TAXES &amp; REGULATORY PRACTICE
                 </div>
               </div>
               <h1 className="font-display text-4xl sm:text-5xl font-bold text-[#0A2536]">
-                Direct Tax, Goods and Services Tax &amp; Regulatory Practice
+                Direct and Indirect Taxes &amp; Regulatory Practice
               </h1>
               <p className="mt-3 text-[#33566D] max-w-3xl text-base leading-relaxed">
                 The Firm&apos;s Direct Tax and Indirect Tax teams are well-equipped and dedicated to

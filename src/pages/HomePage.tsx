@@ -10,7 +10,6 @@ import {
 import {
   FIRM_IDENTITY,
   PRINCIPAL_ADVOCATE,
-  PRACTICE_AREAS,
   CORPORATE_SOLUTIONS,
 } from "@/src/data/firmData";
 import {
@@ -160,7 +159,47 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
   };
 
   const carouselCourts = getCarouselCourts();
-  const top3Sections = PRACTICE_AREAS.slice(0, 3);
+  const top3Sections = [
+    {
+      id: "section-01-gst",
+      title: "Goods and Services Tax — Registration, Return Filing, SCN & Appeals",
+      summary:
+        "The Firm’s Indirect Tax team renders advice, manages statutory compliances, and litigates across Goods and Services Tax (‘GST’) and Customs before Adjudicating Authorities, Commissioner (Appeals), GSTAT, High Courts, and the Supreme Court.",
+      representationScope: [
+        "GST Registration (REG-01), amendments, revocation (REG-21) & compliance advisory",
+        "Periodic & annual GST Return Filing (GSTR-1, GSTR-3B, GSTR-9/9C) & GSTR-2B reconciliation",
+        "Show Cause Notice (DRC-01 / Sec. 73 & 74) replies & ASMT-10 adjudication defence",
+        "Commissioner (Appeals) Section 107, GSTAT Section 112 & High Court Tax Appeals",
+      ],
+      typicalForums: ["Vyapar Bhawan GST · Commissioner (Appeals) · GSTAT · High Courts"],
+    },
+    {
+      id: "section-02-income-tax",
+      title: "Income Tax — Consultancy, ITR & TDS Return Filing",
+      summary:
+        "The Direct Tax team offers comprehensive Income Tax Consultancy, Income Tax Return (ITR) Filing, quarterly TDS Return Filing, and representation in scrutiny assessments and appeals before CIT(Appeals) and Tax Authorities.",
+      representationScope: [
+        "Income Tax Consultancy on domestic & cross-border tax planning and capital gains structuring",
+        "Income Tax Return (ITR) Filing (ITR-1 to ITR-7), tax audit reports & AIS/TIS reconciliation",
+        "Quarterly TDS & TCS Return Filing (24Q, 26Q, 27Q, 27EQ), Form 16/16A & TRACES rectification",
+        "Scrutiny assessments (Sec. 143(3)), Sec. 148A/148 notices & CIT(Appeals) representation",
+      ],
+      typicalForums: ["Pratyaksh Kar Bhawan (ITO) · NFAC · CIT(Appeals) · TRACES"],
+    },
+    {
+      id: "section-03-others",
+      title: "Others — Accounting, Registrations, Corporate & Litigation",
+      summary:
+        "End-to-end Financial Accounting & Bookkeeping, Corporate Law Practice, statutory registrations, Labour Law, Corporate, Criminal & Civil Litigation, and Arbitration across Delhi NCR, Bihar, and India.",
+      representationScope: [
+        "Financial Accounting & Bookkeeping, Trial Balance, P&L, Balance Sheet & audit support",
+        "Company Registration, Partnership Firm, MSME Udyam, Trademark & DGFT (IEC) Work",
+        "Corporate Law Practice, Labour Law, Corporate Litigation & Arbitration representation",
+        "Criminal & Civil Litigation before District Courts, High Courts & Supreme Court",
+      ],
+      typicalForums: ["MCA / ROC · DGFT · Trade Marks Registry · District & High Courts"],
+    },
+  ];
   const gstSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Goods and Services Tax");
   const incomeTaxSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Income Tax");
   const otherSolutions = CORPORATE_SOLUTIONS.filter((s) => s.category === "Others");

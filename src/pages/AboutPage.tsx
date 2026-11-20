@@ -35,7 +35,7 @@ export function AboutPage({ onOpenConsultation }: AboutPageProps) {
   const secondHalfPoints = [
     {
       code: "POINT 04 · EXPERTISE & BROAD PRACTICE AREAS",
-      heading: "Goods and Services Tax, Direct Tax & Regulatory Combination",
+      heading: "Direct and Indirect Taxes & Regulatory Combination",
       body: PRINCIPAL_ADVOCATE.overview[3],
     },
     {
