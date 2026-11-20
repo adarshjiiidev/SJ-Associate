@@ -85,7 +85,7 @@ export const PRINCIPAL_ADVOCATE = {
   title: "Advocate, Delhi High Court",
   designation: "Founder & Advocate, Delhi High Court",
   firm: "S J Associates",
-  membership: "Member of International Council Of Jurists",
+  membership: "Member of International Council of Jurists",
   standing: "15+ Years of Active Tax, Appellate & Registration Practice",
   education:
     "Certificate No. 2529 · ICJ Membership No. 471-A/2009 · Bar Council of Delhi",

@@ -272,7 +272,7 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
               DELHI HIGH COURT
             </p>
             <p className="text-xs sm:text-sm font-semibold text-[#0A2536]">
-              Member of International Council Of Jurists
+              Member of International Council of Jurists
             </p>
           </div>
 
