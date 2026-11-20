@@ -32,9 +32,9 @@ export function Header({ onOpenConsultation }: HeaderProps) {
         {/* Zone 1: Official SJA Thin-Capital Monogram Logo + Wordmark */}
         <Link
           to="/"
-          className="inline-flex items-center gap-3 sm:gap-3.5 text-[#0A2536] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex items-center gap-3.5 sm:gap-4 text-[#0A2536] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <FirmLogo size={54} />
+          <FirmLogo size={70} />
           <div className="flex flex-col leading-none">
             <span className="text-base sm:text-xl lg:text-[22px] font-extrabold tracking-[0.06em] text-[#0A2536]">
               S J <strong className="font-bold">Associates</strong>

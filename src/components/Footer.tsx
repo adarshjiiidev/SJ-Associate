@@ -99,8 +99,8 @@ export const Footer: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
             {/* Column 1: Brand & Counsel (5 cols) */}
             <div className="md:col-span-5 space-y-5">
-              <div className="flex items-center gap-3.5">
-                <FirmLogo size={54} variant="light" />
+              <div className="flex items-center gap-4">
+                <FirmLogo size={74} variant="light" />
                 <div>
                   <p className="text-lg font-light tracking-[0.22em] uppercase text-white leading-none">
                     S J <strong className="font-semibold">ASSOCIATES</strong>

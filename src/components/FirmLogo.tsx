@@ -15,7 +15,7 @@ interface FirmLogoProps {
  * so the golden scales and SJA lettering stay razor-sharp on both light and dark surfaces.
  */
 export function FirmLogo({
-  size = 40,
+  size = 68,
   className,
   showFrame = true,
   variant = "default",
@@ -26,11 +26,11 @@ export function FirmLogo({
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center shrink-0 select-none overflow-hidden bg-white p-0.5",
+        "inline-flex items-center justify-center shrink-0 select-none overflow-hidden rounded-md bg-white",
         showFrame &&
           (isLightSurface
-            ? "border border-white/25 shadow-sm"
-            : "border border-[#0A2536]/15 shadow-2xs"),
+            ? "border border-white/30 shadow-sm"
+            : "border border-[#0A2536]/18 shadow-xs"),
         className
       )}
       style={{
@@ -41,10 +41,11 @@ export function FirmLogo({
       <img
         src={FIRM_LOGO_SRC}
         alt="SJA — S J Associates | Justice • Advise • Solution"
-        className="h-full w-full object-contain"
+        className="h-full w-full object-contain scale-[1.09] contrast-[1.08] saturate-[1.08]"
         loading="eager"
         decoding="async"
       />
     </span>
   );
 }
+

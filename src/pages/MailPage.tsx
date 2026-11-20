@@ -558,8 +558,8 @@ export function MailPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#0A2536] via-[#0E2F44] to-[#173E56] flex flex-col justify-between p-5 sm:p-8">
         <div className="mx-auto w-full max-w-[1120px] flex items-center justify-between">
-          <Link to="/" className="inline-flex items-center gap-2.5 group">
-            <FirmLogo size={32} />
+          <Link to="/" className="inline-flex items-center gap-3 group">
+            <FirmLogo size={52} />
             <div className="leading-tight">
               <p className="text-sm font-extrabold uppercase tracking-[0.08em] text-[#F3FAFF]">
                 S J Associates
@@ -759,7 +759,7 @@ export function MailPage() {
       <header className="sticky top-0 z-30 border-b border-border bg-[#0A2536] text-[#F3FAFF]">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-            <FirmLogo size={30} />
+            <FirmLogo size={46} />
             <div className="min-w-0 leading-tight">
               <p className="text-sm font-extrabold uppercase tracking-[0.06em] whitespace-nowrap">
                 S J Associates Mail
