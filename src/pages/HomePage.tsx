@@ -226,26 +226,36 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
     <div className="min-h-screen bg-[#F3FAFF] text-[#0A2536]">
       {/* SECTION 1: HERO */}
       <section className="relative overflow-hidden border-b border-border pt-14 pb-10 sm:pt-20 sm:pb-12">
-        {/* Layer 0 (Bottom-most layer): Delhi High Court background image */}
+        {/* 4K Delhi High Court background image */}
         <div className="pointer-events-none absolute inset-0 z-0">
           <ResilientImage
-            src={COURT_IMAGES["delhi-high-court"]}
-            alt="High Court of Delhi Background"
-            className="h-full w-full object-cover object-center"
+            src={HERO_IMAGE}
+            alt="High Court of Delhi 4K Background"
+            className="h-full w-full object-cover object-center blur-[2.5px] scale-[1.02]"
           />
         </div>
 
-        {/* Layer 1 (Middle layer): Solid white layer completely covering the background outside the text */}
+        {/* Extra blur specifically over the central High Court of Delhi building & portico signage */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-[#F3FAFF] via-[#ECF8F6] to-[#DAF6EF]"
+          className="pointer-events-none absolute inset-0 z-10 backdrop-blur-xl bg-[#F3FAFF]/35 [mask-image:radial-gradient(ellipse_55%_42%_at_50%_52%,#000_55%,transparent_100%)]"
         />
 
-        {/* Layer 2 (Top layer): Hero text & controls where headline sees through the white layer to the Delhi High Court image */}
-        <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="hero-image-knockout-text font-display text-5xl sm:text-7xl lg:text-[88px] font-extrabold tracking-tight leading-[0.94] max-w-4xl mx-auto">
-            <span className="block">SJ Associates</span>
-            <span className="block mt-1.5 pb-1">Stands For You</span>
+        {/* Translucent wash so the 4K Delhi High Court background is visible while keeping normal dark text legible */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-[#F3FAFF]/65 via-[#F3FAFF]/58 to-[#DAF6EF]/75 backdrop-blur-[2px]"
+        />
+
+        {/* Hero text & controls with normal solid typography */}
+        <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center [text-shadow:0_1px_14px_rgba(243,250,255,0.95)]">
+          <h1 className="font-display tracking-tight text-[#0A2536] max-w-5xl mx-auto">
+            <span className="block text-6xl sm:text-8xl lg:text-[104px] font-extrabold leading-[0.94]">
+              S J Associates
+            </span>
+            <span className="block mt-2 pb-1 text-3xl sm:text-5xl lg:text-[62px] font-bold italic leading-[1.05]">
+              Stands For You
+            </span>
           </h1>
 
           <div className="mt-6 space-y-1">
@@ -255,12 +265,12 @@ export function HomePage({ onOpenConsultation }: HomePageProps) {
             <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.16em] text-[#0A2536]">
               DELHI HIGH COURT
             </p>
-            <p className="text-xs sm:text-sm font-semibold text-[#33566D]">
+            <p className="text-xs sm:text-sm font-semibold text-[#0A2536]">
               Member of International Council Of Jurists
             </p>
           </div>
 
-          <p className="mt-4 max-w-3xl mx-auto text-sm sm:text-base text-[#33566D] leading-relaxed">
+          <p className="mt-4 max-w-3xl mx-auto text-sm sm:text-base font-medium text-[#0A2536] leading-relaxed">
             Focused on Direct &amp; Indirect Taxation, Financial Accounting and Bookkeeping,
             Corporate Law and Practice, Labour Law, Corporate Litigation, Criminal and Civil
             Litigation, and Arbitration.
