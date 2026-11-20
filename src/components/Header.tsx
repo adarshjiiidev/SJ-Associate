@@ -36,7 +36,7 @@ export function Header({ onOpenConsultation }: HeaderProps) {
         >
           <FirmLogo size={54} />
           <div className="flex flex-col leading-none">
-            <span className="text-base sm:text-xl lg:text-[22px] font-normal uppercase tracking-[0.2em] text-[#0A2536]">
+            <span className="text-base sm:text-xl lg:text-[22px] font-extrabold tracking-[0.06em] text-[#0A2536]">
               S J <strong className="font-bold">Associates</strong>
             </span>
             <span className="mt-1 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-[#33566D]">
