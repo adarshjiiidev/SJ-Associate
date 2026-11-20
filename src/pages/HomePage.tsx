@@ -13,6 +13,7 @@ import {
   CORPORATE_SOLUTIONS,
 } from "@/src/data/firmData";
 import {
+  HERO_IMAGE,
   COURT_IMAGES,
   ADVOCATE_CORRIDOR_IMAGE,
 } from "@/src/data/assets";

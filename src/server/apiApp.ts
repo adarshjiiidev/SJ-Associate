@@ -59,7 +59,7 @@ async function fetchRssXml(url: string): Promise<string> {
   }
 }
 
-async function fetchCourtNewsRssItems(court: CourtProfile, limit = 8) {
+async function fetchCourtNewsRssItems(court: CourtProfile, limit = 15) {
   const courtSearchPhrase =
     court.shortName && court.shortName !== court.name
       ? `("${court.shortName}" OR "${court.name}")`
@@ -67,8 +67,8 @@ async function fetchCourtNewsRssItems(court: CourtProfile, limit = 8) {
 
   const query =
     court.slug === "gstat"
-      ? `("GSTAT" OR "GST Appellate Tribunal") (GST OR appeal OR notice OR ruling OR bench)`
-      : `${courtSearchPhrase} (GST OR "Income Tax" OR tax OR customs OR judgment OR order OR bench)`;
+      ? `("GSTAT" OR "GST Appellate Tribunal") (GST OR tax OR appeal OR notice OR ITC OR refund)`
+      : `${courtSearchPhrase} (GST OR "Income Tax" OR "Direct Tax" OR "Indirect Tax" OR TDS OR ITC OR Customs OR "Corporate Tax" OR Civil OR suit OR injunction OR property)`;
 
   const googleUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(
     query
@@ -97,9 +97,9 @@ async function fetchLiveCourtReport(court: CourtProfile): Promise<LiveCourtRepor
 
   const nowIso = new Date().toISOString();
 
-  // Direct Live RSS without AI credit usage
-  const rssItems = await fetchCourtNewsRssItems(court, 8);
-  if (rssItems.length >= 2) {
+  // Direct Live RSS filtered exclusively to Direct & Indirect Tax without AI credit usage
+  const rssItems = await fetchCourtNewsRssItems(court, 15);
+  if (rssItems.length >= 1) {
     const rssReport = buildLiveReportFromRss(court, rssItems, nowIso);
     courtReportCache.set(court.slug, {
       data: rssReport,
@@ -121,30 +121,33 @@ async function fetchCrossCourtBriefings(): Promise<CrossCourtFeedItem[]> {
     return crossCourtFeedCache.data;
   }
 
-  const targetCourts = COURTS_REGISTRY.slice(0, 6);
+  const targetCourts = COURTS_REGISTRY;
   const reports = await Promise.all(
     targetCourts.map((court) => fetchLiveCourtReport(court))
   );
 
   const feedItems: CrossCourtFeedItem[] = [];
-  for (let i = 0; i < targetCourts.length; i++) {
-    const court = targetCourts[i];
-    const report = reports[i];
-    const topRuling = report.rulings[0];
-    if (topRuling) {
-      feedItems.push({
-        id: `${court.slug}-feed-${i + 1}`,
-        courtSlug: court.slug,
-        courtId: court.slug,
-        courtName: court.name,
-        courtShortName: court.shortName,
-        title: topRuling.title,
-        date: topRuling.date,
-        dateLabel: topRuling.date,
-        category: topRuling.category,
-        summary: topRuling.holdingSummary,
-        sourceUrl: topRuling.sourceUrl || court.officialUrl,
-      });
+  // Round-robin pick Direct & Indirect Tax rulings across all 10 courts up to 15 items
+  for (let round = 0; round < 2 && feedItems.length < 15; round++) {
+    for (let i = 0; i < targetCourts.length && feedItems.length < 15; i++) {
+      const court = targetCourts[i];
+      const report = reports[i];
+      const ruling = report.rulings[round];
+      if (ruling) {
+        feedItems.push({
+          id: `${court.slug}-feed-${round + 1}-${i + 1}`,
+          courtSlug: court.slug,
+          courtId: court.slug,
+          courtName: court.name,
+          courtShortName: court.shortName,
+          title: ruling.title,
+          date: ruling.date,
+          dateLabel: ruling.date,
+          category: ruling.category,
+          summary: ruling.holdingSummary,
+          sourceUrl: ruling.sourceUrl || court.officialUrl,
+        });
+      }
     }
   }
 

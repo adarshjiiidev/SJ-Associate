@@ -95,7 +95,7 @@ describe("courtsRegistry pure logic", () => {
     assert.equal(report.rulings[0].category, "GST & Income Tax");
   });
 
-  it("builds deterministic archive fallback report with 3 statements without AI usage", () => {
+  it("builds deterministic archive fallback report with 15 Direct Tax, Indirect Tax & Civil statements without AI usage", () => {
     const court = getCourtBySlug("bombay-high-court")!;
     const fallback = buildArchiveFallbackReport(
       court,
@@ -104,8 +104,9 @@ describe("courtsRegistry pure logic", () => {
 
     assert.equal(fallback.courtSlug, "bombay-high-court");
     assert.equal(fallback.sourceMode, "archive-fallback");
-    assert.equal(fallback.rulings.length, 3);
+    assert.equal(fallback.rulings.length, 15);
     assert.equal(fallback.rulings[0].category, "GST & Income Tax");
+    assert.ok(fallback.rulings.some((r) => r.category === "Civil & Property"));
   });
 
   it("parses RSS XML items and builds a live RSS court report", () => {
@@ -119,7 +120,7 @@ describe("courtsRegistry pure logic", () => {
           <source>Legal Desk</source>
           <description>GSTAT Principal Bench in New Delhi clarified filing procedure for Form GST APL-05.</description>
         </item>
-      </channel></rss>
+      </rss></channel>
     `;
     const items = parseRssItemsFromXml(sampleXml, 4, court);
     assert.equal(items.length, 1);
@@ -129,6 +130,7 @@ describe("courtsRegistry pure logic", () => {
       "2025-05-15T10:00:00.000Z"
     );
     assert.equal(liveReport.sourceMode, "live-rss");
+    assert.equal(liveReport.rulings.length, 15);
     assert.equal(liveReport.rulings[0].category, "GST & Income Tax");
   });
 
@@ -166,7 +168,7 @@ describe("courtsRegistry pure logic", () => {
       filteredItems,
       "2025-05-15T11:00:00.000Z"
     );
-    assert.equal(report.rulings.length, 1);
+    assert.equal(report.rulings.length, 15);
     assert.ok(!report.rulings[0].holdingSummary.includes("&nbsp;"));
     assert.ok(!report.rulings[0].holdingSummary.includes("MP High Court"));
     assert.notEqual(report.rulings[0].holdingSummary, report.rulings[0].title);

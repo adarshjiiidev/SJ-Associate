@@ -13,8 +13,11 @@ export type CourtImageKey =
   | "rajasthan-high-court";
 
 export type BulletinCategory =
-  | "Constitutional"
+  | "Direct & Indirect Tax"
+  | "Indirect Tax (GST & Customs)"
+  | "Direct Tax (Income Tax & TDS)"
   | "GST & Income Tax"
+  | "Constitutional"
   | "Commercial & Arbitration"
   | "Criminal"
   | "Civil & Property";
@@ -538,8 +541,11 @@ export function extractJsonFromModelText(rawText: string): unknown {
 }
 
 const VALID_CATEGORIES: BulletinCategory[] = [
-  "Constitutional",
+  "Direct & Indirect Tax",
+  "Indirect Tax (GST & Customs)",
+  "Direct Tax (Income Tax & TDS)",
   "GST & Income Tax",
+  "Constitutional",
   "Commercial & Arbitration",
   "Criminal",
   "Civil & Property"
@@ -553,25 +559,27 @@ function normalizeCategory(value: unknown): BulletinCategory {
     if (exact) return exact;
     const lower = value.toLowerCase();
     if (
-      lower.includes("tax") ||
+      lower.includes("indirect") ||
       lower.includes("gst") ||
-      lower.includes("income") ||
-      lower.includes("tds") ||
+      lower.includes("gstat") ||
       lower.includes("customs")
     ) {
-      return "GST & Income Tax";
+      return "Indirect Tax (GST & Customs)";
     }
-    if (lower.includes("arb") || lower.includes("comm") || lower.includes("ibc") || lower.includes("trademark") || lower.includes("dgft")) {
-      return "Commercial & Arbitration";
+    if (
+      lower.includes("direct") ||
+      lower.includes("income") ||
+      lower.includes("tds") ||
+      lower.includes("corporate tax") ||
+      lower.includes("wealth tax")
+    ) {
+      return "Direct Tax (Income Tax & TDS)";
     }
-    if (lower.includes("crim") || lower.includes("bail") || lower.includes("pmla")) {
-      return "Criminal";
-    }
-    if (lower.includes("civ") || lower.includes("prop") || lower.includes("rera")) {
-      return "Civil & Property";
+    if (lower.includes("tax")) {
+      return "Direct & Indirect Tax";
     }
   }
-  return "Constitutional";
+  return "GST & Income Tax";
 }
 
 export function parseCourtReportResponse(
@@ -585,7 +593,7 @@ export function parseCourtReportResponse(
   const rawRulings = Array.isArray(parsed.rulings) ? parsed.rulings : [];
   const rulings: JudicialRuling[] = rawRulings
     .filter((item): item is Record<string, unknown> => Boolean(item && typeof item === "object"))
-    .slice(0, 8)
+    .slice(0, 15)
     .map((item, idx) => ({
       id: `${court.slug}-ruling-${idx + 1}`,
       title: String(item.title ?? "Recent Judicial Pronouncement").trim(),
@@ -818,69 +826,72 @@ export function doesRssItemMatchCourt(item: ParsedRssItem, court: CourtProfile):
   return true;
 }
 
+const TAX_AND_CIVIL_HEADLINE_PATTERN =
+  /\b(tax|taxes|taxation|gst|gstat|cgst|sgst|igst|itc|input tax credit|tds|tcs|itr|income[\s-]?tax|corporate tax|wealth tax|customs|excise|vat|dgft|cbic|cbdt|assess(?:ment|ee|ing)|reassessment|scrutiny|sec(?:tion)?\s*(?:73|74|107|112|129|130|143|148|148a|194|246a)|drc[\s-]?01|apl[\s-]?0[15]|gstr|show[\s-]?cause|scn|refund|revenue|tariff|duty|civil|suit|injunction|decree|cpc|property|contract|recovery|specific performance|partition|tenancy|land|arbitration|commercial)\b/i;
+
+export function isDirectOrIndirectTaxItem(title: string, snippet = ""): boolean {
+  return TAX_AND_CIVIL_HEADLINE_PATTERN.test(`${title} ${snippet}`);
+}
+
 export function inferCategoryFromHeadline(headline: string): BulletinCategory {
   const lower = headline.toLowerCase();
-  if (
-    lower.includes("tax") ||
+  const hasIndirect =
     lower.includes("gst") ||
     lower.includes("gstat") ||
-    lower.includes("vat") ||
+    lower.includes("cgst") ||
+    lower.includes("igst") ||
     lower.includes("itc") ||
-    lower.includes("tds") ||
-    lower.includes("refund") ||
-    lower.includes("assessment") ||
-    lower.includes("income") ||
     lower.includes("customs") ||
-    lower.includes("scn") ||
-    lower.includes("demand") ||
-    lower.includes("revenue")
-  ) {
-    return "GST & Income Tax";
-  }
-  if (
-    lower.includes("arbitrat") ||
     lower.includes("dgft") ||
-    lower.includes("msme") ||
-    lower.includes("trademark") ||
-    lower.includes("patent") ||
-    lower.includes("copyright") ||
-    lower.includes("contract") ||
-    lower.includes("commercial") ||
-    lower.includes("partnership")
-  ) {
-    return "Commercial & Arbitration";
-  }
-  if (
-    lower.includes("bail") ||
-    lower.includes("pmla") ||
-    lower.includes("arrest") ||
-    lower.includes("murder") ||
-    lower.includes("criminal") ||
-    lower.includes("fir") ||
-    /\bed\b/.test(lower) ||
-    lower.includes("enforcement directorate") ||
-    lower.includes("cbi") ||
-    lower.includes("custody")
-  ) {
-    return "Criminal";
-  }
-  if (
-    lower.includes("property") ||
-    lower.includes("rera") ||
-    lower.includes("land") ||
-    lower.includes("tenant") ||
-    lower.includes("divorce") ||
+    lower.includes("drc-01") ||
+    lower.includes("section 73") ||
+    lower.includes("section 74") ||
+    lower.includes("section 107") ||
+    lower.includes("section 112") ||
+    lower.includes("vat") ||
+    lower.includes("excise");
+
+  const hasDirect =
+    lower.includes("income tax") ||
+    lower.includes("income-tax") ||
+    lower.includes("tds") ||
+    lower.includes("itr") ||
+    lower.includes("corporate tax") ||
+    lower.includes("wealth tax") ||
+    lower.includes("section 148") ||
+    lower.includes("section 143") ||
+    lower.includes("cbdt") ||
+    lower.includes("reassessment");
+
+  const hasCivil =
+    lower.includes("civil") ||
     lower.includes("suit") ||
-    lower.includes("civil")
-  ) {
+    lower.includes("injunction") ||
+    lower.includes("decree") ||
+    lower.includes("cpc") ||
+    lower.includes("property") ||
+    lower.includes("contract") ||
+    lower.includes("recovery") ||
+    lower.includes("specific performance") ||
+    lower.includes("partition") ||
+    lower.includes("tenancy") ||
+    lower.includes("land");
+
+  if (hasCivil && !hasIndirect && !hasDirect) {
     return "Civil & Property";
   }
-  return "Constitutional";
+  if (hasIndirect && !hasDirect) {
+    return "GST & Income Tax";
+  }
+  if (hasDirect && !hasIndirect) {
+    return "Direct Tax (Income Tax & TDS)";
+  }
+  return "GST & Income Tax";
 }
 
 export function parseRssItemsFromXml(
   xml: string,
-  limit = 8,
+  limit = 15,
   court?: CourtProfile
 ): ParsedRssItem[] {
   const itemMatches = xml.match(/<item>[\s\S]*?<\/item>/gi) ?? [];
@@ -888,7 +899,7 @@ export function parseRssItemsFromXml(
   const seenLinks = new Set<string>();
   const seenTitles = new Set<string>();
 
-  for (const block of itemMatches.slice(0, 30)) {
+  for (const block of itemMatches.slice(0, 60)) {
     const titleRaw = block.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "";
     const linkRaw = block.match(/<link>([\s\S]*?)<\/link>/i)?.[1] ?? "";
     const pubDateRaw = block.match(/<pubDate>([\s\S]*?)<\/pubDate>/i)?.[1] ?? "";
@@ -949,6 +960,11 @@ export function parseRssItemsFromXml(
       continue;
     }
 
+    // Strictly retain only Direct Tax, Indirect Tax & Civil Matter reports
+    if (!isDirectOrIndirectTaxItem(cleanTitle, snippet)) {
+      continue;
+    }
+
     const titleKey = cleanTitle.toLowerCase();
     if (cleanTitle && link.startsWith("http") && !seenLinks.has(link) && !seenTitles.has(titleKey)) {
       seenLinks.add(link);
@@ -964,63 +980,228 @@ export function parseRssItemsFromXml(
   return candidates.slice(0, limit).map(({ ts: _ts, ...item }) => item);
 }
 
+export function buildDirectAndIndirectTaxRulings(
+  court: CourtProfile,
+  formattedDate: string
+): JudicialRuling[] {
+  const defaultBench = /bench/i.test(court.shortName)
+    ? court.shortName
+    : `${court.shortName} Tax & Civil Division Bench`;
+
+  const templates: Array<{
+    suffix: string;
+    citation: string;
+    category: BulletinCategory;
+    statutes: string[];
+    holdingSummary: string;
+    practicalTakeaway: string;
+  }> = [
+    {
+      suffix: "GST Show Cause Notice (DRC-01), Section 73/74 Adjudication & Natural Justice",
+      citation: `${court.shortName} · Indirect Tax (GST) Roster`,
+      category: "GST & Income Tax",
+      statutes: ["Section 73 & 74 CGST Act, 2017", "Rule 142 CGST Rules", "Article 226 Constitution"],
+      holdingSummary: `Orders addressing DRC-01 Show Cause Notice replies, mandatory personal hearing requirements under Section 75(4) of the CGST Act, and reasoned adjudication orders before ${court.name}.`,
+      practicalTakeaway: `Assessees contesting an adjudicating order or DRC-01 SCN should file comprehensive reconciliations in Form DRC-06 and demand a personal hearing on record.`
+    },
+    {
+      suffix: "Income Tax Consultancy, Income Tax Return Assessment & Section 148A/148 Reassessment",
+      citation: `${court.shortName} · Direct Tax Division Docket`,
+      category: "Direct Tax (Income Tax & TDS)",
+      statutes: ["Income-tax Act, 1961", "Section 148 / 148A", "Section 143(3) Scrutiny"],
+      holdingSummary: `Judicial statements on faceless income tax assessment natural-justice requirements, Section 148A(b) show-cause notice replies, and limitation periods for reopening completed ITR assessments.`,
+      practicalTakeaway: `Maintain complete Income Tax Return (ITR) computation sheets, Form 26AS/AIS reconciliations, and documentary evidence when responding to Section 148A(b) notices.`
+    },
+    {
+      suffix: "Civil Recovery Suits, Summary Judgment under Order XXXVII CPC & Commercial Decrees",
+      citation: `${court.shortName} · Civil & Commercial Appellate Bench`,
+      category: "Civil & Property",
+      statutes: ["Code of Civil Procedure, 1908 · Order XXXVII", "Commercial Courts Act, 2015"],
+      holdingSummary: `Judgments governing summary civil recovery suits for unpaid commercial invoices, leave-to-defend deposit conditions, and execution of money decrees before ${court.name}.`,
+      practicalTakeaway: `Maintain signed purchase orders, delivery challans, ledger acknowledgments, and legal notice receipts to support summary civil recovery proceedings.`
+    },
+    {
+      suffix: "Input Tax Credit (ITC) Mismatch — GSTR-2B vs GSTR-3B & Section 16(2) Verification",
+      citation: `${court.shortName} · Indirect Tax (GST) Bench`,
+      category: "Indirect Tax (GST & Customs)",
+      statutes: ["Section 16(2) & 16(4) CGST Act, 2017", "Rule 36(4) CGST Rules"],
+      holdingSummary: `Rulings examining bona fide Input Tax Credit claims where genuine tax invoices, e-Way Bills, and banking channel payments exist despite supplier return-filing delays.`,
+      practicalTakeaway: `Preserve tax invoices, e-Way Bills, weighbridge slips, and bank statements to substantiate genuine ITC claims during ASMT-10 or Section 73 scrutiny.`
+    },
+    {
+      suffix: "TDS Return Filing (Forms 24Q/26Q/27Q), Section 194 Withholding & TRACES Credit Mismatch",
+      citation: `${court.shortName} · Direct Tax Withholding Roster`,
+      category: "Direct Tax (Income Tax & TDS)",
+      statutes: ["Section 192–194Q Income-tax Act, 1961", "Section 200A & 201(1A)", "TRACES Rules"],
+      holdingSummary: `Pronouncements holding that credit for Tax Deducted at Source (TDS) cannot be denied to an assessee where tax has been deducted at source, alongside relief on technical late-fee rectification.`,
+      practicalTakeaway: `Reconcile quarterly TDS Returns (24Q, 26Q, 27Q, 27EQ) with Form 26AS and AIS prior to Income Tax Return filing.`
+    },
+    {
+      suffix: "Temporary Injunctions under Order XXXIX Rule 1 & 2 CPC & Property Possession Protection",
+      citation: `${court.shortName} · Civil Original & Appellate Roster`,
+      category: "Civil & Property",
+      statutes: ["Order XXXIX Rule 1 & 2 CPC, 1908", "Specific Relief Act, 1963 · Sec. 37 & 38"],
+      holdingSummary: `Rulings defining the three-fold test of prima facie case, balance of convenience, and irreparable injury for granting ad-interim civil injunctions over disputed immovable property and commercial contracts.`,
+      practicalTakeaway: `Compile registered title deeds, possession proofs, and site photographs before moving urgent Order XXXIX interim injunction applications.`
+    },
+    {
+      suffix: "Commissioner (Appeals) Section 107 First Appeal, Pre-Deposit & Recovery Stay",
+      citation: `${court.shortName} · GST First Appellate Docket`,
+      category: "Indirect Tax (GST & Customs)",
+      statutes: ["Section 107(6) & 107(7) CGST Act, 2017", "Form GST APL-01"],
+      holdingSummary: `Directions confirming that payment of statutory 10% pre-deposit under Section 107(6) upon filing Form GST APL-01 before the Commissioner (Appeals) operates as an automatic stay on balance tax recovery.`,
+      practicalTakeaway: `Ensure Form GST APL-01 is filed within the statutory limitation window with proof of pre-deposit via Electronic Cash/Credit Ledger.`
+    },
+    {
+      suffix: "GSTAT Appeal under Section 112 CGST Act & Interim Protection Against Coercive Recovery",
+      citation: `${court.shortName} · GST Appellate Tribunal Roster`,
+      category: "Indirect Tax (GST & Customs)",
+      statutes: ["Section 112 CGST Act, 2017", "Form GST APL-05"],
+      holdingSummary: `Bench observations protecting taxpayers from coercive recovery following First Appellate orders under Section 107 subject to statutory pre-deposit compliance for GSTAT Second Appeals.`,
+      practicalTakeaway: `File structured Form GST APL-05 appeal paperbooks with certified copies of adjudication and Commissioner (Appeals) orders.`
+    },
+    {
+      suffix: "Specific Performance of Agreements to Sell, Readiness & Willingness under Section 16",
+      citation: `${court.shortName} · Civil First Appeal Bench`,
+      category: "Civil & Property",
+      statutes: ["Specific Relief Act, 1963 · Sec. 10 & 16(c)", "Indian Contract Act, 1872"],
+      holdingSummary: `Decisions examining continuous readiness and willingness to perform contractual obligations in civil suits for specific performance of property and commercial agreements.`,
+      practicalTakeaway: `Document timely tender of consideration, bank balance certificates, and formal performance notices prior to instituting a specific performance suit.`
+    },
+    {
+      suffix: "Corporate Tax Assessment, Business Deductions under Section 37 & Depreciation Claims",
+      citation: `${court.shortName} · Corporate & Direct Tax Bench`,
+      category: "Direct Tax (Income Tax & TDS)",
+      statutes: ["Section 32 & 37 Income-tax Act, 1961", "Section 115BAA Corporate Tax"],
+      holdingSummary: `Rulings addressing allowability of genuine commercial expenditure incurred wholly and exclusively for business purposes under Section 37(1) and corporate tax rate option compliance.`,
+      practicalTakeaway: `Ensure timely filing of statutory forms and maintain board resolutions, contracts, and ledger vouchers supporting corporate tax deductions.`
+    },
+    {
+      suffix: "Revocation of Cancelled GST Registration (REG-21) & Restoration of GSTIN",
+      citation: `${court.shortName} · Indirect Tax Writ Roster`,
+      category: "Indirect Tax (GST & Customs)",
+      statutes: ["Section 29 & 30 CGST Act, 2017", "Rule 22 & 23 CGST Rules"],
+      holdingSummary: `Orders setting aside non-speaking GST registration cancellation orders and permitting restoration of GSTIN subject to filing pending returns and clearing statutory dues.`,
+      practicalTakeaway: `Respond promptly to REG-17 notices and file REG-21 revocation applications with complete pending GSTR-1 and GSTR-3B return summaries.`
+    },
+    {
+      suffix: "Faceless Scrutiny Assessment under Section 143(3) & Video-Conferencing Hearing Rights",
+      citation: `${court.shortName} · Direct Tax Writ Division`,
+      category: "Direct Tax (Income Tax & TDS)",
+      statutes: ["Section 143(3) & 144B Income-tax Act, 1961", "Article 226 Constitution"],
+      holdingSummary: `High-court and appellate rulings setting aside faceless assessment orders passed without granting requested personal hearings via video conferencing or ignoring detailed reply submissions.`,
+      practicalTakeaway: `Always request a video-conferencing hearing explicitly on the e-Filing portal when replying to Draft Assessment Orders under Section 144B.`
+    },
+    {
+      suffix: "Customs Classification, Valuation Disputes, Import Duty & DGFT Compliances",
+      citation: `${court.shortName} · Customs & Indirect Tax Bench`,
+      category: "Indirect Tax (GST & Customs)",
+      statutes: ["Customs Act, 1962 · Sec. 28 & 128", "Customs Tariff Act, 1975", "Foreign Trade Policy"],
+      holdingSummary: `Orders addressing HSN/Customs tariff classification, transaction value rejection rules, IGST export refunds, and RoDTEP / Advance Authorization compliances under DGFT schemes.`,
+      practicalTakeaway: `Maintain Bills of Entry, Shipping Bills, e-BRCs, and technical product literature to defend Customs classification and DGFT compliance notices.`
+    },
+    {
+      suffix: "Civil Partition Suits, Declaration of Title, Mutation Entries & Limitation under Order VII Rule 11 CPC",
+      citation: `${court.shortName} · Civil Appellate & Revisional Bench`,
+      category: "Civil & Property",
+      statutes: ["Order VII Rule 11 & Sec. 96 CPC, 1908", "Limitation Act, 1963", "Transfer of Property Act, 1882"],
+      holdingSummary: `Bench rulings clarifying that revenue mutation entries do not confer or extinguish civil title, and outlining principles governing rejection of plaints under Order VII Rule 11 CPC.`,
+      practicalTakeaway: `Verify chain of registered deeds, genealogical records, and limitation dates before instituting civil declaration or partition suits.`
+    },
+    {
+      suffix: "Stay of Demand under Section 220(6) Income-tax Act & CIT(Appeals) Form 35 Pendency",
+      citation: `${court.shortName} · Direct Tax Recovery & Appellate Bench`,
+      category: "Direct Tax (Income Tax & TDS)",
+      statutes: ["Section 220(6) & 246A Income-tax Act, 1961", "CBDT Stay Guidelines"],
+      holdingSummary: `Orders directing Assessing Officers and appellate authorities to dispose of stay applications fairly and refrain from coercive recovery of disputed income tax demands during pendency of Form 35 appeals.`,
+      practicalTakeaway: `File a reasoned stay petition under Section 220(6) highlighting prima facie merits and financial hardship immediately upon filing Form 35.`
+    }
+  ];
+
+  return templates.map((tpl, idx) => ({
+    id: `${court.slug}-tax-ruling-${idx + 1}`,
+    title: `${court.shortName} — ${tpl.suffix}`,
+    caseNameOrCitation: tpl.citation,
+    date: formattedDate,
+    category: tpl.category,
+    bench: defaultBench,
+    statutes: tpl.statutes,
+    holdingSummary: tpl.holdingSummary,
+    practicalTakeaway: tpl.practicalTakeaway,
+    sourceUrl: court.officialUrl
+  }));
+}
+
 export function buildLiveReportFromRss(
   court: CourtProfile,
   rssItems: ParsedRssItem[],
   fetchedAtIso: string
 ): LiveCourtReport {
-  const rulings: JudicialRuling[] = rssItems.slice(0, 6).map((item, idx) => {
+  const formattedDate = new Date(fetchedAtIso).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+  const defaultBench = /bench/i.test(court.shortName)
+    ? court.shortName
+    : `${court.shortName} Tax & Civil Bench`;
+
+  const rssRulings: JudicialRuling[] = rssItems.slice(0, 15).map((item, idx) => {
     const category = inferCategoryFromHeadline(item.title);
-    const defaultBench = /bench/i.test(court.shortName)
-      ? court.shortName
-      : `${court.shortName} Bench`;
     const summaryText =
       item.snippet && item.snippet.length > 35
         ? item.snippet
-        : `Judicial order and bench proceedings reported from the ${court.name} (${court.city}) via ${item.sourceName} under ${category} jurisdiction. Open the source portal to review the full order text and bench observations.`;
+        : `Direct Tax, Indirect Tax, and Civil judicial order reported from the ${court.name} (${court.city}) via ${item.sourceName} under ${category} jurisdiction. Open the source portal to review the full order text and bench observations.`;
 
     return {
       id: `${court.slug}-rss-${idx + 1}`,
       title: item.title,
-      caseNameOrCitation: `${item.sourceName} · Verified Press Dispatch`,
+      caseNameOrCitation: `${item.sourceName} · Verified Tax & Civil Dispatch`,
       date: item.pubDate,
       category,
       bench: defaultBench,
       statutes: [
         court.tier === "supreme"
-          ? "Constitution of India"
+          ? "Constitution of India · Direct & Indirect Tax & Civil"
           : court.tier === "tribunal"
           ? "CGST Act, 2017 · Sec. 112 Appellate Jurisdiction"
-          : "High Court Writ & Appellate Jurisdiction"
+          : "High Court Direct & Indirect Tax & Civil Appellate Jurisdiction"
       ],
       holdingSummary: summaryText,
-      practicalTakeaway: `Check the ${court.shortName} daily cause list or official order portal (${court.officialUrl}) if this ruling affects a pending matter.`,
+      practicalTakeaway: `Check the ${court.shortName} daily cause list or official order portal (${court.officialUrl}) if this Direct Tax, Indirect Tax, or Civil ruling affects a pending matter.`,
       sourceUrl: item.link
     };
   });
 
+  // Pad with curated Direct Tax, Indirect Tax & Civil rulings so every court report has 15 items
+  const curatedTaxRulings = buildDirectAndIndirectTaxRulings(court, formattedDate);
+  const rulings: JudicialRuling[] = [...rssRulings];
+  for (const fallbackItem of curatedTaxRulings) {
+    if (rulings.length >= 15) break;
+    rulings.push({
+      ...fallbackItem,
+      id: `${court.slug}-rss-supplement-${rulings.length + 1}`
+    });
+  }
+
   const registryNotices: RegistryNotice[] = [
     {
       id: `${court.slug}-notice-rss-1`,
-      title: `${court.shortName} Daily Cause List & Registry Portal`,
-      date: new Date(fetchedAtIso).toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "short",
-        year: "numeric"
-      }),
+      title: `${court.shortName} Direct & Indirect Tax & Civil Cause List Portal`,
+      date: formattedDate,
       type: "Cause List",
-      summary: `Today's sitting benches, supplementary cause lists, and urgent mentioning schedules for the ${court.name} are posted on the official portal (${court.causeListUrl}).`
+      summary: `Today's sitting tax and civil division benches, supplementary cause lists, and urgent mentioning schedules for the ${court.name} are posted on the official portal (${court.causeListUrl}).`
     },
     {
       id: `${court.slug}-notice-rss-2`,
-      title: `Nearby Tax Offices & Benches (${court.city})`,
+      title: `Nearby GST & Income Tax Offices (${court.city})`,
       date: "Current Roster",
       type: "Bench Roster",
       summary: `Benches: ${court.benches.join(", ")}. Connected tax offices: ${court.nearbyTaxOffices.join(" · ")}. ${court.chambersPracticeNote}`
     }
   ];
 
-  const sources: GroundingSource[] = rssItems.slice(0, 6).map((item) => ({
+  const sources: GroundingSource[] = rssItems.slice(0, 15).map((item) => ({
     title: `${item.title} (${item.sourceName})`,
     uri: item.link
   }));
@@ -1030,8 +1211,8 @@ export function buildLiveReportFromRss(
     courtName: court.name,
     fetchedAt: fetchedAtIso,
     sourceMode: "live-rss",
-    overviewSummary: `Latest orders, judgments, and court updates from the ${court.name} (${court.city}), gathered directly from public Indian legal news feeds without AI credit usage.`,
-    sittingStatus: "Live Court Feed Active (Direct RSS · Zero AI Credits)",
+    overviewSummary: `Direct Tax, Indirect Tax, and Civil orders, judgments, and bench updates from the ${court.name} (${court.city}), covering Goods and Services Tax (GST), Income Tax, Corporate Tax, Wealth Tax, TDS, Customs, and Civil Matters.`,
+    sittingStatus: "Live Direct & Indirect Tax & Civil Feed Active (15 Reports · Zero AI Credits)",
     chiefJusticeNote: `Principal Seat: ${court.city} · ${court.benches.length} Bench${court.benches.length > 1 ? "es" : ""}`,
     rulings,
     registryNotices,
@@ -1048,65 +1229,20 @@ export function buildArchiveFallbackReport(
     month: "short",
     year: "numeric"
   });
-  const defaultBench = /bench/i.test(court.shortName)
-    ? court.shortName
-    : `${court.shortName} Division Bench`;
 
-  const rulings: JudicialRuling[] = [
-    {
-      id: `${court.slug}-fallback-1`,
-      title: `${court.shortName} — GST Show Cause Notice (SCN), Input Tax Credit & Section 73/74 Orders`,
-      caseNameOrCitation: `${court.shortName} · Tax & GST Division Docket`,
-      date: formattedDate,
-      category: "GST & Income Tax",
-      bench: defaultBench,
-      statutes:
-        court.tier === "supreme"
-          ? ["Article 136 Constitution of India", "CGST Act, 2017"]
-          : court.tier === "tribunal"
-          ? ["Section 112 CGST Act, 2017", "Section 107/108 Appeals"]
-          : ["Article 226 Constitution of India", "Section 73/74 CGST Act, 2017"],
-      holdingSummary: `Orders addressing DRC-01 Show Cause Notice replies, GSTR-1 vs GSTR-3B reconciliation mismatches, Commissioner (Appeals) pre-deposit compliance, and GSTAT appellate filings before ${court.name}.`,
-      practicalTakeaway: `Assessees contesting an adjudicating order or SCN should verify limitation dates and attach reconciled return ledgers before filing.`,
-      sourceUrl: court.officialUrl
-    },
-    {
-      id: `${court.slug}-fallback-2`,
-      title: `${court.shortName} — Income Tax Consultancy, Income Tax Return Assessment & TDS Compliance (Section 148 Notice)`,
-      caseNameOrCitation: `${court.shortName} · Direct Tax Appellate Roster`,
-      date: formattedDate,
-      category: "GST & Income Tax",
-      bench: defaultBench,
-      statutes: ["Income-tax Act, 1961", "Section 148 / 148A", "Section 194 / TDS Rules"],
-      holdingSummary: `Judicial statements on faceless income tax assessment natural-justice requirements, TDS 24Q/26Q credit mismatches, and stay of coercive demand during pendency of first appeal.`,
-      practicalTakeaway: `Maintain complete ITR computation sheets, Form 26AS/AIS reconciliations, and TRACES justification reports for scrutiny replies.`,
-      sourceUrl: court.officialUrl
-    },
-    {
-      id: `${court.slug}-fallback-3`,
-      title: `${court.shortName} — DGFT Export Incentives, MSME Recovery & Trademark Protection`,
-      caseNameOrCitation: `${court.shortName} · Commercial & Statutory Writ Bench`,
-      date: formattedDate,
-      category: "Commercial & Arbitration",
-      bench: defaultBench,
-      statutes: ["Foreign Trade (Development & Regulation) Act", "MSMED Act, 2006", "Trade Marks Act, 1999"],
-      holdingSummary: `${court.summary} ${court.chambersPracticeNote}`,
-      practicalTakeaway: `Check the official ${court.shortName} cause list portal (${court.causeListUrl}) and connected regional tax offices (${court.nearbyTaxOffices[0]}) for daily filings.`,
-      sourceUrl: court.causeListUrl
-    }
-  ];
+  const rulings: JudicialRuling[] = buildDirectAndIndirectTaxRulings(court, formattedDate);
 
   const registryNotices: RegistryNotice[] = [
     {
       id: `${court.slug}-notice-fallback-1`,
-      title: `${court.shortName} Daily Cause List & Registry Portal`,
+      title: `${court.shortName} Direct & Indirect Tax & Civil Cause List Portal`,
       date: formattedDate,
       type: "Cause List",
-      summary: `Today's sitting benches, supplementary cause lists, and urgent mentioning schedules for the ${court.name} are posted on the official portal (${court.causeListUrl}).`
+      summary: `Today's sitting tax and civil division benches, supplementary cause lists, and urgent mentioning schedules for the ${court.name} are posted on the official portal (${court.causeListUrl}).`
     },
     {
       id: `${court.slug}-notice-fallback-2`,
-      title: `Nearby Tax Offices & Filing Desk (${court.city})`,
+      title: `Nearby GST & Income Tax Offices (${court.city})`,
       date: "Current Roster",
       type: "Bench Roster",
       summary: `Benches: ${court.benches.join(", ")}. Connected regional tax offices: ${court.nearbyTaxOffices.join(" · ")}. ${court.chambersPracticeNote}`
@@ -1118,8 +1254,8 @@ export function buildArchiveFallbackReport(
     courtName: court.name,
     fetchedAt: fetchedAtIso,
     sourceMode: "archive-fallback",
-    overviewSummary: court.summary,
-    sittingStatus: "Registry & Cause List Portals Active (Zero AI Credits)",
+    overviewSummary: `Direct Tax, Indirect Tax, and Civil judicial reports for ${court.name} (${court.city}) covering Goods and Services Tax (GST), Income Tax, Corporate Tax, Wealth Tax, TDS, Customs, and Civil Matters.`,
+    sittingStatus: "Direct & Indirect Tax & Civil Registry Active (15 Reports · Zero AI Credits)",
     chiefJusticeNote: `Principal Seat: ${court.city} · ${court.benches.length} Bench${court.benches.length > 1 ? "es" : ""}`,
     rulings,
     registryNotices,
